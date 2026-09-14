@@ -2,10 +2,10 @@
 
 ## In scope
 
-- A single domain ontology, small enough to hand-check (roughly 10-20 classes).
-- Entity and relation extraction from a fixed text corpus.
-- Retrieval that combines vector similarity with graph traversal.
-- Evaluation on a hand-written question set with known answers.
+- One narrow ontology, kept deliberately small so errors stay visible.
+- Extraction of entities and relations, with a human spot-check pass.
+- Hybrid retrieval: vector recall first, then graph expansion for precision.
+- Evaluation against a baseline of plain vector RAG on the same questions.
 
 ## Out of scope
 
