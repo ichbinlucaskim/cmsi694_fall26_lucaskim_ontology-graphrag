@@ -2,10 +2,10 @@
 
 ## In scope
 
-- A single domain ontology of 10-20 classes, hand-checked against the corpus.
-- Entity and relation extraction, run once over a frozen snapshot.
-- Retrieval that walks the graph first and falls back to vector search.
-- Evaluation on 50 hand-written questions with gold answers.
+- A narrow ontology of 10-20 classes, hand-checked against the corpus.
+- Entity and relation extraction, run once over a frozen snapshot and spot-checked by hand.
+- Hybrid retrieval: vector recall first, then graph expansion for precision.
+- Evaluation on 50 hand-written questions with gold answers, against a plain vector RAG baseline.
 
 ## Out of scope
 
