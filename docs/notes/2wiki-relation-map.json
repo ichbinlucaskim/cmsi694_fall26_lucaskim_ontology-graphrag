@@ -1,0 +1,409 @@
+{
+  "lookup_date": "2026-09-23",
+  "endpoint": "https://www.wikidata.org/w/api.php",
+  "query": {
+    "action": "wbsearchentities",
+    "type": "property",
+    "language": "en"
+  },
+  "source": "data/raw/2wiki/dev.json",
+  "notes": "pid is set only when the relation string equals a property label in English (match=exact_en) or an English variant (match=en_variant, variant names it); alias-only matches are not mapped. count is the number of triples in the evidences field across the full dev set.",
+  "summary": {
+    "exact_en": 32,
+    "en_variant": 1,
+    "none": 1
+  },
+  "relations": [
+    {
+      "relation": "award received",
+      "pid": "P166",
+      "wikidata_label": "award received",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 125
+    },
+    {
+      "relation": "cause of death",
+      "pid": "P509",
+      "wikidata_label": "cause of death",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 78
+    },
+    {
+      "relation": "child",
+      "pid": "P40",
+      "wikidata_label": "child",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "inference",
+        "compositional"
+      ],
+      "count": 107
+    },
+    {
+      "relation": "composer",
+      "pid": "P86",
+      "wikidata_label": "composer",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 262
+    },
+    {
+      "relation": "country",
+      "pid": "P17",
+      "wikidata_label": "country",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "comparison",
+        "compositional"
+      ],
+      "count": 657
+    },
+    {
+      "relation": "country of citizenship",
+      "pid": "P27",
+      "wikidata_label": "country of citizenship",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "comparison",
+        "compositional",
+        "bridge_comparison"
+      ],
+      "count": 2146
+    },
+    {
+      "relation": "country of origin",
+      "pid": "P495",
+      "wikidata_label": "country of origin",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "comparison"
+      ],
+      "count": 754
+    },
+    {
+      "relation": "creator",
+      "pid": "P170",
+      "wikidata_label": "creator",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 18
+    },
+    {
+      "relation": "date of birth",
+      "pid": "P569",
+      "wikidata_label": "date of birth",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "comparison",
+        "compositional",
+        "bridge_comparison"
+      ],
+      "count": 4976
+    },
+    {
+      "relation": "date of death",
+      "pid": "P570",
+      "wikidata_label": "date of death",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "comparison",
+        "compositional",
+        "bridge_comparison"
+      ],
+      "count": 2551
+    },
+    {
+      "relation": "director",
+      "pid": "P57",
+      "wikidata_label": "director",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "comparison",
+        "compositional",
+        "bridge_comparison"
+      ],
+      "count": 7592
+    },
+    {
+      "relation": "doctoral advisor",
+      "pid": "P184",
+      "wikidata_label": "doctoral advisor",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "inference"
+      ],
+      "count": 1
+    },
+    {
+      "relation": "editor",
+      "pid": "P98",
+      "wikidata_label": "editor",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 12
+    },
+    {
+      "relation": "educated at",
+      "pid": "P69",
+      "wikidata_label": "educated at",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 249
+    },
+    {
+      "relation": "employer",
+      "pid": "P108",
+      "wikidata_label": "employer",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "inference",
+        "compositional"
+      ],
+      "count": 148
+    },
+    {
+      "relation": "father",
+      "pid": "P22",
+      "wikidata_label": "father",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "inference",
+        "compositional"
+      ],
+      "count": 3203
+    },
+    {
+      "relation": "founded by",
+      "pid": "P112",
+      "wikidata_label": "founder",
+      "match": "en_variant",
+      "variant": "en-gb",
+      "types": [
+        "compositional"
+      ],
+      "count": 78
+    },
+    {
+      "relation": "has part",
+      "pid": null,
+      "wikidata_label": null,
+      "match": "none",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 17
+    },
+    {
+      "relation": "inception",
+      "pid": "P571",
+      "wikidata_label": "inception",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "comparison",
+        "compositional"
+      ],
+      "count": 143
+    },
+    {
+      "relation": "manufacturer",
+      "pid": "P176",
+      "wikidata_label": "manufacturer",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 3
+    },
+    {
+      "relation": "mother",
+      "pid": "P25",
+      "wikidata_label": "mother",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "inference",
+        "compositional"
+      ],
+      "count": 1156
+    },
+    {
+      "relation": "occupation",
+      "pid": "P106",
+      "wikidata_label": "occupation",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "comparison"
+      ],
+      "count": 19
+    },
+    {
+      "relation": "performer",
+      "pid": "P175",
+      "wikidata_label": "performer",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 426
+    },
+    {
+      "relation": "place of birth",
+      "pid": "P19",
+      "wikidata_label": "place of birth",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "comparison",
+        "compositional"
+      ],
+      "count": 1648
+    },
+    {
+      "relation": "place of burial",
+      "pid": "P119",
+      "wikidata_label": "place of burial",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 156
+    },
+    {
+      "relation": "place of death",
+      "pid": "P20",
+      "wikidata_label": "place of death",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 1015
+    },
+    {
+      "relation": "place of detention",
+      "pid": "P2632",
+      "wikidata_label": "place of detention",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 5
+    },
+    {
+      "relation": "presenter",
+      "pid": "P371",
+      "wikidata_label": "presenter",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 6
+    },
+    {
+      "relation": "producer",
+      "pid": "P162",
+      "wikidata_label": "producer",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "comparison",
+        "bridge_comparison"
+      ],
+      "count": 42
+    },
+    {
+      "relation": "publication date",
+      "pid": "P577",
+      "wikidata_label": "publication date",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "comparison"
+      ],
+      "count": 2184
+    },
+    {
+      "relation": "publisher",
+      "pid": "P123",
+      "wikidata_label": "publisher",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 34
+    },
+    {
+      "relation": "sibling",
+      "pid": "P3373",
+      "wikidata_label": "sibling",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "inference"
+      ],
+      "count": 106
+    },
+    {
+      "relation": "spouse",
+      "pid": "P26",
+      "wikidata_label": "spouse",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "inference",
+        "compositional"
+      ],
+      "count": 1198
+    },
+    {
+      "relation": "student of",
+      "pid": "P1066",
+      "wikidata_label": "student of",
+      "match": "exact_en",
+      "variant": null,
+      "types": [
+        "compositional"
+      ],
+      "count": 5
+    }
+  ]
+}
