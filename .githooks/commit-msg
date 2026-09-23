@@ -1,0 +1,30 @@
+#!/bin/sh
+# Strip AI attribution trailers from commit messages.
+# Removes (case-insensitive) lines starting with "Co-Authored-By:" or
+# "Claude-Session:", and lines containing "Generated with [Claude Code]",
+# then drops trailing blank lines. Everything else passes through unchanged.
+# POSIX sh + awk only, so it works with macOS BSD tools.
+
+msg_file="$1"
+tmp_file=$(mktemp "${TMPDIR:-/tmp}/commit-msg.XXXXXX") || exit 1
+
+awk '
+{
+    lower = tolower($0)
+    if (lower ~ /^[ \t]*co-authored-by:/) next
+    if (lower ~ /^[ \t]*claude-session:/) next
+    if (index(lower, "generated with [claude code]") > 0) next
+
+    # Hold blank lines until a non-blank line follows, so trailing ones are dropped.
+    if ($0 ~ /^[ \t]*$/) {
+        pending = pending $0 "\n"
+        next
+    }
+    printf "%s", pending
+    pending = ""
+    print
+}
+' "$msg_file" > "$tmp_file" || { rm -f "$tmp_file"; exit 1; }
+
+cat "$tmp_file" > "$msg_file"
+rm -f "$tmp_file"
