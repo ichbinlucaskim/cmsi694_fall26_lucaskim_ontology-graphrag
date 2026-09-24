@@ -10,6 +10,7 @@ venv/
 # Local data and index artifacts
 data/raw/
 data/index/
+runs/
 
 # Editor / OS
 .DS_Store
