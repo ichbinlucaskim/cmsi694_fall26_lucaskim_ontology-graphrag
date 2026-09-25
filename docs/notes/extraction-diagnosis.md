@@ -335,16 +335,20 @@ Open items:
 
 ## Indexing time projection (no model calls)
 
-Method: `random.Random(694).sample(dev, n)` over `data/raw/2wiki/dev.json`.
-Paragraphs are deduplicated on `(title, text)`, and the D4 rate of 74.3 s per
-paragraph is applied. The estimate is for one condition; two conditions double
-it. The rate is unchanged by D6 and D7, because the recommendation is still
-JSON mode.
+The D4 rate of 74.3 s per paragraph is applied to unique paragraphs
+(deduplicated on `(title, text)`). The estimate is for one condition; two
+conditions double it. The rate is unchanged by D6 and D7, because the
+recommendation is still JSON mode.
 
-| Sample | Context paragraphs (unique) | Mean words | Projected indexing time |
-|---|---|---|---|
-| 20 questions | 184 | 62 | 13,671 s (3.8 h) |
-| 300 questions | 2,111 | 69 | 156,847 s (43.6 h) |
+| Sample | Source | Context paragraphs (unique) | Mean words | Projected indexing time |
+|---|---|---|---|---|
+| smoke20 | Frozen subset, SCRUM-15 (`data/subsets/manifest.json`) | 187 | 69.9 | 13,894 s (3.9 h) |
+| study50 | Frozen subset, SCRUM-15 | 427 | 64.4 | 31,726 s (8.8 h) |
+| 300 questions | `random.Random(694).sample(dev, 300)` | 2,111 | 69 | 156,847 s (43.6 h) |
+
+The smoke20 row replaces an earlier estimate of 184 paragraphs, which was
+computed from `random.Random(694).sample(dev, 20)` before the subset was
+frozen.
 
 For comparison, indexing only the paragraphs named in `supporting_facts`
 would give 54 paragraphs (1.1 h) for 20 questions and 725 paragraphs (15.0 h)

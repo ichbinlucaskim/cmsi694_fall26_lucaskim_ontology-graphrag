@@ -1,0 +1,118 @@
+{
+  "dataset": "2WikiMultiHopQA dev (data_ids_april7)",
+  "dev_json_sha256": "79f77ae104088ea8e25b1a65dbece768d45771194663bc5660ec9a98070dadf5",
+  "seed": 694,
+  "type_rotation_order": [
+    "inference",
+    "compositional",
+    "comparison",
+    "bridge_comparison"
+  ],
+  "ordering": "group by type; sort each group by _id; shuffle groups in rotation order with one random.Random(seed); interleave round-robin",
+  "paragraph_join_rule": "text = \" \".join(sentences)",
+  "paragraph_id_scheme": "id = \"p_\" + sha1(title + \"\\x1f\" + text).hexdigest()[:16], UTF-8",
+  "subsets": {
+    "smoke20": {
+      "question_ids": [
+        "c8c5f3ee0baf11ebab90acde48001122",
+        "d4ae7b5e0bdc11eba7f7acde48001122",
+        "549d1a63086a11ebbd5fac1f6bf848b6",
+        "90c8793c087411ebbd67ac1f6bf848b6",
+        "36a3fe2a0baf11ebab90acde48001122",
+        "e61479860bda11eba7f7acde48001122",
+        "787f51ac097311ebbdb0ac1f6bf848b6",
+        "e82674bd089311ebbd75ac1f6bf848b6",
+        "48137be00baf11ebab90acde48001122",
+        "62e8b66a0bdc11eba7f7acde48001122",
+        "e4d6a06c08a111ebbd7aac1f6bf848b6",
+        "711cc23a088011ebbd6cac1f6bf848b6",
+        "21ec1e0e0baf11ebab90acde48001122",
+        "8abaaafe0bdc11eba7f7acde48001122",
+        "3afdad9c086f11ebbd62ac1f6bf848b6",
+        "103f164e088e11ebbd70ac1f6bf848b6",
+        "fcd1f6ba0baf11ebab90acde48001122",
+        "3581ccec0bdd11eba7f7acde48001122",
+        "569f6717097d11ebbdb0ac1f6bf848b6",
+        "4782cd7d087e11ebbd6bac1f6bf848b6"
+      ],
+      "type_counts": {
+        "inference": 5,
+        "compositional": 5,
+        "comparison": 5,
+        "bridge_comparison": 5
+      },
+      "paragraph_count": 187,
+      "gold_paragraph_count": 50,
+      "files": {
+        "questions_smoke20.jsonl": "6759e2c94026fd7e4095ee1fe20d39505f7c315f3c0c27e267c3d5b723fa60ad",
+        "corpus_smoke20.jsonl": "33121b8cdec0c2514954dbd7d753c8ce124d2cb1d8e5cf795b81e12221f113b5"
+      }
+    },
+    "study50": {
+      "question_ids": [
+        "c8c5f3ee0baf11ebab90acde48001122",
+        "d4ae7b5e0bdc11eba7f7acde48001122",
+        "549d1a63086a11ebbd5fac1f6bf848b6",
+        "90c8793c087411ebbd67ac1f6bf848b6",
+        "36a3fe2a0baf11ebab90acde48001122",
+        "e61479860bda11eba7f7acde48001122",
+        "787f51ac097311ebbdb0ac1f6bf848b6",
+        "e82674bd089311ebbd75ac1f6bf848b6",
+        "48137be00baf11ebab90acde48001122",
+        "62e8b66a0bdc11eba7f7acde48001122",
+        "e4d6a06c08a111ebbd7aac1f6bf848b6",
+        "711cc23a088011ebbd6cac1f6bf848b6",
+        "21ec1e0e0baf11ebab90acde48001122",
+        "8abaaafe0bdc11eba7f7acde48001122",
+        "3afdad9c086f11ebbd62ac1f6bf848b6",
+        "103f164e088e11ebbd70ac1f6bf848b6",
+        "fcd1f6ba0baf11ebab90acde48001122",
+        "3581ccec0bdd11eba7f7acde48001122",
+        "569f6717097d11ebbdb0ac1f6bf848b6",
+        "4782cd7d087e11ebbd6bac1f6bf848b6",
+        "9d570e6e0baf11ebab90acde48001122",
+        "805844f80bdd11eba7f7acde48001122",
+        "f998c58c091b11ebbdaeac1f6bf848b6",
+        "53ab316c08b911ebbd88ac1f6bf848b6",
+        "be0a16240baf11ebab90acde48001122",
+        "407810d40bdd11eba7f7acde48001122",
+        "f75d22fa095d11ebbdafac1f6bf848b6",
+        "8b165288088911ebbd6eac1f6bf848b6",
+        "8eb5dfe20bb011ebab90acde48001122",
+        "05155b180bde11eba7f7acde48001122",
+        "5ac1f04908d311ebbd96ac1f6bf848b6",
+        "78b84f3608db11ebbd9cac1f6bf848b6",
+        "9fdd38980baf11ebab90acde48001122",
+        "38fdf5420bda11eba7f7acde48001122",
+        "77119398087411ebbd67ac1f6bf848b6",
+        "bf3e001408c111ebbd8bac1f6bf848b6",
+        "67d898240bb011ebab90acde48001122",
+        "26c35f920bdb11eba7f7acde48001122",
+        "debaf1c5084c11ebbd56ac1f6bf848b6",
+        "3f894264086411ebbd5eac1f6bf848b6",
+        "6c80bc4e0bb011ebab90acde48001122",
+        "38779cfe0bda11eba7f7acde48001122",
+        "a469ea08084b11ebbd56ac1f6bf848b6",
+        "8474fb5e08a811ebbd7fac1f6bf848b6",
+        "52599bce0bb011ebab90acde48001122",
+        "8ecf15540bdb11eba7f7acde48001122",
+        "ab28bfb6097d11ebbdb0ac1f6bf848b6",
+        "16b5529e085d11ebbd5cac1f6bf848b6",
+        "e9dc3da00bae11ebab90acde48001122",
+        "c7134f820bdd11eba7f7acde48001122"
+      ],
+      "type_counts": {
+        "inference": 13,
+        "compositional": 13,
+        "comparison": 12,
+        "bridge_comparison": 12
+      },
+      "paragraph_count": 427,
+      "gold_paragraph_count": 124,
+      "files": {
+        "questions_50.jsonl": "dda89d59a240cf94dcfe91c8c3798188dc8ba26589ee161c581083513c86c0eb",
+        "corpus_50.jsonl": "8fd8f182a9a93d7669bb33e967406f813ca4a17cf57dbd66bbf57117d4bf41a7"
+      }
+    }
+  }
+}
