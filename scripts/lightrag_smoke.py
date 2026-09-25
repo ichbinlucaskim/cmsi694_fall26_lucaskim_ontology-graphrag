@@ -10,10 +10,15 @@ server with the models below pulled.
 
 Usage:
     python scripts/lightrag_smoke.py
+    python scripts/lightrag_smoke.py --use-json --max-gleaning 0 \
+        --runs-dir runs/diagnosis/d4
+    python scripts/lightrag_smoke.py --tuple-delimiter "<|SEP|>" --max-gleaning 0 \
+        --runs-dir runs/diagnosis/d7
 
 Run scripts/download_2wiki.py first.
 """
 
+import argparse
 import asyncio
 import json
 import random
@@ -27,6 +32,7 @@ import ollama
 from lightrag import LightRAG
 from lightrag.base import DocStatus
 from lightrag.llm.ollama import ollama_embed, ollama_model_complete
+from lightrag.prompt import PROMPTS
 from lightrag.utils import wrap_embedding_func_with_attrs
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -93,10 +99,10 @@ async def warm_up() -> None:
     )
 
 
-async def main() -> int:
+async def main(args: argparse.Namespace) -> int:
     paragraphs = sample_paragraphs()
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    working_dir = RUNS_DIR / run_id
+    working_dir = ROOT / args.runs_dir / run_id
     working_dir.mkdir(parents=True)
 
     print(f"== Sample: {NUM_PARAGRAPHS} paragraphs, seed={SEED} ==")
@@ -105,6 +111,13 @@ async def main() -> int:
     print(f"\nWorking dir: {working_dir.relative_to(ROOT)}")
     print(f"LLM: {LLM_MODEL} (num_ctx={LLM_NUM_CTX})")
     print(f"Embedding: {EMBED_MODEL} (dim={EMBED_DIM}, num_ctx={EMBED_NUM_CTX})")
+    if args.tuple_delimiter:
+        # operate.py reads this key at call time; assign it, never rebind PROMPTS.
+        PROMPTS["DEFAULT_TUPLE_DELIMITER"] = args.tuple_delimiter
+    print(
+        f"Extraction: use_json={args.use_json}, max_gleaning={args.max_gleaning}, "
+        f"tuple_delimiter={PROMPTS['DEFAULT_TUPLE_DELIMITER']}"
+    )
 
     start = time.perf_counter()
     await warm_up()
@@ -118,6 +131,8 @@ async def main() -> int:
         llm_model_max_async=LLM_MAX_ASYNC,
         embedding_func=embed,
         default_embedding_timeout=EMBED_TIMEOUT_S,
+        entity_extraction_use_json=args.use_json,
+        entity_extract_max_gleaning=args.max_gleaning,
     )
     await rag.initialize_storages()
     try:
@@ -155,7 +170,9 @@ async def main() -> int:
     print("\n== Graph ==")
     print(f"Entities: {len(nodes)}")
     print(f"Relations: {len(edges)}")
-    print(f"Indexing wall-clock: {elapsed:.1f} s")
+    print(f"Entity names containing a space: {sum(' ' in n['id'] for n in nodes)}")
+    print(f"Entities typed UNKNOWN: {sum(n.get('entity_type') == 'UNKNOWN' for n in nodes)}")
+    print(f"Indexing wall-clock: {elapsed:.1f} s ({elapsed / NUM_PARAGRAPHS:.1f} s per paragraph)")
 
     print(f"\n== {min(NUM_EXAMPLES, len(edges))} example relations ==")
     for edge in edges[:NUM_EXAMPLES]:
@@ -170,4 +187,20 @@ async def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(asyncio.run(main()))
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--use-json", action="store_true", help="LightRAG JSON extraction mode"
+    )
+    parser.add_argument(
+        "--max-gleaning", type=int, default=1, help="LightRAG default is 1"
+    )
+    parser.add_argument(
+        "--tuple-delimiter",
+        help="text-mode field delimiter; LightRAG default is <|#|>",
+    )
+    parser.add_argument(
+        "--runs-dir",
+        default=str(RUNS_DIR.relative_to(ROOT)),
+        help="parent of the timestamped working directory",
+    )
+    sys.exit(asyncio.run(main(parser.parse_args())))
