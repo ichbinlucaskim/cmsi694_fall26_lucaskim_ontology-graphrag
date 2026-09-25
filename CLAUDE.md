@@ -30,3 +30,6 @@ Ollama. Work is tracked in Jira project SCRUM.
 
 Each story has acceptance criteria in Jira. Before declaring a story done, check
 every criterion and report pass or fail for each one.
+
+Write downloaded files only to absolute paths under /tmp or data/raw/; never with a
+relative output path in the repo.
