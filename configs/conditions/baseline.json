@@ -1,0 +1,5 @@
+{
+  "name": "baseline",
+  "description": "Schema-free LightRAG extraction with the library's default entity type guidance and prompts. Adds no settings to configs/run_config.json.",
+  "settings": {}
+}
