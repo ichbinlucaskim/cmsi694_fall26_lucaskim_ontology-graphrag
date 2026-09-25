@@ -9,6 +9,7 @@ venv/
 
 # Local data and index artifacts
 data/raw/
+data/processed/
 data/index/
 runs/
 
