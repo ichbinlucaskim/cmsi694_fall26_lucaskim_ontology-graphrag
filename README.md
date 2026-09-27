@@ -30,24 +30,24 @@ python scripts/download_2wiki.py
 python scripts/freeze_subset.py
 ```
 
-Index the smoke subset, then answer its 20 questions:
+Index the smoke subset, then answer its 10 questions:
 
 ```
-python scripts/run_condition.py index --condition baseline --subset smoke20
-python scripts/run_condition.py query --condition baseline --subset smoke20
+python scripts/run_condition.py index --condition baseline --subset smoke10
+python scripts/run_condition.py query --condition baseline --subset smoke10
 ```
 
-`--subset` accepts `mini` (one question, for pipeline checks), `smoke20`, and
-`study50`. `--condition` names a file in `configs/conditions/`. Settings shared by
+`--subset` accepts `mini` (one question, for pipeline checks), `smoke10`,
+`smoke20`, and `study50`. `--condition` names a file in `configs/conditions/`. Settings shared by
 all conditions are in `configs/run_config.json`.
 
-Indexing 187 paragraphs takes several hours on an M1 Mac. To keep the machine
+Indexing smoke10 (100 paragraphs) takes several hours on an M1 Mac. To keep the machine
 awake and keep a log:
 
 ```
 mkdir -p runs/baseline
-caffeinate -i python scripts/run_condition.py index --condition baseline --subset smoke20 \
-  2>&1 | tee -a runs/baseline/smoke20-index.log
+caffeinate -i python scripts/run_condition.py index --condition baseline --subset smoke10 \
+  2>&1 | tee -a runs/baseline/smoke10-index.log
 ```
 
 **Resuming.** Rerun the same `index` command. Paragraphs already processed are

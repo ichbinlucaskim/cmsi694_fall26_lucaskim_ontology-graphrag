@@ -1,7 +1,7 @@
 """Freeze the type-balanced 2WikiMultiHopQA question subsets and corpora (SCRUM-15).
 
-Orders the dev split deterministically, takes the first 20 questions (smoke)
-and the first 50 (study), and writes each subset's questions and its
+Orders the dev split deterministically, takes the first 10 and 20 questions
+(smoke10, smoke20) and the first 50 (study50), and writes each subset's questions and its
 deduplicated paragraph corpus as JSON Lines under data/processed/2wiki_subset/.
 The committed manifest, data/subsets/manifest.json, records the question ID
 lists, counts, and the sha256 of every processed file; it holds no question or
@@ -12,8 +12,8 @@ Ordering:
   2. With one random.Random(SEED), shuffle the groups in TYPE_ORDER.
   3. Interleave round-robin in TYPE_ORDER, one question per type per round;
      types that run out drop out of the rotation.
-Every prefix is therefore as balanced as possible, and the smoke subset is the
-first 20 questions of the study subset.
+Every prefix is therefore as balanced as possible, and each smaller subset is a
+prefix of every larger one.
 
 Usage:
     python scripts/freeze_subset.py           # write data/processed and manifest
@@ -42,6 +42,10 @@ MANIFEST_PATH = ROOT / "data" / "subsets" / "manifest.json"
 SEED = 694
 TYPE_ORDER = ["inference", "compositional", "comparison", "bridge_comparison"]
 SUBSETS = {
+    "smoke10": {
+        "size": 10,
+        "counts": {"inference": 3, "compositional": 3, "comparison": 2, "bridge_comparison": 2},
+    },
     "smoke20": {
         "size": 20,
         "counts": {"inference": 5, "compositional": 5, "comparison": 5, "bridge_comparison": 5},
@@ -52,6 +56,7 @@ SUBSETS = {
     },
 }
 FILE_NAMES = {
+    "smoke10": ("questions_smoke10.jsonl", "corpus_smoke10.jsonl"),
     "smoke20": ("questions_smoke20.jsonl", "corpus_smoke20.jsonl"),
     "study50": ("questions_50.jsonl", "corpus_50.jsonl"),
 }
@@ -191,11 +196,15 @@ def generate(out_dir: Path) -> tuple[dict, dict]:
             },
         }
 
-    smoke, study = (manifest["subsets"][n]["question_ids"] for n in ("smoke20", "study50"))
-    assert study[: len(smoke)] == smoke
-    smoke_corpus = [p["id"] for p in report["corpora"]["smoke20"]]
-    study_corpus = [p["id"] for p in report["corpora"]["study50"]]
-    assert study_corpus[: len(smoke_corpus)] == smoke_corpus
+    # Each smaller subset is a prefix of every larger one, in questions and corpus.
+    names = sorted(SUBSETS, key=lambda n: SUBSETS[n]["size"])
+    for i, small in enumerate(names):
+        for large in names[i + 1:]:
+            small_q = manifest["subsets"][small]["question_ids"]
+            assert manifest["subsets"][large]["question_ids"][: len(small_q)] == small_q
+            small_c = [p["id"] for p in report["corpora"][small]]
+            large_c = [p["id"] for p in report["corpora"][large]]
+            assert large_c[: len(small_c)] == small_c
 
     report["dev_paragraphs"] = len(index)
     titles = defaultdict(set)

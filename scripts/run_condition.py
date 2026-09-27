@@ -2,8 +2,8 @@
 
 One command per phase, for one experimental condition and one subset:
 
-    python scripts/run_condition.py index --condition baseline --subset smoke20
-    python scripts/run_condition.py query --condition baseline --subset smoke20
+    python scripts/run_condition.py index --condition baseline --subset smoke10
+    python scripts/run_condition.py query --condition baseline --subset smoke10
 
 Settings shared by every condition come from configs/run_config.json; a
 condition file, configs/conditions/<condition>.json, may add settings but not
@@ -58,7 +58,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CONFIG_PATH = ROOT / "configs" / "run_config.json"
 CONDITIONS_DIR = ROOT / "configs" / "conditions"
 RUNS_DIR = ROOT / "runs"
-SUBSETS = ["mini", "smoke20", "study50"]
+SUBSETS = ["mini", "smoke10", "smoke20", "study50"]
 # Sections that determine the index. query refuses an index built with others.
 INDEX_SECTIONS = ["ollama_host", "llm", "embedding", "indexing"]
 # Keys a condition file may add under "settings", and how they are applied.
