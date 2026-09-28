@@ -28,6 +28,7 @@ import argparse
 import asyncio
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import time
@@ -61,6 +62,8 @@ RUNS_DIR = ROOT / "runs"
 SUBSETS = ["mini", "smoke10", "smoke20", "study50"]
 # Sections that determine the index. query refuses an index built with others.
 INDEX_SECTIONS = ["ollama_host", "llm", "embedding", "indexing"]
+# One trailing citation marker such as "[8]" or "[2, 3]", with leading space.
+TRAILING_CITATION = re.compile(r"\s*\[\d+(?:\s*,\s*\d+)*\]\s*$")
 # Keys a condition file may add under "settings", and how they are applied.
 CONDITION_KEYS = {"addon_params", "prompt_overrides"}
 
@@ -70,6 +73,19 @@ class SharedTokenTracker(TokenTracker):
 
     def __deepcopy__(self, memo):
         return self
+
+
+def normalize_answer(raw: str) -> str:
+    """Strip trailing citation markers, surrounding whitespace, and a trailing
+    period, repeating until none remain ("Alexandra [8]." -> "Alexandra")."""
+    answer = raw.strip()
+    while True:
+        cleaned = TRAILING_CITATION.sub("", answer).strip()
+        if cleaned.endswith("."):
+            cleaned = cleaned[:-1].strip()
+        if cleaned == answer:
+            return answer
+        answer = cleaned
 
 
 # ---------------------------------------------------------------- inputs
@@ -489,7 +505,8 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
                 "type": question["type"],
                 "question": question["question"],
                 "gold_answer": question["answer"],
-                "predicted_answer": answer.strip(),
+                "predicted_answer_raw": answer,
+                "predicted_answer": normalize_answer(answer),
                 "retrieved_paragraph_ids": retrieved,
                 "gold_paragraph_ids": question["gold_paragraph_ids"],
                 "query_status": result.get("status"),

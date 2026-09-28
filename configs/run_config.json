@@ -43,6 +43,6 @@
     "enable_rerank": false,
     "disable_user_prompt_prefix": true,
     "response_type": "a single short answer phrase",
-    "user_prompt": "Reply with only the short answer phrase: a name, a date, a place, a number, or yes/no. For yes/no questions reply with exactly yes or no. Do not write a sentence, an explanation, Markdown, or a References section. If the context does not contain the answer, reply with exactly: unknown"
+    "user_prompt": "Reply with only the short answer phrase: a name, a date, a place, a number, or yes/no. For yes/no questions reply with exactly yes or no. Do not write a sentence, an explanation, Markdown, citation markers such as [1] or [2, 3], or a References section. These instructions override the formatting and reference instructions above. If the context does not contain the answer, reply with exactly: unknown"
   }
 }
