@@ -46,7 +46,7 @@ table below explains each value; the config file is authoritative.
 | `max_parallel_insert` | 1 | Documents are merged in a fixed order across repeats; LLM calls are serialized anyway. |
 | Query mode | `hybrid` | Retrieves only through the knowledge graph (entities and relations, then their source chunks). The default, `mix`, also adds plain vector search over chunks (`operate.py:5280`), which would be identical across conditions and dilute the effect of the graph. |
 | Answer format | `response_type` and `user_prompt` in `configs/run_config.json` | Supported `QueryParam` fields filled into LightRAG's `rag_response` prompt. `disable_user_prompt_prefix=True` keeps any server-side prefix out. The user prompt forbids citation markers, because a seeded mini run answered `Alexandra of Lithuania [8]`. |
-| Answer normalization | `predicted_answer` = normalized `predicted_answer_raw` | `results.jsonl` keeps the exact model output as `predicted_answer_raw`. `predicted_answer` is derived from it by repeatedly removing, from the end only, a citation marker (`[n]` or `[n, m, ...]`), surrounding whitespace, and one trailing period, until nothing changes (`normalize_answer` in `scripts/run_condition.py`). Example: `Alexandra [8].` becomes `Alexandra`. Nothing else is changed; case, inner punctuation, and markers inside the text are kept. |
+| Answer normalization | `predicted_answer` = normalized `predicted_answer_raw` | `results.jsonl` keeps the exact model output as `predicted_answer_raw`. `predicted_answer` is derived from it by `normalize_answer` in `scripts/run_condition.py`, in three steps: (1) keep the text before the first blank line or `### References` heading; (2) keep only its first sentence, splitting on a period followed by whitespace and a capital letter; (3) repeatedly remove, from the end only, a citation marker (`[n]` or `[n, m, ...]`), surrounding whitespace, and one trailing period, until nothing changes. Examples: `No\n\n### References ...` becomes `No`; `Alexandra of Lithuania. She was ...` becomes `Alexandra of Lithuania`; `Alexandra [8].` becomes `Alexandra`. Case and inner punctuation are kept. Known limit: step 2 would cut an answer at an abbreviation followed by a capitalized word (`St. Louis` becomes `St`). `run_condition.py renormalize` re-derives the column for stored results without model calls. The answer template is replaced at the source in SCRUM-30. |
 | Sampling | Ollama defaults, plus `seed` 694 | No temperature or other sampling option is set; this is what SCRUM-29 tested. The seed is in `llm.options`; `run_condition.py query --seed` overrides it for query-time calls only. |
 
 The SCRUM-14 smoke run used text mode, gleaning 1, and no output cap; those
@@ -112,14 +112,30 @@ hashed.
 
 ## Reference timing
 
-`scripts/lightrag_smoke.py`, run 2026-09-23 (`runs/lightrag_smoke/20260923T235035Z`):
-5 paragraphs from the 2WikiMultiHopQA dev split, seed 694, 358 words in total.
+**Current reference: baseline smoke10 index** (SCRUM-16, run 2026-09-28,
+commit `7ac0e59`, `configs/run_config.json` as committed there; details in
+`docs/results/baseline-smoke10.md`).
 
 | Measure | Value |
 |---|---|
-| Indexing wall-clock (`ainsert`, 5 paragraphs) | 529.9 s |
-| Model warm-up before indexing (not included above) | 22.3 s |
-| Result | 5/5 documents processed; 47 entities, 24 relations |
+| Paragraphs | 100 (mean 65.5 words) |
+| Indexing wall-clock | 5,383.3 s |
+| Seconds per paragraph | **53.8** |
+| Result | 100/100 processed, 0 failed |
+| LLM tokens (Ollama-reported) | 189,225 prompt + 50,373 completion, 100 calls |
 
-At about 106 s per paragraph, indexing is the dominant cost of an experimental
-run on this machine.
+**Projection for study50 at 53.8 s per paragraph:** 427 paragraphs gives
+22,973 s, about 6.4 h per condition.
+
+The projection is a rough guide. The rate depends mostly on how much each
+extraction generates. smoke10 averaged about 504 completion tokens per call,
+and the unseeded 10-paragraph mini run averaged about 923, which took 117.8 s
+per paragraph. Treat 54 to 118 s per paragraph as the observed range.
+
+Earlier measurements, kept for history:
+
+| Run | Configuration | Seconds per paragraph |
+|---|---|---|
+| SCRUM-14 smoke (`scripts/lightrag_smoke.py`, 5 paragraphs) | text mode, gleaning 1, no output cap | 106.0 |
+| SCRUM-29 D4 (5 paragraphs) | JSON mode, gleaning 0 | 74.3 |
+| SCRUM-16 mini (10 paragraphs) | current configuration, no seed | 117.8 |

@@ -4,6 +4,7 @@ One command per phase, for one experimental condition and one subset:
 
     python scripts/run_condition.py index --condition baseline --subset smoke10
     python scripts/run_condition.py query --condition baseline --subset smoke10
+    python scripts/run_condition.py renormalize --condition baseline --subset smoke10
 
 Settings shared by every condition come from configs/run_config.json; a
 condition file, configs/conditions/<condition>.json, may add settings but not
@@ -15,6 +16,10 @@ Outputs go to runs/<condition>/<subset>/ (git-ignored):
     lightrag/            LightRAG working directory
     run_manifest.json    one record per index or query invocation
     results.jsonl        one row per question (query)
+
+renormalize re-derives predicted_answer from the stored predicted_answer_raw
+with the current normalize_answer rule, without model calls, and records which
+rows changed.
 
 index is resumable: documents already PROCESSED are skipped, documents left
 PENDING or interrupted are picked up, and FAILED documents get one retry.
@@ -64,6 +69,15 @@ SUBSETS = ["mini", "smoke10", "smoke20", "study50"]
 INDEX_SECTIONS = ["ollama_host", "llm", "embedding", "indexing"]
 # One trailing citation marker such as "[8]" or "[2, 3]", with leading space.
 TRAILING_CITATION = re.compile(r"\s*\[\d+(?:\s*,\s*\d+)*\]\s*$")
+# Where the answer ends: a blank line, or a References heading.
+ANSWER_END = re.compile(r"\n[ \t]*\n|#+\s*References")
+# A sentence boundary: a period, whitespace, then a capital letter.
+SENTENCE_END = re.compile(r"\.\s+(?=[A-Z])")
+NORMALIZE_RULE = (
+    "keep text before the first blank line or '### References' heading; keep its "
+    "first sentence (split on a period, whitespace, capital letter); then repeatedly "
+    "strip trailing [n] / [n, m] markers, surrounding whitespace, and one trailing period"
+)
 # Keys a condition file may add under "settings", and how they are applied.
 CONDITION_KEYS = {"addon_params", "prompt_overrides"}
 
@@ -76,9 +90,14 @@ class SharedTokenTracker(TokenTracker):
 
 
 def normalize_answer(raw: str) -> str:
-    """Strip trailing citation markers, surrounding whitespace, and a trailing
-    period, repeating until none remain ("Alexandra [8]." -> "Alexandra")."""
-    answer = raw.strip()
+    """Reduce a raw model answer to its short answer phrase; see NORMALIZE_RULE.
+
+    "No\n\n### References\n- [1] X" -> "No"
+    "Alexandra of Lithuania. She was the daughter of ..." -> "Alexandra of Lithuania"
+    "Alexandra [8]." -> "Alexandra"
+    """
+    answer = ANSWER_END.split(raw.strip(), maxsplit=1)[0]
+    answer = SENTENCE_END.split(answer, maxsplit=1)[0].strip()
     while True:
         cleaned = TRAILING_CITATION.sub("", answer).strip()
         if cleaned.endswith("."):
@@ -544,9 +563,46 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
     return 1 if failures else 0
 
 
+async def run_renormalize(args, shared, cond, hashes, questions, corpus, provenance, base) -> int:
+    run_dir = RUNS_DIR / args.condition / args.subset
+    results_path = run_dir / "results.jsonl"
+    if not results_path.exists():
+        raise SystemExit(f"No results to renormalize: {results_path.relative_to(ROOT)}")
+    manifest_path = run_dir / "run_manifest.json"
+    manifest, record = start_record(manifest_path, base, "renormalize", {
+        "git": git_info(),
+        "rule": NORMALIZE_RULE,
+        "results_sha256_before": freeze_subset.sha256_of(results_path),
+    })
+    rows = [json.loads(line) for line in results_path.open(encoding="utf-8")]
+    changed = []
+    for n, row in enumerate(rows, start=1):
+        after = normalize_answer(row["predicted_answer_raw"])
+        if after != row["predicted_answer"]:
+            changed.append({"row": n, "question_id": row["question_id"],
+                            "before": row["predicted_answer"], "after": after})
+            row["predicted_answer"] = after
+    with results_path.open("w", encoding="utf-8", newline="\n") as f:
+        for row in rows:
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+    record.update(
+        status="completed",
+        ended_at=now(),
+        rows=len(rows),
+        rows_changed=len(changed),
+        changed=changed,
+        results_sha256_after=freeze_subset.sha256_of(results_path),
+    )
+    write_manifest(manifest_path, manifest)
+    print(f"{len(changed)} of {len(rows)} rows changed")
+    for c in changed:
+        print(f"  row {c['row']} {c['question_id']}: {c['before']!r} -> {c['after']!r}")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("phase", choices=["index", "query"])
+    parser.add_argument("phase", choices=["index", "query", "renormalize"])
     parser.add_argument("--condition", required=True)
     parser.add_argument("--subset", required=True, choices=SUBSETS)
     parser.add_argument(
@@ -566,10 +622,12 @@ def main() -> int:
         help="query: bypass LightRAG's LLM response cache for this run (recorded)",
     )
     args = parser.parse_args()
-    if args.phase == "index" and (
+    if args.phase != "query" and (
         args.seed is not None or args.no_llm_cache or args.allow_settings_mismatch
     ):
         parser.error("--seed, --no-llm-cache and --allow-settings-mismatch apply to query only")
+    if args.phase != "query" and args.allow_incomplete:
+        parser.error("--allow-incomplete applies to query only")
 
     shared, cond, hashes = load_config(args.condition)
     questions, corpus, provenance = load_subset(args.subset)
@@ -580,7 +638,7 @@ def main() -> int:
         "question_count": len(questions),
         "paragraph_count": len(corpus),
     }
-    phase = run_index if args.phase == "index" else run_query
+    phase = {"index": run_index, "query": run_query, "renormalize": run_renormalize}[args.phase]
     return asyncio.run(phase(args, shared, cond, hashes, questions, corpus, provenance, base))
 
 
