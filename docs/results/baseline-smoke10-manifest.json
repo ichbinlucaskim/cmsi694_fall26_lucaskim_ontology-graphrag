@@ -1,0 +1,166 @@
+{
+  "condition": "baseline",
+  "subset": "smoke10",
+  "subset_provenance": {
+    "subset_manifest_sha256": "094198d427cd05be619c023f15dc1be80d7d3b4df98891967aa356181797a30d",
+    "source_subset": "smoke10",
+    "files": {
+      "questions_smoke10.jsonl": "f07c798e534ef2df02f46fe76a663dbad4a929905b6395ceda400d76cfa6e0cf",
+      "corpus_smoke10.jsonl": "13dd5516543963dc380a5a5a11448866d16b3cc2aee490c7d0c48e5c0bb78497"
+    }
+  },
+  "question_count": 10,
+  "paragraph_count": 100,
+  "index": [
+    {
+      "status": "completed",
+      "started_at": "2026-09-28T00:00:22+00:00",
+      "config_sha256": "a14572f9fc751039543e36a7880029fe812a1d9ead77def4b3ed12f6ddb54566",
+      "condition_config_sha256": "22f151c2a0766d27cc0297b53d1831ce72f58181086413178579bfecfcd2453c",
+      "index_settings_sha256": "e2a4c0dcb9777fb8ee037d86c148249adb7cf871da56f46da6c355c55858e7d2",
+      "models": {
+        "llm": "qwen2.5:7b-instruct",
+        "embedding": "bge-m3:latest"
+      },
+      "ollama_version": "0.34.3",
+      "model_digests": {
+        "qwen2.5:7b-instruct": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+        "bge-m3:latest": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab"
+      },
+      "lightrag_version": "1.5.7",
+      "git": {
+        "commit": "7ac0e59cbc011cf2bac03a5c38f932abe54f052e",
+        "dirty": false
+      },
+      "seed": 694,
+      "documents_total": 100,
+      "documents_already_processed": 0,
+      "documents_enqueued": 100,
+      "warmup_s": 7.8,
+      "first_pass": {
+        "status_counts": {
+          "processed": 100
+        },
+        "failed_ids": [],
+        "unfinished_ids": []
+      },
+      "ended_at": "2026-09-28T01:30:13+00:00",
+      "indexing_wall_s": 5383.3,
+      "documents_processed_this_run": 100,
+      "seconds_per_processed_document": 53.8,
+      "max_chunks_per_document": 1,
+      "tokens": {
+        "method": "Ollama-reported prompt_eval_count and eval_count for every LLM and embedding call actually sent in this invocation, collected with LightRAG's token_tracker hook; LLM cache hits send no call and count nothing.",
+        "llm": {
+          "prompt_tokens": 189225,
+          "completion_tokens": 50373,
+          "total_tokens": 239598,
+          "call_count": 100
+        },
+        "embedding": {
+          "prompt_tokens": 41444,
+          "completion_tokens": 0,
+          "total_tokens": 41444,
+          "call_count": 304
+        }
+      },
+      "status_counts": {
+        "processed": 100
+      },
+      "failed_ids": [],
+      "unfinished_ids": []
+    }
+  ],
+  "query": [
+    {
+      "status": "completed",
+      "started_at": "2026-09-28T01:41:35+00:00",
+      "config_sha256": "8b69423758b7cce446ccfe2706e331d776e80c1122caee3cabdd32f5f92c6b5e",
+      "condition_config_sha256": "22f151c2a0766d27cc0297b53d1831ce72f58181086413178579bfecfcd2453c",
+      "index_settings_sha256": "e2a4c0dcb9777fb8ee037d86c148249adb7cf871da56f46da6c355c55858e7d2",
+      "models": {
+        "llm": "qwen2.5:7b-instruct",
+        "embedding": "bge-m3:latest"
+      },
+      "ollama_version": "0.34.3",
+      "model_digests": {
+        "qwen2.5:7b-instruct": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+        "bge-m3:latest": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab"
+      },
+      "lightrag_version": "1.5.7",
+      "git": {
+        "commit": "c7022724d13974ec7f0243e1339c4433ae3b0a21",
+        "dirty": false
+      },
+      "seed": 694,
+      "llm_cache": true,
+      "index_built_with_settings_sha256": "e2a4c0dcb9777fb8ee037d86c148249adb7cf871da56f46da6c355c55858e7d2",
+      "allow_settings_mismatch": false,
+      "settings_mismatch": false,
+      "allow_incomplete": false,
+      "index_incomplete": false,
+      "index_status_counts": {
+        "processed": 100
+      },
+      "warmup_s": 6.0,
+      "ended_at": "2026-09-28T02:12:33+00:00",
+      "questions": 10,
+      "query_failures": 0,
+      "query_wall_s": 1852.2,
+      "mean_query_s": 185.22,
+      "results_file": "runs/baseline/smoke10/results.jsonl",
+      "results_sha256": "f0a6b95e592e5489dda8e871959423f29ef3624bb879f06d5f07770c655b0549",
+      "tokens": {
+        "method": "as for index: Ollama-reported counts via token_tracker; cache hits count nothing",
+        "llm": {
+          "prompt_tokens": 122822,
+          "completion_tokens": 432,
+          "total_tokens": 123254,
+          "call_count": 20
+        },
+        "embedding": {
+          "prompt_tokens": 381,
+          "completion_tokens": 0,
+          "total_tokens": 381,
+          "call_count": 10
+        }
+      }
+    }
+  ],
+  "renormalize": [
+    {
+      "status": "completed",
+      "started_at": "2026-09-28T02:16:24+00:00",
+      "git": {
+        "commit": "dc58506b369fb57b889843f6a5a17bc72882d044",
+        "dirty": false
+      },
+      "rule": "keep text before the first blank line or '### References' heading; keep its first sentence (split on a period, whitespace, capital letter); then repeatedly strip trailing [n] / [n, m] markers, surrounding whitespace, and one trailing period",
+      "results_sha256_before": "f0a6b95e592e5489dda8e871959423f29ef3624bb879f06d5f07770c655b0549",
+      "ended_at": "2026-09-28T02:16:24+00:00",
+      "rows": 10,
+      "rows_changed": 3,
+      "changed": [
+        {
+          "row": 1,
+          "question_id": "c8c5f3ee0baf11ebab90acde48001122",
+          "before": "Alexandra of Lithuania. She was the daughter of Algirdas, the Grand Duke of Lithuania",
+          "after": "Alexandra of Lithuania"
+        },
+        {
+          "row": 3,
+          "question_id": "549d1a63086a11ebbd5fac1f6bf848b6",
+          "before": "No\n\n### References\n\n- [2] The Crown (band)\n- [1] Dazz Band",
+          "after": "No"
+        },
+        {
+          "row": 8,
+          "question_id": "e82674bd089311ebbd75ac1f6bf848b6",
+          "before": "A Pistol for Ringo\n\n### References\n\n- [1] A Pistol for Ringo\n- [4] The Return of Ringo",
+          "after": "A Pistol for Ringo"
+        }
+      ],
+      "results_sha256_after": "3d3d5f1f78751f03600671b9d5e205b09662f1ca1292a188740cb3b6921d2409"
+    }
+  ]
+}
