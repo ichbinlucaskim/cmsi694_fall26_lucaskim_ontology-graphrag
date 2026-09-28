@@ -12,6 +12,32 @@
   "paragraph_join_rule": "text = \" \".join(sentences)",
   "paragraph_id_scheme": "id = \"p_\" + sha1(title + \"\\x1f\" + text).hexdigest()[:16], UTF-8",
   "subsets": {
+    "smoke10": {
+      "question_ids": [
+        "c8c5f3ee0baf11ebab90acde48001122",
+        "d4ae7b5e0bdc11eba7f7acde48001122",
+        "549d1a63086a11ebbd5fac1f6bf848b6",
+        "90c8793c087411ebbd67ac1f6bf848b6",
+        "36a3fe2a0baf11ebab90acde48001122",
+        "e61479860bda11eba7f7acde48001122",
+        "787f51ac097311ebbdb0ac1f6bf848b6",
+        "e82674bd089311ebbd75ac1f6bf848b6",
+        "48137be00baf11ebab90acde48001122",
+        "62e8b66a0bdc11eba7f7acde48001122"
+      ],
+      "type_counts": {
+        "inference": 3,
+        "compositional": 3,
+        "comparison": 2,
+        "bridge_comparison": 2
+      },
+      "paragraph_count": 100,
+      "gold_paragraph_count": 24,
+      "files": {
+        "questions_smoke10.jsonl": "f07c798e534ef2df02f46fe76a663dbad4a929905b6395ceda400d76cfa6e0cf",
+        "corpus_smoke10.jsonl": "13dd5516543963dc380a5a5a11448866d16b3cc2aee490c7d0c48e5c0bb78497"
+      }
+    },
     "smoke20": {
       "question_ids": [
         "c8c5f3ee0baf11ebab90acde48001122",

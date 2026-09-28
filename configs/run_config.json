@@ -1,0 +1,48 @@
+{
+  "description": "Settings shared by every experimental condition. A condition file in configs/conditions/ may add settings but may not redefine any key here. Rationale for each value: MODELS.md and docs/notes/extraction-diagnosis.md.",
+  "ollama_host": "http://localhost:11434",
+  "llm": {
+    "model": "qwen2.5:7b-instruct",
+    "options": {
+      "num_ctx": 32768,
+      "num_predict": 4096,
+      "seed": 694
+    },
+    "max_async": 1,
+    "timeout_s": 600
+  },
+  "embedding": {
+    "model": "bge-m3:latest",
+    "dim": 1024,
+    "max_token_size": 8192,
+    "options": {
+      "num_ctx": 8192
+    },
+    "timeout_s": 180
+  },
+  "indexing": {
+    "entity_extraction_use_json": true,
+    "entity_extract_max_gleaning": 0,
+    "chunk_token_size": 1200,
+    "chunk_overlap_token_size": 100,
+    "max_parallel_insert": 1,
+    "document_text": "{title}\n{text}"
+  },
+  "retrieval": {
+    "related_chunk_number": 5,
+    "kg_chunk_pick_method": "VECTOR",
+    "cosine_better_than_threshold": 0.2
+  },
+  "query": {
+    "mode": "hybrid",
+    "top_k": 40,
+    "chunk_top_k": 20,
+    "max_entity_tokens": 6000,
+    "max_relation_tokens": 8000,
+    "max_total_tokens": 30000,
+    "enable_rerank": false,
+    "disable_user_prompt_prefix": true,
+    "response_type": "a single short answer phrase",
+    "user_prompt": "Reply with only the short answer phrase: a name, a date, a place, a number, or yes/no. For yes/no questions reply with exactly yes or no. Do not write a sentence, an explanation, Markdown, citation markers such as [1] or [2, 3], or a References section. These instructions override the formatting and reference instructions above. If the context does not contain the answer, reply with exactly: unknown"
+  }
+}
