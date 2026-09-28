@@ -112,7 +112,7 @@ hashed.
 
 ## Reference timing
 
-**Current reference: baseline smoke10 index** (SCRUM-16, run 2026-09-28,
+**Current reference: baseline smoke10 index** (SCRUM-16, run 2026-09-27 (America/Los_Angeles),
 commit `7ac0e59`, `configs/run_config.json` as committed there; details in
 `docs/results/baseline-smoke10.md`).
 

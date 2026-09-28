@@ -12,14 +12,18 @@ Ollama. Work is tracked in Jira project SCRUM.
   commit-msg hook. At the start of each session, check that
   `git config core.hooksPath` prints `.githooks`; if it does not, tell me
   before doing anything else.
+- Before starting a new branch, pull main.
 - One branch per story, named `story/SCRUM-<n>-<short-name>`.
 - Stop and show the diff before every commit.
 - Use plain commit messages.
-- Merge into main only with `--no-ff`, and only after approval.
+- Never merge into main locally. Push the branch and open a pull request.
+  Lucas merges it on GitHub with a merge commit.
 - Never push unless told to.
 - Never use `--force`, `--no-verify`, `reset --hard`, or `rebase`.
 - Never touch the `backup-main` or `backup-feature` branches.
 - Never add `Co-Authored-By` or `Claude-Session` trailers.
+- Pull request titles and bodies contain no AI attribution: no Co-Authored-By
+  lines, no "Generated with Claude Code" text, and no session links or IDs.
 
 ## Data rules
 
