@@ -102,7 +102,9 @@ Notes on the table:
 
 Configuration: V3 (`entity_extraction_use_json=True`) with gleaning disabled
 (`entity_extract_max_gleaning=0`). Everything else is as in the SCRUM-14 smoke
-run. Working directory: `runs/diagnosis/d4/20260924T001642Z`.
+run. Working directory: `runs/diagnosis/d4/20260924T001642Z`. The directory
+name is the start time in UTC; the run started 2026-09-23 17:16
+(America/Los_Angeles).
 
 | Measure | SCRUM-14 smoke (text mode, gleaning 1) | D4 (JSON mode, gleaning 0) |
 |---|---|---|
@@ -181,7 +183,8 @@ drops, which leaves one parsed relation. Full outputs are in
 
 D6 met the condition for this run: no run-together names and at least one
 parsed relation in both calls. Working directory:
-`runs/diagnosis/d7/20260925T010241Z`.
+`runs/diagnosis/d7/20260925T010241Z`. The directory name is the start time in
+UTC; the run started 2026-09-24 18:02 (America/Los_Angeles).
 
 | Measure | D4 (JSON mode, gleaning 0) | D7 (`<\|SEP\|>` text mode, gleaning 0) |
 |---|---|---|
