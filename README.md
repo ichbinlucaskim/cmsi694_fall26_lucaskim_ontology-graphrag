@@ -62,3 +62,24 @@ processed; `--allow-incomplete` overrides this and is recorded in the manifest.
 | `lightrag/` | LightRAG working directory (graph, vector stores, LLM cache, document status) |
 | `run_manifest.json` | One record per `index` or `query` invocation: timings, document status counts, failed IDs, token counts, config and subset hashes, model digests, versions, git commit |
 | `results.jsonl` | One row per question: ID, type, question, gold answer, predicted answer, retrieved and gold paragraph IDs, query time |
+| `scores.json` | Written by `scripts/score.py`: per-question and aggregate scores |
+
+## Scoring a run
+
+```
+python scripts/score.py --condition baseline --subset smoke10
+```
+
+This scores `runs/<condition>/<subset>/results.jsonl` with the official
+2WikiMultiHopQA v1.1 answer metrics (EM and F1, with and without answer
+aliases) and retrieval recall, and adds bootstrap 95% confidence intervals
+overall and per question type. It writes `runs/<condition>/<subset>/scores.json`
+and a summary in `docs/results/<condition>-<subset>-scores.md`. It needs
+`data/raw/2wiki/id_aliases.json` from `scripts/download_2wiki.py` and uses the
+standard library only.
+
+Tests:
+
+```
+python -m unittest discover -s tests
+```
