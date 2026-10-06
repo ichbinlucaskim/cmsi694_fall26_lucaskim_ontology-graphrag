@@ -17,6 +17,11 @@ Outputs go to runs/<condition>/<subset>/ (git-ignored):
     run_manifest.json    one record per index or query invocation
     results.jsonl        one row per question (query)
 
+query replaces LightRAG's answer template (query.answer_template_key) with
+query.answer_template from the shared config, for every condition, after
+checking that both have the same placeholders. normalize_answer stays as a
+fallback; the query record counts the rows it changed.
+
 renormalize re-derives predicted_answer from the stored predicted_answer_raw
 with the current normalize_answer rule, without model calls, and records which
 rows changed.
@@ -34,6 +39,7 @@ import asyncio
 import hashlib
 import json
 import re
+import string
 import subprocess
 import sys
 import time
@@ -123,6 +129,9 @@ def load_config(condition: str) -> tuple[dict, dict, dict]:
         raise SystemExit(f"No condition file: {condition_path.relative_to(ROOT)}")
     condition_raw = condition_path.read_text(encoding="utf-8")
     cond = json.loads(condition_raw)
+    answer_key = shared["query"]["answer_template_key"]
+    if answer_key in cond.get("settings", {}).get("prompt_overrides", {}):
+        raise SystemExit(f"Condition overrides the shared answer template: {answer_key}")
     unknown = set(cond.get("settings", {})) - CONDITION_KEYS
     if unknown:
         raise SystemExit(f"Unsupported condition settings: {sorted(unknown)}")
@@ -299,6 +308,33 @@ def build_rag(
     )
 
 
+def placeholders(template: str) -> set[str]:
+    return {field for _, field, _, _ in string.Formatter().parse(template) if field is not None}
+
+
+def apply_answer_template(shared: dict) -> dict:
+    """Replace LightRAG's answer template with the shared one; return provenance.
+
+    Refuses a template whose placeholders differ from the installed one's.
+    """
+    key, template = shared["query"]["answer_template_key"], shared["query"]["answer_template"]
+    if key not in PROMPTS:
+        raise SystemExit(f"Unknown PROMPTS key for the answer template: {key}")
+    original = PROMPTS[key]
+    if placeholders(template) != placeholders(original):
+        raise SystemExit(
+            f"Answer template placeholders {sorted(placeholders(template))} differ from "
+            f"LightRAG's {key} {sorted(placeholders(original))}"
+        )
+    PROMPTS[key] = template  # assign the key; never rebind PROMPTS
+    return {
+        "key": key,
+        "placeholders": sorted(placeholders(template)),
+        "template_sha256": sha256_text(template),
+        "replaced_template_sha256": sha256_text(original),
+    }
+
+
 async def warm_up(shared: dict) -> float:
     """Load both models so timed phases exclude model load."""
     start = time.perf_counter()
@@ -467,6 +503,7 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
         shared, cond, rag_dir, llm_tracker, embed_tracker,
         llm_options=llm_options, enable_llm_cache=not args.no_llm_cache,
     )
+    answer_template = apply_answer_template(shared)
     await rag.initialize_storages()
     try:
         statuses = await doc_statuses(rag, [p["id"] for p in corpus])
@@ -488,6 +525,7 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
             "allow_incomplete": bool(args.allow_incomplete),
             "index_incomplete": incomplete,
             "index_status_counts": summary["status_counts"],
+            "answer_template": answer_template,
         })
         q = shared["query"]
         record["warmup_s"] = await warm_up(shared)
@@ -541,6 +579,12 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
         with results_path.open("w", encoding="utf-8", newline="\n") as f:
             for row in rows:
                 f.write(json.dumps(row, ensure_ascii=False) + "\n")
+        fallback = [
+            {"row": n, "question_id": row["question_id"],
+             "raw": row["predicted_answer_raw"], "normalized": row["predicted_answer"]}
+            for n, row in enumerate(rows, start=1)
+            if row["predicted_answer"] != row["predicted_answer_raw"].strip()
+        ]
         record.update(
             status="completed",
             ended_at=now(),
@@ -550,6 +594,11 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
             mean_query_s=round(wall / len(rows), 2) if rows else None,
             results_file=str(results_path.relative_to(ROOT)),
             results_sha256=freeze_subset.sha256_of(results_path),
+            normalization_fallback={
+                "rule": NORMALIZE_RULE,
+                "rows_changed": len(fallback),
+                "changed": fallback,
+            },
             tokens={
                 "method": "as for index: Ollama-reported counts via token_tracker; cache hits count nothing",
                 "llm": llm_tracker.get_usage(),
@@ -559,7 +608,8 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
         write_manifest(manifest_path, manifest)
     finally:
         await rag.finalize_storages()
-    print(f"Wrote {results_path.relative_to(ROOT)}: {len(rows)} rows, {failures} failed queries")
+    print(f"Wrote {results_path.relative_to(ROOT)}: {len(rows)} rows, {failures} failed queries, "
+          f"{len(fallback)} changed by the normalization fallback")
     return 1 if failures else 0
 
 
