@@ -2,6 +2,10 @@
 
 First pass at the classes the graph will hold. Names are provisional.
 
+The experiment's treatment ontology is `ontology/ontology.json` (SCRUM-17),
+derived from Wikidata; see `docs/notes/ontology-decisions.md`. This draft
+is kept for history.
+
 ## Classes
 
 - **Document** — a source text as ingested, before chunking.
