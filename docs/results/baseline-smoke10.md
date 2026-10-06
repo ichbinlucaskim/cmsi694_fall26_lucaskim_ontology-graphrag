@@ -17,6 +17,15 @@ python scripts/run_condition.py query --condition baseline --subset smoke10
 python scripts/run_condition.py renormalize --condition baseline --subset smoke10
 ```
 
+SCRUM-30 then re-ran the query phase on the same index with LightRAG's answer
+template replaced and the LLM cache off; see "SCRUM-30 re-run" below. The
+current `results.jsonl` is from that re-run. The earlier results are kept,
+git-ignored, as `runs/baseline/smoke10/results-before-scrum30.jsonl`.
+
+```
+python scripts/run_condition.py query --condition baseline --subset smoke10 --no-llm-cache
+```
+
 ## Provenance
 
 | Item | Value |
@@ -32,11 +41,14 @@ python scripts/run_condition.py renormalize --condition baseline --subset smoke1
 | Index | `7ac0e59cbc011cf2bac03a5c38f932abe54f052e` | `a14572f9fc751039543e36a7880029fe812a1d9ead77def4b3ed12f6ddb54566` | `e2a4c0dcb9777fb8ee037d86c148249adb7cf871da56f46da6c355c55858e7d2` |
 | Query | `c7022724d13974ec7f0243e1339c4433ae3b0a21` | `8b69423758b7cce446ccfe2706e331d776e80c1122caee3cabdd32f5f92c6b5e` | `e2a4c0dcb9777fb8ee037d86c148249adb7cf871da56f46da6c355c55858e7d2` |
 | Renormalize | `dc58506b369fb57b889843f6a5a17bc72882d044` | not used | not used |
+| Query, SCRUM-30 re-run | `f9b7d24e8217eb1b756f78e9458072a3642cd8ab` | `0462fab880d215c56e98f07db049581f380b4add5a8919ec9ed5b965b4cf1a5a` | `e2a4c0dcb9777fb8ee037d86c148249adb7cf871da56f46da6c355c55858e7d2` |
 
 The two config hashes differ because the query's answer instruction
 (`query.user_prompt`) was tightened between indexing and querying. That section
 does not affect the index, so the index settings hash is the same for both
-phases, and the query ran without `--allow-settings-mismatch`.
+phases, and the query ran without `--allow-settings-mismatch`. The same holds
+for the SCRUM-30 re-run, whose config adds the answer template to the `query`
+section (`settings_mismatch: false` in its manifest record).
 
 ## Timing and tokens
 
@@ -49,6 +61,7 @@ index, so every call went to the model: 20 LLM calls, 2 per question.
 |---|---|---|---|---|---|
 | Index (100 paragraphs) | 5,383.3 s | 53.8 s per paragraph | 189,225 + 50,373 = 239,598 | 100 | 41,444 (304 calls) |
 | Query (10 questions) | 1,852.2 s | 185.2 s per question | 122,822 + 432 = 123,254 | 20 | 381 (10 calls) |
+| Query, SCRUM-30 re-run, cache off | 1,588.5 s | 158.9 s per question | 119,452 + 376 = 119,828 | 20 | 381 (10 calls) |
 
 Index: 100 of 100 documents processed, none failed, one chunk per paragraph.
 
@@ -61,7 +74,10 @@ Index: 100 of 100 documents processed, none failed, one chunk per paragraph.
 
 ## Answer format
 
-**The answer template itself is not yet fixed.** LightRAG's `rag_response`
+This section describes the first query run. The SCRUM-30 re-run below
+replaces the answer template.
+
+LightRAG's `rag_response`
 prompt asks for Markdown and a References section. Our instruction in
 `query.user_prompt` does not always override it.
 
@@ -82,9 +98,46 @@ These three rows rely on the post-processing rule documented in `MODELS.md`
   lists them and the results file's sha256 before and after.
 - The raw outputs are kept as `predicted_answer_raw`.
 
-SCRUM-30 (Sprint 2) replaces LightRAG's answer template at the source.
+Counted against the raw output rather than the previous normalization, the
+fallback changed 4 rows: these three, and row 5, whose raw output
+`Ulick Burke, 3rd Earl of Clanricarde.` lost its trailing period.
 
-## Per-question results
+## SCRUM-30 re-run
+
+The query phase was re-run on the same index (no re-indexing) with
+`query.answer_template` in `configs/run_config.json` replacing LightRAG's
+`rag_response` template, and with `--no-llm-cache`, so every answer was
+generated afresh. The replacement keeps the template's three placeholders and
+asks for one plain-text line; see `MODELS.md`, "Answer template".
+
+Result: all 10 raw answers are a single line with no References section, no
+citation marker, and no explanatory sentence. The normalization fallback
+changed 0 rows (`normalization_fallback.rows_changed` in the query record), so
+`predicted_answer` equals `predicted_answer_raw` for every row.
+
+Retrieval was unchanged: every question retrieved the same paragraph IDs as
+in the first run, so the answer changes below come from generation, not retrieval.
+
+| # | Gold answer | Before (raw) | Before (`predicted_answer`) | After (raw = `predicted_answer`) |
+|---|---|---|---|---|
+| 1 | Uliana of Tver | `Alexandra of Lithuania. She was the daughter of Algirdas, the Grand Duke of Lithuania.` | Alexandra of Lithuania | Alexandra of Lithuania |
+| 2 | Ayutthaya | `unknown` | unknown | unknown |
+| 3 | no | `No`, followed by a `### References` list | No | no |
+| 4 | Return To Cabin By The Lake | `unknown` | unknown | unknown |
+| 5 | Richard Burke, 2nd Earl of Clanricarde | `Ulick Burke, 3rd Earl of Clanricarde.` | Ulick Burke, 3rd Earl of Clanricarde | Ulick Burke, 3rd Earl of Clanricarde |
+| 6 | Reykjavík | `unknown` | unknown | Kingston |
+| 7 | Find A Place To Die | `Find a Place to Die` | Find a Place to Die | Find A Place To Die |
+| 8 | A Pistol For Ringo | `A Pistol for Ringo`, followed by a `### References` list | A Pistol for Ringo | Los Hijos de Fierro |
+| 9 | Abdul Qadir Najmuddin | `unknown` | unknown | unknown |
+| 10 | New York | `unknown` | unknown | New York |
+
+Rows the fallback changed: before, 4 (rows 1, 3, 5, and 8); after, 0.
+
+Answers that changed in substance: row 6 (`unknown` to a wrong place), row 8
+(correct to wrong), and row 10 (`unknown` to correct). `unknown` answers fell
+from 5 to 3. Scores are computed by SCRUM-19, not here.
+
+## Per-question results (first query run)
 
 "Gold retrieved" compares the question's gold paragraph IDs (from
 `supporting_facts`) with `retrieved_paragraph_ids`. Every question retrieved
@@ -103,7 +156,7 @@ SCRUM-30 (Sprint 2) replaces LightRAG's answer template at the source.
 | 9 | `48137be00baf11ebab90acde48001122` | inference | unknown | Abdul Qadir Najmuddin | yes | yes (2/2) |
 | 10 | `62e8b66a0bdc11eba7f7acde48001122` | compositional | unknown | New York | yes | yes (2/2) |
 
-## Sanity numbers (unofficial)
+## Sanity numbers (unofficial, first query run)
 
 **These are rough checks, not the SCRUM-19 metrics.** They use no answer
 normalization beyond case and must not be reported as results.
@@ -116,7 +169,8 @@ normalization beyond case and must not be reported as results.
 Observations, not conclusions:
 
 - Retrieval found every gold paragraph for every question.
-- Six answers were `unknown` even though the gold paragraphs were in the
-  retrieved set.
+- Five answers were `unknown` (rows 2, 4, 6, 9, and 10) even though the gold
+  paragraphs were in the retrieved set. An earlier version of this note said
+  six; the per-question table shows five.
 - The two wrong named answers (rows 1 and 5) are one generation off the gold
   entity.
