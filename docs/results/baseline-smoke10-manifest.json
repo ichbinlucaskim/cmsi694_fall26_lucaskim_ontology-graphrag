@@ -125,6 +125,75 @@
           "call_count": 10
         }
       }
+    },
+    {
+      "status": "completed",
+      "started_at": "2026-10-06T19:59:27+00:00",
+      "config_sha256": "0462fab880d215c56e98f07db049581f380b4add5a8919ec9ed5b965b4cf1a5a",
+      "condition_config_sha256": "22f151c2a0766d27cc0297b53d1831ce72f58181086413178579bfecfcd2453c",
+      "index_settings_sha256": "e2a4c0dcb9777fb8ee037d86c148249adb7cf871da56f46da6c355c55858e7d2",
+      "models": {
+        "llm": "qwen2.5:7b-instruct",
+        "embedding": "bge-m3:latest"
+      },
+      "ollama_version": "0.34.3",
+      "model_digests": {
+        "qwen2.5:7b-instruct": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+        "bge-m3:latest": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab"
+      },
+      "lightrag_version": "1.5.7",
+      "git": {
+        "commit": "f9b7d24e8217eb1b756f78e9458072a3642cd8ab",
+        "dirty": false
+      },
+      "seed": 694,
+      "llm_cache": false,
+      "index_built_with_settings_sha256": "e2a4c0dcb9777fb8ee037d86c148249adb7cf871da56f46da6c355c55858e7d2",
+      "allow_settings_mismatch": false,
+      "settings_mismatch": false,
+      "allow_incomplete": false,
+      "index_incomplete": false,
+      "index_status_counts": {
+        "processed": 100
+      },
+      "answer_template": {
+        "key": "rag_response",
+        "placeholders": [
+          "context_data",
+          "response_type",
+          "user_prompt"
+        ],
+        "template_sha256": "7f0e7292a5c2c395918828daaaf231afdf0f2db584c0b6612c49480a4b75b923",
+        "replaced_template_sha256": "72bd3844d9165657291989dc0117665d3f2a98de01471811f475a52d6818e893"
+      },
+      "warmup_s": 7.0,
+      "ended_at": "2026-10-06T20:26:02+00:00",
+      "questions": 10,
+      "query_failures": 0,
+      "query_wall_s": 1588.5,
+      "mean_query_s": 158.85,
+      "results_file": "runs/baseline/smoke10/results.jsonl",
+      "results_sha256": "6cc98361fb17481bbfe0f2c0e2ab89d2e82ba158a7d2e8f607c29571e231f560",
+      "normalization_fallback": {
+        "rule": "keep text before the first blank line or '### References' heading; keep its first sentence (split on a period, whitespace, capital letter); then repeatedly strip trailing [n] / [n, m] markers, surrounding whitespace, and one trailing period",
+        "rows_changed": 0,
+        "changed": []
+      },
+      "tokens": {
+        "method": "as for index: Ollama-reported counts via token_tracker; cache hits count nothing",
+        "llm": {
+          "prompt_tokens": 119452,
+          "completion_tokens": 376,
+          "total_tokens": 119828,
+          "call_count": 20
+        },
+        "embedding": {
+          "prompt_tokens": 381,
+          "completion_tokens": 0,
+          "total_tokens": 381,
+          "call_count": 10
+        }
+      }
     }
   ],
   "renormalize": [
