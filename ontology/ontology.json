@@ -1,0 +1,3333 @@
+{
+  "description": "Entity types and relation types for ontology-guided extraction on 2WikiMultiHopQA, derived from Wikidata property constraints (SCRUM-17). A listed type admits its narrower types. The ontology supplies types and relations only; it has no composition rules (D2).",
+  "entity_types": [
+    {
+      "broader": null,
+      "definition": "A prize, honour, decoration, or award category given to a person, group, or work.",
+      "name": "Award",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "hall of fame",
+              "qid": "Q1046088"
+            },
+            {
+              "label": "group of awards",
+              "qid": "Q107655869"
+            },
+            {
+              "label": "science award",
+              "qid": "Q11448906"
+            },
+            {
+              "label": "medal",
+              "qid": "Q131647"
+            },
+            {
+              "label": "grade of an order",
+              "qid": "Q1499804"
+            },
+            {
+              "label": "homage",
+              "qid": "Q16249975"
+            },
+            {
+              "label": "military decoration",
+              "qid": "Q1788716"
+            },
+            {
+              "label": "order",
+              "qid": "Q193622"
+            },
+            {
+              "label": "title of honor",
+              "qid": "Q3320743"
+            },
+            {
+              "label": "literary award",
+              "qid": "Q378427"
+            },
+            {
+              "label": "class of award",
+              "qid": "Q38033430"
+            },
+            {
+              "label": "prize",
+              "qid": "Q5257307"
+            },
+            {
+              "label": "film award category",
+              "qid": "Q56116950"
+            },
+            {
+              "label": "award",
+              "qid": "Q618779"
+            },
+            {
+              "label": "Roman triumph",
+              "qid": "Q657438"
+            },
+            {
+              "label": "recognition",
+              "qid": "Q7302601"
+            }
+          ],
+          "group": "awards and honours"
+        }
+      ]
+    },
+    {
+      "broader": "Creative work",
+      "definition": "A television, radio, or podcast program or series, or one of its seasons.",
+      "name": "Broadcast program",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "season",
+              "qid": "Q10688145"
+            },
+            {
+              "label": "radio series",
+              "qid": "Q14623351"
+            },
+            {
+              "label": "television program",
+              "qid": "Q15416"
+            },
+            {
+              "label": "radio program",
+              "qid": "Q1555508"
+            },
+            {
+              "label": "podcast show",
+              "qid": "Q24634210"
+            },
+            {
+              "label": "radio drama",
+              "qid": "Q2635894"
+            }
+          ],
+          "group": "programs"
+        }
+      ]
+    },
+    {
+      "broader": null,
+      "definition": "A disease, injury, method, or event named as the cause of a death.",
+      "name": "Cause of death",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "violence",
+              "qid": "Q124490"
+            },
+            {
+              "label": "execution method",
+              "qid": "Q15169167"
+            },
+            {
+              "label": "violent crime",
+              "qid": "Q1520311"
+            },
+            {
+              "label": "accident",
+              "qid": "Q171558"
+            },
+            {
+              "label": "old age",
+              "qid": "Q191089"
+            },
+            {
+              "label": "cause of death",
+              "qid": "Q1931388"
+            },
+            {
+              "label": "health problem",
+              "qid": "Q2057971"
+            },
+            {
+              "label": "suicide method",
+              "qid": "Q2485083"
+            },
+            {
+              "label": "obsolete medical term",
+              "qid": "Q61915880"
+            },
+            {
+              "label": "combat",
+              "qid": "Q650711"
+            }
+          ],
+          "group": "causes of death"
+        }
+      ]
+    },
+    {
+      "broader": "Location",
+      "definition": "A sovereign, historical, or dependent state or territory.",
+      "name": "Country",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "colony",
+              "qid": "Q133156"
+            },
+            {
+              "label": "disputed territory",
+              "qid": "Q15239622"
+            },
+            {
+              "label": "dependent territory",
+              "qid": "Q161243"
+            },
+            {
+              "label": "occupied territory",
+              "qid": "Q2577883"
+            }
+          ],
+          "group": "dependent and contested territories"
+        },
+        {
+          "classes": [
+            {
+              "label": "state with limited recognition",
+              "qid": "Q10711424"
+            },
+            {
+              "label": "client state",
+              "qid": "Q1151405"
+            },
+            {
+              "label": "realm",
+              "qid": "Q1250464"
+            },
+            {
+              "label": "city-state",
+              "qid": "Q133442"
+            },
+            {
+              "label": "polis",
+              "qid": "Q148837"
+            },
+            {
+              "label": "country of the Kingdom of the Netherlands",
+              "qid": "Q15304003"
+            },
+            {
+              "label": "confederation",
+              "qid": "Q170156"
+            },
+            {
+              "label": "subject of international law",
+              "qid": "Q1896989"
+            },
+            {
+              "label": "ancient civilization",
+              "qid": "Q28171280"
+            },
+            {
+              "label": "historical country",
+              "qid": "Q3024240"
+            },
+            {
+              "label": "sovereign state",
+              "qid": "Q3624078"
+            },
+            {
+              "label": "federation",
+              "qid": "Q43702"
+            },
+            {
+              "label": "empire",
+              "qid": "Q48349"
+            },
+            {
+              "label": "provisional government",
+              "qid": "Q59281"
+            },
+            {
+              "label": "country",
+              "qid": "Q6256"
+            },
+            {
+              "label": "government-in-exile",
+              "qid": "Q678116"
+            },
+            {
+              "label": "state",
+              "qid": "Q7275"
+            },
+            {
+              "label": "former or current state",
+              "qid": "Q96196009"
+            }
+          ],
+          "group": "states"
+        }
+      ]
+    },
+    {
+      "broader": null,
+      "definition": "A work of authorship or performance not covered by a narrower work type, such as a play or video game.",
+      "name": "Creative work",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "VR experience",
+              "qid": "Q106046707"
+            },
+            {
+              "label": "game",
+              "qid": "Q11410"
+            },
+            {
+              "label": "group of video games often treated as a singular game",
+              "qid": "Q116779426"
+            },
+            {
+              "label": "video game series",
+              "qid": "Q7058673"
+            },
+            {
+              "label": "video game",
+              "qid": "Q7889"
+            }
+          ],
+          "group": "games and interactive works"
+        },
+        {
+          "classes": [
+            {
+              "label": "item of collection or exhibition",
+              "qid": "Q18593264"
+            },
+            {
+              "label": "website",
+              "qid": "Q35127"
+            },
+            {
+              "label": "map",
+              "qid": "Q4006"
+            },
+            {
+              "label": "portfolio",
+              "qid": "Q49094714"
+            },
+            {
+              "label": "digital artistic drawing",
+              "qid": "Q97180164"
+            }
+          ],
+          "group": "other works"
+        },
+        {
+          "classes": [
+            {
+              "label": "performance work",
+              "qid": "Q17538722"
+            },
+            {
+              "label": "play",
+              "qid": "Q25379"
+            },
+            {
+              "label": "performance",
+              "qid": "Q35140"
+            },
+            {
+              "label": "performing arts production",
+              "qid": "Q43099500"
+            },
+            {
+              "label": "Jatra",
+              "qid": "Q5474871"
+            }
+          ],
+          "group": "stage works and performances"
+        },
+        {
+          "classes": [
+            {
+              "label": "audiovisual release",
+              "qid": "Q115668795"
+            },
+            {
+              "label": "group of works",
+              "qid": "Q17489659"
+            },
+            {
+              "label": "group of manifestations",
+              "qid": "Q17538690"
+            },
+            {
+              "label": "audiovisual work",
+              "qid": "Q2431196"
+            },
+            {
+              "label": "manifestation",
+              "qid": "Q286583"
+            },
+            {
+              "label": "work",
+              "qid": "Q386724"
+            },
+            {
+              "label": "series of creative works",
+              "qid": "Q7725310"
+            }
+          ],
+          "group": "works in general"
+        }
+      ]
+    },
+    {
+      "broader": "Organization",
+      "definition": "A school, college, university, or other organization that educates students.",
+      "name": "Educational institution",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "educational facility",
+              "qid": "Q20860083"
+            },
+            {
+              "label": "division of an educational institution",
+              "qid": "Q23005223"
+            },
+            {
+              "label": "seminary",
+              "qid": "Q233324"
+            },
+            {
+              "label": "educational institution",
+              "qid": "Q2385804"
+            },
+            {
+              "label": "training organization",
+              "qid": "Q32053225"
+            },
+            {
+              "label": "academic institution",
+              "qid": "Q4671277"
+            },
+            {
+              "label": "educational organization",
+              "qid": "Q5341295"
+            },
+            {
+              "label": "former educational institution",
+              "qid": "Q96086516"
+            }
+          ],
+          "group": "educational institutions"
+        }
+      ]
+    },
+    {
+      "broader": null,
+      "definition": "Something that happens at a time, such as a battle, competition, ceremony, or campaign.",
+      "name": "Event",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "data breach",
+              "qid": "Q1172486"
+            },
+            {
+              "label": "occurrence",
+              "qid": "Q1190554"
+            },
+            {
+              "label": "sports competition",
+              "qid": "Q13406554"
+            },
+            {
+              "label": "recurring event",
+              "qid": "Q15275719"
+            },
+            {
+              "label": "sporting event",
+              "qid": "Q16510064"
+            },
+            {
+              "label": "planned event",
+              "qid": "Q1656682"
+            },
+            {
+              "label": "battle",
+              "qid": "Q178561"
+            },
+            {
+              "label": "legal case",
+              "qid": "Q2334719"
+            },
+            {
+              "label": "expedition",
+              "qid": "Q2401485"
+            },
+            {
+              "label": "award ceremony",
+              "qid": "Q4504495"
+            },
+            {
+              "label": "seminar",
+              "qid": "Q504703"
+            },
+            {
+              "label": "campaign",
+              "qid": "Q6056746"
+            },
+            {
+              "label": "recording session",
+              "qid": "Q98216532"
+            }
+          ],
+          "group": "events"
+        }
+      ]
+    },
+    {
+      "broader": "Location",
+      "definition": "A building, structure, or site such as a hospital, cemetery, prison, or airport.",
+      "name": "Facility",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "building of public administration",
+              "qid": "Q1220959"
+            },
+            {
+              "label": "airport",
+              "qid": "Q1248784"
+            },
+            {
+              "label": "facility",
+              "qid": "Q13226383"
+            },
+            {
+              "label": "palace",
+              "qid": "Q16560"
+            },
+            {
+              "label": "military base",
+              "qid": "Q245016"
+            },
+            {
+              "label": "attraction",
+              "qid": "Q2800000"
+            },
+            {
+              "label": "building",
+              "qid": "Q41176"
+            },
+            {
+              "label": "workshop",
+              "qid": "Q656720"
+            },
+            {
+              "label": "built structure",
+              "qid": "Q811979"
+            },
+            {
+              "label": "mine",
+              "qid": "Q820477"
+            },
+            {
+              "label": "factory",
+              "qid": "Q83405"
+            }
+          ],
+          "group": "buildings and structures"
+        },
+        {
+          "classes": [
+            {
+              "label": "cemetery, burial plot, or tomb",
+              "qid": "Q16859021"
+            },
+            {
+              "label": "cemetery",
+              "qid": "Q39614"
+            },
+            {
+              "label": "sarcophagus",
+              "qid": "Q48634"
+            },
+            {
+              "label": "unmarked grave",
+              "qid": "Q567603"
+            },
+            {
+              "label": "funerary structure",
+              "qid": "Q6023295"
+            }
+          ],
+          "group": "burial places"
+        },
+        {
+          "classes": [
+            {
+              "label": "hospital",
+              "qid": "Q16917"
+            },
+            {
+              "label": "medical facility",
+              "qid": "Q4260475"
+            },
+            {
+              "label": "residential facility",
+              "qid": "Q67140121"
+            },
+            {
+              "label": "nursing home",
+              "qid": "Q837142"
+            }
+          ],
+          "group": "medical and residential facilities"
+        },
+        {
+          "classes": [
+            {
+              "label": "fort",
+              "qid": "Q1785071"
+            },
+            {
+              "label": "prison",
+              "qid": "Q40357"
+            },
+            {
+              "label": "Xinjiang internment camps",
+              "qid": "Q55506436"
+            },
+            {
+              "label": "citadel",
+              "qid": "Q88291"
+            },
+            {
+              "label": "keep",
+              "qid": "Q91165"
+            }
+          ],
+          "group": "places of detention"
+        },
+        {
+          "classes": [
+            {
+              "label": "convent",
+              "qid": "Q1128397"
+            },
+            {
+              "label": "monastery",
+              "qid": "Q44613"
+            }
+          ],
+          "group": "religious houses"
+        }
+      ]
+    },
+    {
+      "broader": "Creative work",
+      "definition": "A motion picture, a film series, or a dubbed version of a film.",
+      "name": "Film",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "film",
+              "qid": "Q11424"
+            },
+            {
+              "label": "film series",
+              "qid": "Q24856"
+            },
+            {
+              "label": "film dubbing",
+              "qid": "Q26204053"
+            }
+          ],
+          "group": "films"
+        }
+      ]
+    },
+    {
+      "broader": null,
+      "definition": "Two or more people credited or acting together, such as a band, duo, couple, or team.",
+      "name": "Group",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "duo",
+              "qid": "Q10648343"
+            },
+            {
+              "label": "sibling duo",
+              "qid": "Q14073567"
+            },
+            {
+              "label": "twins",
+              "qid": "Q14756018"
+            },
+            {
+              "label": "group of siblings",
+              "qid": "Q16979650"
+            },
+            {
+              "label": "couple",
+              "qid": "Q219160"
+            },
+            {
+              "label": "married couple",
+              "qid": "Q3046146"
+            }
+          ],
+          "group": "families and couples"
+        },
+        {
+          "classes": [
+            {
+              "label": "group of humans",
+              "qid": "Q16334295"
+            },
+            {
+              "label": "community",
+              "qid": "Q177634"
+            },
+            {
+              "label": "class",
+              "qid": "Q18204"
+            }
+          ],
+          "group": "groups of people"
+        },
+        {
+          "classes": [
+            {
+              "label": "sports team",
+              "qid": "Q12973014"
+            },
+            {
+              "label": "cast",
+              "qid": "Q15267437"
+            },
+            {
+              "label": "comedy troupe",
+              "qid": "Q18510489"
+            },
+            {
+              "label": "dōjin circle",
+              "qid": "Q2013644"
+            },
+            {
+              "label": "musical ensemble",
+              "qid": "Q2088357"
+            },
+            {
+              "label": "musical group",
+              "qid": "Q215380"
+            },
+            {
+              "label": "dance troupe",
+              "qid": "Q2393314"
+            },
+            {
+              "label": "theatre troupe",
+              "qid": "Q2416217"
+            },
+            {
+              "label": "editorial team",
+              "qid": "Q24354647"
+            },
+            {
+              "label": "editorial board",
+              "qid": "Q2985386"
+            },
+            {
+              "label": "production team",
+              "qid": "Q7247847"
+            },
+            {
+              "label": "record production team",
+              "qid": "Q84310035"
+            }
+          ],
+          "group": "performing and production groups"
+        }
+      ]
+    },
+    {
+      "broader": null,
+      "definition": "An individual person, living or historical.",
+      "name": "Human",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "alumnus",
+              "qid": "Q508719"
+            },
+            {
+              "label": "special purpose artist",
+              "qid": "Q59755569"
+            },
+            {
+              "label": "uncredited musical artist",
+              "qid": "Q60614352"
+            }
+          ],
+          "group": "classes of people defined by a role they hold"
+        },
+        {
+          "classes": [
+            {
+              "label": "human biblical figure",
+              "qid": "Q20643955"
+            },
+            {
+              "label": "human whose existence is disputed",
+              "qid": "Q21070568"
+            },
+            {
+              "label": "person",
+              "qid": "Q215627"
+            },
+            {
+              "label": "human",
+              "qid": "Q5"
+            }
+          ],
+          "group": "humans and persons"
+        }
+      ]
+    },
+    {
+      "broader": null,
+      "definition": "A place not covered by a narrower place type, such as a region, river, or island.",
+      "name": "Location",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "at sea",
+              "qid": "Q55438959"
+            },
+            {
+              "label": "burial at sea",
+              "qid": "Q630013"
+            }
+          ],
+          "group": "places at sea"
+        },
+        {
+          "classes": [
+            {
+              "label": "location",
+              "qid": "Q115095765"
+            },
+            {
+              "label": "physical location",
+              "qid": "Q17334923"
+            },
+            {
+              "label": "geographic location",
+              "qid": "Q2221906"
+            },
+            {
+              "label": "geographic entity",
+              "qid": "Q27096213"
+            },
+            {
+              "label": "geographical feature",
+              "qid": "Q618123"
+            },
+            {
+              "label": "unknown location",
+              "qid": "Q62077203"
+            }
+          ],
+          "group": "places in general"
+        },
+        {
+          "classes": [
+            {
+              "label": "historical region",
+              "qid": "Q1620908"
+            },
+            {
+              "label": "zone",
+              "qid": "Q219858"
+            },
+            {
+              "label": "ghetto in Nazi-occupied Europe",
+              "qid": "Q2583015"
+            },
+            {
+              "label": "cultural region",
+              "qid": "Q3502482"
+            },
+            {
+              "label": "continent",
+              "qid": "Q5107"
+            },
+            {
+              "label": "region",
+              "qid": "Q82794"
+            }
+          ],
+          "group": "regions"
+        }
+      ]
+    },
+    {
+      "broader": "Creative work",
+      "definition": "A composition, song, opera, or musical release.",
+      "name": "Musical work",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "musical work/composition",
+              "qid": "Q105543609"
+            },
+            {
+              "label": "single release",
+              "qid": "Q108352496"
+            },
+            {
+              "label": "group of musical works",
+              "qid": "Q115473170"
+            },
+            {
+              "label": "musical release",
+              "qid": "Q2031291"
+            },
+            {
+              "label": "musical work",
+              "qid": "Q2188189"
+            },
+            {
+              "label": "instrumental composition",
+              "qid": "Q24887304"
+            },
+            {
+              "label": "dramatico-musical work",
+              "qid": "Q58483083"
+            }
+          ],
+          "group": "compositions and releases"
+        }
+      ]
+    },
+    {
+      "broader": null,
+      "definition": "A profession, job, position, or religious role a person holds.",
+      "name": "Occupation",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "occupation",
+              "qid": "Q12737077"
+            },
+            {
+              "label": "artisan",
+              "qid": "Q1294787"
+            },
+            {
+              "label": "job activity",
+              "qid": "Q192581"
+            },
+            {
+              "label": "profession",
+              "qid": "Q28640"
+            },
+            {
+              "label": "position",
+              "qid": "Q4164871"
+            },
+            {
+              "label": "title of authority",
+              "qid": "Q480319"
+            },
+            {
+              "label": "literary translator",
+              "qid": "Q9363889"
+            }
+          ],
+          "group": "occupations and positions"
+        },
+        {
+          "classes": [
+            {
+              "label": "Islamic religious occupation",
+              "qid": "Q108377574"
+            },
+            {
+              "label": "religious role",
+              "qid": "Q4504549"
+            },
+            {
+              "label": "Christian religious occupation",
+              "qid": "Q63188683"
+            },
+            {
+              "label": "Catholic vocation",
+              "qid": "Q63188808"
+            }
+          ],
+          "group": "religious roles"
+        }
+      ]
+    },
+    {
+      "broader": null,
+      "definition": "A formally constituted body such as a company, agency, broadcaster, or society.",
+      "name": "Organization",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "radio station",
+              "qid": "Q14350"
+            },
+            {
+              "label": "radio channel",
+              "qid": "Q1474440"
+            },
+            {
+              "label": "broadcaster",
+              "qid": "Q15265344"
+            },
+            {
+              "label": "television station",
+              "qid": "Q1616075"
+            },
+            {
+              "label": "news agency",
+              "qid": "Q192283"
+            },
+            {
+              "label": "television channel",
+              "qid": "Q2001305"
+            }
+          ],
+          "group": "broadcasters and news agencies"
+        },
+        {
+          "classes": [
+            {
+              "label": "production company",
+              "qid": "Q11396960"
+            },
+            {
+              "label": "theatre company",
+              "qid": "Q11812394"
+            },
+            {
+              "label": "manufacturer",
+              "qid": "Q13235160"
+            },
+            {
+              "label": "corporation",
+              "qid": "Q167037"
+            },
+            {
+              "label": "record label",
+              "qid": "Q18127"
+            },
+            {
+              "label": "publishing house",
+              "qid": "Q2085381"
+            },
+            {
+              "label": "publisher",
+              "qid": "Q2516866"
+            },
+            {
+              "label": "imprint",
+              "qid": "Q2608849"
+            },
+            {
+              "label": "talent agency",
+              "qid": "Q5354754"
+            },
+            {
+              "label": "theatre company",
+              "qid": "Q742421"
+            },
+            {
+              "label": "software publisher",
+              "qid": "Q7554349"
+            },
+            {
+              "label": "company",
+              "qid": "Q783794"
+            }
+          ],
+          "group": "companies and publishers"
+        },
+        {
+          "classes": [
+            {
+              "label": "government organization",
+              "qid": "Q2659904"
+            },
+            {
+              "label": "government agency",
+              "qid": "Q327333"
+            },
+            {
+              "label": "governing body",
+              "qid": "Q895526"
+            }
+          ],
+          "group": "government bodies"
+        },
+        {
+          "classes": [
+            {
+              "label": "penal military unit",
+              "qid": "Q1306981"
+            },
+            {
+              "label": "association",
+              "qid": "Q15911314"
+            },
+            {
+              "label": "scientific organization",
+              "qid": "Q16519632"
+            },
+            {
+              "label": "religious community",
+              "qid": "Q2742167"
+            },
+            {
+              "label": "cultural institution",
+              "qid": "Q3152824"
+            },
+            {
+              "label": "regional organization",
+              "qid": "Q4120211"
+            },
+            {
+              "label": "organization",
+              "qid": "Q43229"
+            },
+            {
+              "label": "defunct organization",
+              "qid": "Q55097243"
+            }
+          ],
+          "group": "organizations"
+        }
+      ]
+    },
+    {
+      "broader": null,
+      "definition": "A manufactured or published product, model, brand, machine, or piece of software.",
+      "name": "Product",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "robot",
+              "qid": "Q11012"
+            },
+            {
+              "label": "machine",
+              "qid": "Q11019"
+            },
+            {
+              "label": "optical telescope",
+              "qid": "Q35273"
+            },
+            {
+              "label": "software bundle",
+              "qid": "Q62651817"
+            },
+            {
+              "label": "software",
+              "qid": "Q7397"
+            }
+          ],
+          "group": "machines and software"
+        },
+        {
+          "classes": [
+            {
+              "label": "product model",
+              "qid": "Q10929058"
+            },
+            {
+              "label": "tangible good",
+              "qid": "Q1485500"
+            },
+            {
+              "label": "artificial object",
+              "qid": "Q16686448"
+            },
+            {
+              "label": "product",
+              "qid": "Q2424752"
+            },
+            {
+              "label": "good/s",
+              "qid": "Q28877"
+            },
+            {
+              "label": "brand",
+              "qid": "Q431289"
+            },
+            {
+              "label": "group of artificial physical objects",
+              "qid": "Q66661745"
+            },
+            {
+              "label": "model series",
+              "qid": "Q811701"
+            },
+            {
+              "label": "race car prototype",
+              "qid": "Q972011"
+            }
+          ],
+          "group": "products and brands"
+        }
+      ]
+    },
+    {
+      "broader": "Location",
+      "definition": "A city, town, village, or administrative area below the country level.",
+      "name": "Settlement or region",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "parish",
+              "qid": "Q102496"
+            },
+            {
+              "label": "political territorial entity",
+              "qid": "Q1048835"
+            },
+            {
+              "label": "federated state",
+              "qid": "Q107390"
+            },
+            {
+              "label": "Roman province",
+              "qid": "Q182547"
+            },
+            {
+              "label": "former administrative territorial entity",
+              "qid": "Q19953632"
+            },
+            {
+              "label": "judicial district",
+              "qid": "Q253836"
+            },
+            {
+              "label": "administrative territorial entity",
+              "qid": "Q56061"
+            },
+            {
+              "label": "jurisdiction",
+              "qid": "Q5982983"
+            }
+          ],
+          "group": "administrative units"
+        },
+        {
+          "classes": [
+            {
+              "label": "human settlement",
+              "qid": "Q486972"
+            }
+          ],
+          "group": "settlements"
+        }
+      ]
+    },
+    {
+      "broader": "Creative work",
+      "definition": "A book, periodical, document, or other published text, including legal instruments.",
+      "name": "Written work",
+      "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "treaty",
+              "qid": "Q131569"
+            },
+            {
+              "label": "proclamation",
+              "qid": "Q1572600"
+            },
+            {
+              "label": "agreement",
+              "qid": "Q321839"
+            },
+            {
+              "label": "legislation",
+              "qid": "Q49371"
+            }
+          ],
+          "group": "legal instruments"
+        },
+        {
+          "classes": [
+            {
+              "label": "checklist",
+              "qid": "Q106140535"
+            },
+            {
+              "label": "list",
+              "qid": "Q12139612"
+            },
+            {
+              "label": "ranked list",
+              "qid": "Q80793969"
+            },
+            {
+              "label": "word list",
+              "qid": "Q91828006"
+            }
+          ],
+          "group": "lists"
+        },
+        {
+          "classes": [
+            {
+              "label": "periodical",
+              "qid": "Q1002697"
+            },
+            {
+              "label": "newspaper",
+              "qid": "Q11032"
+            },
+            {
+              "label": "magazine",
+              "qid": "Q41298"
+            }
+          ],
+          "group": "periodicals"
+        },
+        {
+          "classes": [
+            {
+              "label": "anthology",
+              "qid": "Q105420"
+            },
+            {
+              "label": "audiobook",
+              "qid": "Q106833"
+            },
+            {
+              "label": "audiobook edition",
+              "qid": "Q122731938"
+            },
+            {
+              "label": "instructional materials",
+              "qid": "Q1348645"
+            },
+            {
+              "label": "samizdat",
+              "qid": "Q152416"
+            },
+            {
+              "label": "publication by electronic means",
+              "qid": "Q15938550"
+            },
+            {
+              "label": "edited volume",
+              "qid": "Q1711593"
+            },
+            {
+              "label": "chapter",
+              "qid": "Q1980247"
+            },
+            {
+              "label": "documentary edition",
+              "qid": "Q2122677"
+            },
+            {
+              "label": "serial",
+              "qid": "Q2217301"
+            },
+            {
+              "label": "version, edition or translation",
+              "qid": "Q3331189"
+            },
+            {
+              "label": "written work",
+              "qid": "Q47461344"
+            },
+            {
+              "label": "document",
+              "qid": "Q49848"
+            },
+            {
+              "label": "publication",
+              "qid": "Q732577"
+            },
+            {
+              "label": "manga",
+              "qid": "Q8274"
+            }
+          ],
+          "group": "texts and publications"
+        }
+      ]
+    }
+  ],
+  "excluded_constraint_classes": [
+    {
+      "classes": [
+        {
+          "label": "business register",
+          "qid": "Q1428914"
+        },
+        {
+          "label": "certification",
+          "qid": "Q374814"
+        },
+        {
+          "label": "race result",
+          "qid": "Q54933017"
+        },
+        {
+          "label": "survey methodology",
+          "qid": "Q814232"
+        },
+        {
+          "label": "license scheme",
+          "qid": "Q95107111"
+        }
+      ],
+      "reason": "Registers, certifications, licences, and survey methods.",
+      "reason_key": "administrative records and schemes"
+    },
+    {
+      "classes": [
+        {
+          "label": "individual organism",
+          "qid": "Q10855152"
+        },
+        {
+          "label": "dog",
+          "qid": "Q144"
+        },
+        {
+          "label": "cat",
+          "qid": "Q146"
+        },
+        {
+          "label": "group of living things",
+          "qid": "Q16334298"
+        },
+        {
+          "label": "taxon",
+          "qid": "Q16521"
+        },
+        {
+          "label": "Hominin fossil",
+          "qid": "Q18347143"
+        },
+        {
+          "label": "working animal",
+          "qid": "Q228534"
+        },
+        {
+          "label": "individual animal",
+          "qid": "Q26401003"
+        },
+        {
+          "label": "Orcinus orca",
+          "qid": "Q26843"
+        },
+        {
+          "label": "archaic human",
+          "qid": "Q284851"
+        },
+        {
+          "label": "crab-eating macaque",
+          "qid": "Q301676"
+        },
+        {
+          "label": "brown bear",
+          "qid": "Q36341"
+        },
+        {
+          "label": "dog type",
+          "qid": "Q38672"
+        },
+        {
+          "label": "breed",
+          "qid": "Q38829"
+        },
+        {
+          "label": "cultivar",
+          "qid": "Q4886"
+        },
+        {
+          "label": "captive animal",
+          "qid": "Q57812559"
+        },
+        {
+          "label": "captive mammal",
+          "qid": "Q57812611"
+        },
+        {
+          "label": "dressage horse",
+          "qid": "Q60198807"
+        },
+        {
+          "label": "clonal colony",
+          "qid": "Q611804"
+        },
+        {
+          "label": "domesticated animal",
+          "qid": "Q622852"
+        },
+        {
+          "label": "organism",
+          "qid": "Q7239"
+        },
+        {
+          "label": "horse",
+          "qid": "Q726"
+        },
+        {
+          "label": "animal",
+          "qid": "Q729"
+        },
+        {
+          "label": "Ursus arctos arctos",
+          "qid": "Q839769"
+        },
+        {
+          "label": "western lowland gorilla",
+          "qid": "Q876500"
+        }
+      ],
+      "reason": "Non-human organisms, breeds, and taxa; the 2Wiki relations hold between people, works, organizations, and places.",
+      "reason_key": "animals and other organisms"
+    },
+    {
+      "classes": [
+        {
+          "label": "house arrest",
+          "qid": "Q320994"
+        },
+        {
+          "label": "Holocaust train journey",
+          "qid": "Q61927259"
+        }
+      ],
+      "reason": "A condition or a journey, not a place, listed as a place of detention.",
+      "reason_key": "conditions and journeys"
+    },
+    {
+      "classes": [
+        {
+          "label": "food preparation technique",
+          "qid": "Q1039303"
+        },
+        {
+          "label": "field of study",
+          "qid": "Q1047113"
+        },
+        {
+          "label": "rule",
+          "qid": "Q1151067"
+        },
+        {
+          "label": "holiday",
+          "qid": "Q1445650"
+        },
+        {
+          "label": "concept",
+          "qid": "Q151885"
+        },
+        {
+          "label": "languoid",
+          "qid": "Q17376908"
+        },
+        {
+          "label": "theory",
+          "qid": "Q17737"
+        },
+        {
+          "label": "cuisine",
+          "qid": "Q1778821"
+        },
+        {
+          "label": "teaching method",
+          "qid": "Q1813494"
+        },
+        {
+          "label": "song form",
+          "qid": "Q1824109"
+        },
+        {
+          "label": "religious movement",
+          "qid": "Q1826286"
+        },
+        {
+          "label": "music genre",
+          "qid": "Q188451"
+        },
+        {
+          "label": "type of food or dish",
+          "qid": "Q19861951"
+        },
+        {
+          "label": "food",
+          "qid": "Q2095"
+        },
+        {
+          "label": "cultural movement",
+          "qid": "Q2198855"
+        },
+        {
+          "label": "human activity",
+          "qid": "Q24902509"
+        },
+        {
+          "label": "custom",
+          "qid": "Q251777"
+        },
+        {
+          "label": "subculture",
+          "qid": "Q264965"
+        },
+        {
+          "label": "industry",
+          "qid": "Q268592"
+        },
+        {
+          "label": "type of sport",
+          "qid": "Q31629"
+        },
+        {
+          "label": "hairstyle",
+          "qid": "Q327496"
+        },
+        {
+          "label": "dialect",
+          "qid": "Q33384"
+        },
+        {
+          "label": "sport",
+          "qid": "Q349"
+        },
+        {
+          "label": "teaching methodology",
+          "qid": "Q350453"
+        },
+        {
+          "label": "dance move",
+          "qid": "Q384748"
+        },
+        {
+          "label": "language",
+          "qid": "Q4113741"
+        },
+        {
+          "label": "genre",
+          "qid": "Q483394"
+        },
+        {
+          "label": "social movement",
+          "qid": "Q49773"
+        },
+        {
+          "label": "intangible cultural heritage",
+          "qid": "Q59544"
+        },
+        {
+          "label": "branch of pseudoscience",
+          "qid": "Q60031086"
+        },
+        {
+          "label": "music tradition",
+          "qid": "Q60733114"
+        },
+        {
+          "label": "religion or world view",
+          "qid": "Q71966963"
+        },
+        {
+          "label": "ideology",
+          "qid": "Q7257"
+        },
+        {
+          "label": "economic activity",
+          "qid": "Q8187769"
+        },
+        {
+          "label": "writing system",
+          "qid": "Q8192"
+        },
+        {
+          "label": "tradition",
+          "qid": "Q82821"
+        },
+        {
+          "label": "musical form",
+          "qid": "Q862597"
+        },
+        {
+          "label": "religion",
+          "qid": "Q9174"
+        }
+      ],
+      "reason": "Abstract cultural kinds that appear only as subjects of country of origin or founded by; 2Wiki uses those relations for works and organizations.",
+      "reason_key": "culture, language, belief, and practice"
+    },
+    {
+      "classes": [
+        {
+          "label": "fictional technology",
+          "qid": "Q1055307"
+        },
+        {
+          "label": "type of fictional character",
+          "qid": "Q112265308"
+        },
+        {
+          "label": "fictional country",
+          "qid": "Q1145276"
+        },
+        {
+          "label": "imaginary character",
+          "qid": "Q115537581"
+        },
+        {
+          "label": "fictional analog of an occupation",
+          "qid": "Q115580828"
+        },
+        {
+          "label": "fictional product model",
+          "qid": "Q116680403"
+        },
+        {
+          "label": "fictional work",
+          "qid": "Q124301146"
+        },
+        {
+          "label": "legendary figure",
+          "qid": "Q13002315"
+        },
+        {
+          "label": "animal role",
+          "qid": "Q135106502"
+        },
+        {
+          "label": "group of fictional characters",
+          "qid": "Q14514600"
+        },
+        {
+          "label": "fictional organization",
+          "qid": "Q14623646"
+        },
+        {
+          "label": "fictional entity",
+          "qid": "Q14897293"
+        },
+        {
+          "label": "fictional creative work",
+          "qid": "Q15306849"
+        },
+        {
+          "label": "abstract being",
+          "qid": "Q15619164"
+        },
+        {
+          "label": "fictional human",
+          "qid": "Q15632617"
+        },
+        {
+          "label": "fictional educational institution",
+          "qid": "Q15690029"
+        },
+        {
+          "label": "video game character",
+          "qid": "Q1569167"
+        },
+        {
+          "label": "animated character",
+          "qid": "Q15711870"
+        },
+        {
+          "label": "television character",
+          "qid": "Q15773317"
+        },
+        {
+          "label": "class of fictional entities",
+          "qid": "Q15831596"
+        },
+        {
+          "label": "role",
+          "qid": "Q1707847"
+        },
+        {
+          "label": "fictional profession",
+          "qid": "Q17305127"
+        },
+        {
+          "label": "fictional religion",
+          "qid": "Q17364638"
+        },
+        {
+          "label": "deity",
+          "qid": "Q178885"
+        },
+        {
+          "label": "fictional vessel",
+          "qid": "Q18670171"
+        },
+        {
+          "label": "hypothetical entity",
+          "qid": "Q18706315"
+        },
+        {
+          "label": "mythical object",
+          "qid": "Q20203727"
+        },
+        {
+          "label": "personification",
+          "qid": "Q207174"
+        },
+        {
+          "label": "group of mythical characters",
+          "qid": "Q20830276"
+        },
+        {
+          "label": "figure that may or may not be fictional",
+          "qid": "Q21070598"
+        },
+        {
+          "label": "fictional group of siblings",
+          "qid": "Q21191150"
+        },
+        {
+          "label": "animalisation",
+          "qid": "Q2135501"
+        },
+        {
+          "label": "fictional office, position, or title",
+          "qid": "Q21451536"
+        },
+        {
+          "label": "mythical creature",
+          "qid": "Q2239243"
+        },
+        {
+          "label": "mythological Greek character",
+          "qid": "Q22988604"
+        },
+        {
+          "label": "mythical animal",
+          "qid": "Q24334299"
+        },
+        {
+          "label": "mythical entity",
+          "qid": "Q24334685"
+        },
+        {
+          "label": "mythical humanoid race",
+          "qid": "Q24533670"
+        },
+        {
+          "label": "fictional planet",
+          "qid": "Q2775969"
+        },
+        {
+          "label": "fictional organism",
+          "qid": "Q30017383"
+        },
+        {
+          "label": "mythical location",
+          "qid": "Q3238337"
+        },
+        {
+          "label": "character",
+          "qid": "Q3241972"
+        },
+        {
+          "label": "metamorphosis",
+          "qid": "Q33753"
+        },
+        {
+          "label": "processional giant",
+          "qid": "Q340069"
+        },
+        {
+          "label": "fictional animal character",
+          "qid": "Q3542731"
+        },
+        {
+          "label": "fictional location",
+          "qid": "Q3895768"
+        },
+        {
+          "label": "mythical character",
+          "qid": "Q4271324"
+        },
+        {
+          "label": "fictional religious occupation",
+          "qid": "Q47472256"
+        },
+        {
+          "label": "humanoid",
+          "qid": "Q502931"
+        },
+        {
+          "label": "fictional company",
+          "qid": "Q5446565"
+        },
+        {
+          "label": "country in a fiction work",
+          "qid": "Q57662985"
+        },
+        {
+          "label": "fictional radio station",
+          "qid": "Q60153785"
+        },
+        {
+          "label": "fictional award",
+          "qid": "Q60466213"
+        },
+        {
+          "label": "fictional human formerly considered to be historical",
+          "qid": "Q64520857"
+        },
+        {
+          "label": "prosopographical phantom",
+          "qid": "Q64643615"
+        },
+        {
+          "label": "virtual character",
+          "qid": "Q65209857"
+        },
+        {
+          "label": "fictional musical ensemble",
+          "qid": "Q6619719"
+        },
+        {
+          "label": "fictional artificial intelligence",
+          "qid": "Q66481339"
+        },
+        {
+          "label": "fictional book",
+          "qid": "Q74574"
+        },
+        {
+          "label": "hypothetical person",
+          "qid": "Q75855169"
+        },
+        {
+          "label": "fictional potion",
+          "qid": "Q87370199"
+        },
+        {
+          "label": "character",
+          "qid": "Q95074"
+        }
+      ],
+      "reason": "Fictional, mythical, legendary, and hypothetical classes. 2Wiki answers come from Wikipedia articles about real subjects; a fictional or mythical entity is still typed by what it is described as.",
+      "reason_key": "fiction and myth"
+    },
+    {
+      "classes": [
+        {
+          "label": "level",
+          "qid": "Q1046315"
+        },
+        {
+          "label": "person or organization",
+          "qid": "Q106559804"
+        },
+        {
+          "label": "type of musical instrument",
+          "qid": "Q110295396"
+        },
+        {
+          "label": "type of educational institution",
+          "qid": "Q112872396"
+        },
+        {
+          "label": "Item",
+          "qid": "Q121033050"
+        },
+        {
+          "label": "science project",
+          "qid": "Q1298668"
+        },
+        {
+          "label": "Wikimedia list article",
+          "qid": "Q13406463"
+        },
+        {
+          "label": "plan",
+          "qid": "Q1371819"
+        },
+        {
+          "label": "coat of arms",
+          "qid": "Q14659"
+        },
+        {
+          "label": "former entity",
+          "qid": "Q15893266"
+        },
+        {
+          "label": "project",
+          "qid": "Q170584"
+        },
+        {
+          "label": "Wikimedia internal item",
+          "qid": "Q17442446"
+        },
+        {
+          "label": "optical illusion",
+          "qid": "Q174923"
+        },
+        {
+          "label": "family tree",
+          "qid": "Q189977"
+        },
+        {
+          "label": "education program",
+          "qid": "Q2023606"
+        },
+        {
+          "label": "government program",
+          "qid": "Q22222786"
+        },
+        {
+          "label": "ship type",
+          "qid": "Q2235308"
+        },
+        {
+          "label": "physical object",
+          "qid": "Q223557"
+        },
+        {
+          "label": "agent",
+          "qid": "Q24229398"
+        },
+        {
+          "label": "collection",
+          "qid": "Q2668072"
+        },
+        {
+          "label": "statement",
+          "qid": "Q2684591"
+        },
+        {
+          "label": "concrete object",
+          "qid": "Q4406616"
+        },
+        {
+          "label": "system",
+          "qid": "Q58778"
+        },
+        {
+          "label": "individual",
+          "qid": "Q795052"
+        },
+        {
+          "label": "symbol",
+          "qid": "Q80071"
+        }
+      ],
+      "reason": "Classes too general to be a type (agent, physical object, system), unions of listed types (person or organization), Wikimedia-internal classes, and classes of classes (ship type).",
+      "reason_key": "generic, structural, and metaclasses"
+    },
+    {
+      "classes": [
+        {
+          "label": "miscarried child",
+          "qid": "Q117463454"
+        },
+        {
+          "label": "bog body",
+          "qid": "Q199414"
+        },
+        {
+          "label": "stillborn child",
+          "qid": "Q2345820"
+        },
+        {
+          "label": "human fetus",
+          "qid": "Q26513"
+        },
+        {
+          "label": "human head",
+          "qid": "Q3409626"
+        }
+      ],
+      "reason": "Edge cases of the human class that do not appear as 2Wiki answers.",
+      "reason_key": "human remains and pre-birth cases"
+    },
+    {
+      "classes": [
+        {
+          "label": "family name",
+          "qid": "Q101352"
+        },
+        {
+          "label": "professional name",
+          "qid": "Q11415657"
+        },
+        {
+          "label": "character sequence",
+          "qid": "Q117009251"
+        },
+        {
+          "label": "neologism",
+          "qid": "Q130989"
+        },
+        {
+          "label": "collective pseudonym",
+          "qid": "Q16017119"
+        },
+        {
+          "label": "phrase",
+          "qid": "Q187931"
+        },
+        {
+          "label": "term",
+          "qid": "Q1969448"
+        },
+        {
+          "label": "given name",
+          "qid": "Q202444"
+        },
+        {
+          "label": "demonym",
+          "qid": "Q217438"
+        },
+        {
+          "label": "slang term",
+          "qid": "Q42298422"
+        },
+        {
+          "label": "pseudonym",
+          "qid": "Q61002"
+        }
+      ],
+      "reason": "Names and words rather than the things they name.",
+      "reason_key": "names and terms"
+    },
+    {
+      "classes": [
+        {
+          "label": "social media account",
+          "qid": "Q102345381"
+        },
+        {
+          "label": "generative artificial intelligence",
+          "qid": "Q117246174"
+        },
+        {
+          "label": "artificial intelligence model",
+          "qid": "Q117349473"
+        },
+        {
+          "label": "telematics service",
+          "qid": "Q124030631"
+        },
+        {
+          "label": "voice bank",
+          "qid": "Q134612820"
+        },
+        {
+          "label": "unspecified voicebank",
+          "qid": "Q141245227"
+        },
+        {
+          "label": "YouTube channel",
+          "qid": "Q17558136"
+        },
+        {
+          "label": "software bug",
+          "qid": "Q179550"
+        },
+        {
+          "label": "Vocaloid",
+          "qid": "Q550596"
+        },
+        {
+          "label": "humanoid robot",
+          "qid": "Q584529"
+        },
+        {
+          "label": "content delivery network",
+          "qid": "Q72588"
+        }
+      ],
+      "reason": "Accounts, channels, services, voice banks, and AI models; none is a 2Wiki answer type.",
+      "reason_key": "online accounts, services, and software artefacts"
+    },
+    {
+      "classes": [
+        {
+          "label": "internationality",
+          "qid": "Q1072012"
+        },
+        {
+          "label": "nationality",
+          "qid": "Q231002"
+        },
+        {
+          "label": "ethnic minority group",
+          "qid": "Q2531956"
+        },
+        {
+          "label": "ethnic group",
+          "qid": "Q41710"
+        },
+        {
+          "label": "citizenship",
+          "qid": "Q42138"
+        },
+        {
+          "label": "ethnolinguistic group",
+          "qid": "Q4533081"
+        },
+        {
+          "label": "nation",
+          "qid": "Q6266"
+        },
+        {
+          "label": "federally recognized Native American tribe in the United States",
+          "qid": "Q7840353"
+        }
+      ],
+      "reason": "Ethnic groups, nations, nationality, and citizenship. Country of citizenship points at a Country in 2Wiki; these classes name the status, not the place.",
+      "reason_key": "peoples and legal statuses"
+    },
+    {
+      "classes": [
+        {
+          "label": "ship",
+          "qid": "Q11446"
+        },
+        {
+          "label": "vessel",
+          "qid": "Q16391167"
+        },
+        {
+          "label": "naval vessel",
+          "qid": "Q177597"
+        },
+        {
+          "label": "orbit",
+          "qid": "Q4130"
+        },
+        {
+          "label": "astronomical object",
+          "qid": "Q6999"
+        }
+      ],
+      "reason": "Ships and astronomical places, listed as birth or detention places for rare cases.",
+      "reason_key": "vessels and off-world places"
+    }
+  ],
+  "literal_attributes": [
+    {
+      "note": "Dates are literal values, not entities (D4). 2Wiki writes them in many surface forms, e.g. '28 August 1921', 'March 20, 1995', '2003'; evidences_id replaces them with 'date_information'.",
+      "pid": "P569",
+      "relation": "date of birth",
+      "subject_types": [
+        "Human"
+      ],
+      "value": "date"
+    },
+    {
+      "note": "Dates are literal values, not entities (D4). 2Wiki writes them in many surface forms, e.g. '28 August 1921', 'March 20, 1995', '2003'; evidences_id replaces them with 'date_information'.",
+      "pid": "P570",
+      "relation": "date of death",
+      "subject_types": [
+        "Group",
+        "Human"
+      ],
+      "value": "date"
+    },
+    {
+      "note": "Dates are literal values, not entities (D4). 2Wiki writes them in many surface forms, e.g. '28 August 1921', 'March 20, 1995', '2003'; evidences_id replaces them with 'date_information'.",
+      "pid": "P571",
+      "relation": "inception",
+      "subject_types": [
+        "Organization"
+      ],
+      "value": "date"
+    },
+    {
+      "note": "Dates are literal values, not entities (D4). 2Wiki writes them in many surface forms, e.g. '28 August 1921', 'March 20, 1995', '2003'; evidences_id replaces them with 'date_information'.",
+      "pid": "P577",
+      "relation": "publication date",
+      "subject_types": [
+        "Creative work",
+        "Event",
+        "Musical work",
+        "Product",
+        "Written work"
+      ],
+      "value": "date"
+    }
+  ],
+  "name": "2Wiki treatment ontology",
+  "provenance": {
+    "constraint_classes": 462,
+    "constraint_types": {
+      "class qualifier": "P2308",
+      "subject type": "Q21503250",
+      "value type": "Q21510865"
+    },
+    "sources": {
+      "docs/notes/2wiki-relation-map.json": "73ea5680ef7d0a9261d52401f926848b0df1e7228de6aa728ab79b5d38b7819c",
+      "scripts/derive_ontology.py": "6cb766980466f8066854506071e3c570a7eab427e8b4cced183250fb4b9c6dd6",
+      "scripts/wikidata_cache.py": "235d86bf718b4e2bed4e60366ab8401e3ded5c6917be22f75fb9dcf32a8b5db7"
+    },
+    "wikidata_endpoint": "https://www.wikidata.org/w/api.php",
+    "wikidata_lookup_dates": [
+      "2026-10-06"
+    ],
+    "wikidata_requests": {
+      "constraint classes": "wbgetentities props=labels|descriptions languages=en",
+      "properties": "wbgetentities props=labels|descriptions|claims languages=en"
+    }
+  },
+  "relation_types": [
+    {
+      "definition": "award or recognition received by a person, organization or creative work",
+      "domain": [
+        "Group",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 0,
+        "mapped": 0,
+        "total": 0
+      },
+      "domain_note": "P166 has no subject type constraint. Dev subjects are people and groups, e.g. 'Steve Vai' and 'Slayer' (Grammy Award).",
+      "domain_source": "manual",
+      "pid": "P166",
+      "range": [
+        "Award",
+        "Occupation"
+      ],
+      "range_constraint_classes": {
+        "excluded": 2,
+        "mapped": 17,
+        "total": 19
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "award received",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "award received"
+    },
+    {
+      "definition": "underlying or immediate cause of death. Underlying cause (e.g. car accident, stomach cancer) preferred. Use 'manner of death' (P1196) for broadest category, e.g. natural causes, accident, homicide, suicide",
+      "domain": [
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 6,
+        "mapped": 1,
+        "total": 7
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P509",
+      "range": [
+        "Cause of death"
+      ],
+      "range_constraint_classes": {
+        "excluded": 1,
+        "mapped": 10,
+        "total": 11
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "cause of death",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "cause of death"
+    },
+    {
+      "definition": "subject has object as child. Do not use for stepchildren—use \"relative\" (P1038), qualified with \"kinship to subject\" (P1039)",
+      "domain": [
+        "Group",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 13,
+        "mapped": 6,
+        "total": 19
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P40",
+      "range": [
+        "Group",
+        "Human"
+      ],
+      "range_constraint_classes": {
+        "excluded": 15,
+        "mapped": 3,
+        "total": 18
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "child",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "child"
+    },
+    {
+      "definition": "person(s) who wrote the music [for lyricist, use \"lyrics by\" (P676)]",
+      "domain": [
+        "Creative work",
+        "Musical work"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 0,
+        "mapped": 4,
+        "total": 4
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P86",
+      "range": [
+        "Group",
+        "Human"
+      ],
+      "range_constraint_classes": {
+        "excluded": 2,
+        "mapped": 3,
+        "total": 5
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "composer",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "composer"
+    },
+    {
+      "definition": "sovereign state that this subject item is in (not to be used for human beings)",
+      "domain": [
+        "Location",
+        "Organization"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 0,
+        "mapped": 0,
+        "total": 0
+      },
+      "domain_note": "P17 has no subject type constraint. Dev subjects are places, facilities, and organizations, e.g. 'Cabixi River', 'Gillam Airport', 'Empire Kosher'.",
+      "domain_source": "manual",
+      "pid": "P17",
+      "range": [
+        "Country",
+        "Location",
+        "Settlement or region"
+      ],
+      "range_constraint_classes": {
+        "excluded": 3,
+        "mapped": 23,
+        "total": 26
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "country",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "country"
+    },
+    {
+      "definition": "the object is a country that recognizes the subject as its citizen",
+      "domain": [
+        "Group",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 4,
+        "mapped": 2,
+        "total": 6
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P27",
+      "range": [
+        "Country",
+        "Settlement or region"
+      ],
+      "range_constraint_classes": {
+        "excluded": 6,
+        "mapped": 13,
+        "total": 19
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "country of citizenship",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "country of citizenship"
+    },
+    {
+      "definition": "country of origin of this item (creative work, food, phrase, product, etc.)",
+      "domain": [
+        "Creative work",
+        "Event",
+        "Group",
+        "Product",
+        "Written work"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 50,
+        "mapped": 16,
+        "total": 66
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P495",
+      "range": [
+        "Country",
+        "Location",
+        "Organization",
+        "Settlement or region"
+      ],
+      "range_constraint_classes": {
+        "excluded": 3,
+        "mapped": 11,
+        "total": 14
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "country of origin",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "country of origin"
+    },
+    {
+      "definition": "maker of this creative work or other object (where no more specific property exists)",
+      "domain": [
+        "Creative work",
+        "Event",
+        "Facility",
+        "Product",
+        "Written work"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 12,
+        "mapped": 10,
+        "total": 22
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P170",
+      "range": [
+        "Group",
+        "Human",
+        "Occupation",
+        "Organization",
+        "Product"
+      ],
+      "range_constraint_classes": {
+        "excluded": 8,
+        "mapped": 7,
+        "total": 15
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "creator",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "creator"
+    },
+    {
+      "definition": "date on which the subject was born",
+      "domain": [
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 16,
+        "mapped": 2,
+        "total": 18
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P569",
+      "range": "literal:date",
+      "range_constraint_classes": {
+        "excluded": 0,
+        "mapped": 0,
+        "total": 0
+      },
+      "range_note": "Wikidata datatype is time (D4).",
+      "range_source": "datatype",
+      "relation": "date of birth",
+      "wikidata_datatype": "time",
+      "wikidata_label": "date of birth"
+    },
+    {
+      "definition": "date on which the subject died",
+      "domain": [
+        "Group",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 5,
+        "mapped": 4,
+        "total": 9
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P570",
+      "range": "literal:date",
+      "range_constraint_classes": {
+        "excluded": 0,
+        "mapped": 0,
+        "total": 0
+      },
+      "range_note": "Wikidata datatype is time (D4).",
+      "range_source": "datatype",
+      "relation": "date of death",
+      "wikidata_datatype": "time",
+      "wikidata_label": "date of death"
+    },
+    {
+      "definition": "director(s) of film, TV-series, stageplay, video game or similar",
+      "domain": [
+        "Broadcast program",
+        "Creative work",
+        "Film",
+        "Musical work",
+        "Written work"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 1,
+        "mapped": 21,
+        "total": 22
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P57",
+      "range": [
+        "Group",
+        "Human"
+      ],
+      "range_constraint_classes": {
+        "excluded": 0,
+        "mapped": 3,
+        "total": 3
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "director",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "director"
+    },
+    {
+      "definition": "person who supervised the doctorate or PhD thesis of the subject",
+      "domain": [
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 1,
+        "mapped": 1,
+        "total": 2
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P184",
+      "range": [
+        "Human"
+      ],
+      "range_constraint_classes": {
+        "excluded": 1,
+        "mapped": 1,
+        "total": 2
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "doctoral advisor",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "doctoral advisor"
+    },
+    {
+      "definition": "person who checks and corrects a work (such as a book, newspaper, academic journal, etc.) to comply with a rules of certain genre. Also applies to person who establishes the text of an ancient written work or manuscript.",
+      "domain": [
+        "Creative work",
+        "Group",
+        "Organization",
+        "Written work"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 1,
+        "mapped": 9,
+        "total": 10
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P98",
+      "range": [
+        "Human",
+        "Organization"
+      ],
+      "range_constraint_classes": {
+        "excluded": 0,
+        "mapped": 2,
+        "total": 2
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "editor",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "editor"
+    },
+    {
+      "definition": "educational institution attended by subject",
+      "domain": [
+        "Group",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 1,
+        "mapped": 3,
+        "total": 4
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P69",
+      "range": [
+        "Educational institution",
+        "Event",
+        "Facility",
+        "Organization"
+      ],
+      "range_constraint_classes": {
+        "excluded": 3,
+        "mapped": 13,
+        "total": 16
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "educated at",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "educated at"
+    },
+    {
+      "definition": "person or organization for which the subject works or worked",
+      "domain": [
+        "Group",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 5,
+        "mapped": 3,
+        "total": 8
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P108",
+      "range": [
+        "Broadcast program",
+        "Creative work",
+        "Educational institution",
+        "Event",
+        "Facility",
+        "Group",
+        "Human",
+        "Organization",
+        "Product",
+        "Settlement or region",
+        "Written work"
+      ],
+      "range_constraint_classes": {
+        "excluded": 7,
+        "mapped": 33,
+        "total": 40
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "employer",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "employer"
+    },
+    {
+      "definition": "male parent of the subject. For stepfather, use \"stepparent\" (P3448)",
+      "domain": [
+        "Group",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 16,
+        "mapped": 3,
+        "total": 19
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P22",
+      "range": [
+        "Human"
+      ],
+      "range_constraint_classes": {
+        "excluded": 6,
+        "mapped": 2,
+        "total": 8
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "father",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "father"
+    },
+    {
+      "definition": "founder or co-founder of this organization, religion, place or entity",
+      "domain": [
+        "Award",
+        "Creative work",
+        "Event",
+        "Facility",
+        "Group",
+        "Location",
+        "Occupation",
+        "Organization",
+        "Product",
+        "Written work"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 14,
+        "mapped": 19,
+        "total": 33
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P112",
+      "range": [
+        "Group",
+        "Human",
+        "Organization"
+      ],
+      "range_constraint_classes": {
+        "excluded": 7,
+        "mapped": 5,
+        "total": 12
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "founded by",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "founder"
+    },
+    {
+      "definition": "part of this subject; inverse property of \"part of\" (P361). See also \"has parts of the class\" (P2670).",
+      "domain": [
+        "Group"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 0,
+        "mapped": 0,
+        "total": 0
+      },
+      "domain_note": "P527 has no type constraints. All 17 dev triples link a band to a member, e.g. 'XYZ' has part 'Chris Squire'.",
+      "domain_source": "manual",
+      "pid": "P527",
+      "range": [
+        "Human"
+      ],
+      "range_constraint_classes": {
+        "excluded": 0,
+        "mapped": 0,
+        "total": 0
+      },
+      "range_note": "As for the domain: every dev object is a band member.",
+      "range_source": "manual",
+      "relation": "has part",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "has part(s)"
+    },
+    {
+      "definition": "time when an entity begins to exist; for date of official opening use P1619",
+      "domain": [
+        "Organization"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 0,
+        "mapped": 0,
+        "total": 0
+      },
+      "domain_note": "P571 has no type constraints. Dev subjects are organizations and schools, e.g. 'Sigma Xi', 'Korn Ferry', 'Whitehorse Manor Junior School'.",
+      "domain_source": "manual",
+      "pid": "P571",
+      "range": "literal:date",
+      "range_constraint_classes": {
+        "excluded": 0,
+        "mapped": 0,
+        "total": 0
+      },
+      "range_note": "Wikidata datatype is time (D4).",
+      "range_source": "datatype",
+      "relation": "inception",
+      "wikidata_datatype": "time",
+      "wikidata_label": "inception"
+    },
+    {
+      "definition": "(main or final) manufacturer or producer of this product",
+      "domain": [
+        "Event",
+        "Musical work",
+        "Product"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 6,
+        "mapped": 7,
+        "total": 13
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P176",
+      "range": [
+        "Facility",
+        "Human",
+        "Occupation",
+        "Organization"
+      ],
+      "range_constraint_classes": {
+        "excluded": 5,
+        "mapped": 7,
+        "total": 12
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "manufacturer",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "manufacturer"
+    },
+    {
+      "definition": "female parent of the subject. For stepmother, use \"stepparent\" (P3448)",
+      "domain": [
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 19,
+        "mapped": 2,
+        "total": 21
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P25",
+      "range": [
+        "Human"
+      ],
+      "range_constraint_classes": {
+        "excluded": 10,
+        "mapped": 2,
+        "total": 12
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "mother",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "mother"
+    },
+    {
+      "definition": "occupation of a person. See also \"field of work\" (Property:P101), \"position held\" (Property:P39). Not for groups of people. There, use \"field of work\" (Property:P101), \"industry\" (Property:P452), \"members have occupation\" (Property:P3989).",
+      "domain": [
+        "Group",
+        "Human",
+        "Product"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 7,
+        "mapped": 4,
+        "total": 11
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P106",
+      "range": [
+        "Occupation"
+      ],
+      "range_constraint_classes": {
+        "excluded": 5,
+        "mapped": 10,
+        "total": 15
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "occupation",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "occupation"
+    },
+    {
+      "definition": "actor, musician, band or other performer associated with this role or musical work",
+      "domain": [
+        "Creative work",
+        "Event",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 6,
+        "mapped": 6,
+        "total": 12
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P175",
+      "range": [
+        "Group",
+        "Human",
+        "Organization"
+      ],
+      "range_constraint_classes": {
+        "excluded": 11,
+        "mapped": 14,
+        "total": 25
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "performer",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "performer"
+    },
+    {
+      "definition": "most specific known birth location of a person, animal or fictional character",
+      "domain": [
+        "Group",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 6,
+        "mapped": 5,
+        "total": 11
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P19",
+      "range": [
+        "Facility",
+        "Location"
+      ],
+      "range_constraint_classes": {
+        "excluded": 7,
+        "mapped": 5,
+        "total": 12
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "place of birth",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "place of birth"
+    },
+    {
+      "definition": "location of grave, resting place, place of ash-scattering, etc. (e.g., town/city or cemetery) for a person or animal. There may be several places: e.g., re-burials, parts of body buried separately.",
+      "domain": [
+        "Group",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 9,
+        "mapped": 2,
+        "total": 11
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P119",
+      "range": [
+        "Country",
+        "Facility",
+        "Location"
+      ],
+      "range_constraint_classes": {
+        "excluded": 1,
+        "mapped": 11,
+        "total": 12
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "place of burial",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "place of burial"
+    },
+    {
+      "definition": "most specific known (e.g. city instead of country, or hospital instead of city) death location of a person, animal or fictional character",
+      "domain": [
+        "Group",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 8,
+        "mapped": 3,
+        "total": 11
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P20",
+      "range": [
+        "Educational institution",
+        "Event",
+        "Facility",
+        "Location"
+      ],
+      "range_constraint_classes": {
+        "excluded": 5,
+        "mapped": 13,
+        "total": 18
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "place of death",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "place of death"
+    },
+    {
+      "definition": "place where this person is or was detained",
+      "domain": [
+        "Event",
+        "Group",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 5,
+        "mapped": 3,
+        "total": 8
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P2632",
+      "range": [
+        "Facility",
+        "Location",
+        "Organization",
+        "Settlement or region"
+      ],
+      "range_constraint_classes": {
+        "excluded": 4,
+        "mapped": 12,
+        "total": 16
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "place of detention",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "place of detention"
+    },
+    {
+      "definition": "main role in presenting a radio or television program or a performing arts show",
+      "domain": [
+        "Creative work",
+        "Event",
+        "Organization"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 2,
+        "mapped": 4,
+        "total": 6
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P371",
+      "range": [
+        "Human"
+      ],
+      "range_constraint_classes": {
+        "excluded": 4,
+        "mapped": 1,
+        "total": 5
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "presenter",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "presenter"
+    },
+    {
+      "definition": "person(s) who produced the film, musical work, theatrical production, etc. (for film, this does not include executive producers, associate producers, etc.) [for production company, use P272, video games - use P178]",
+      "domain": [
+        "Creative work"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 0,
+        "mapped": 2,
+        "total": 2
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P162",
+      "range": [
+        "Group",
+        "Human",
+        "Organization"
+      ],
+      "range_constraint_classes": {
+        "excluded": 2,
+        "mapped": 7,
+        "total": 9
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "producer",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "producer"
+    },
+    {
+      "definition": "date or point in time when a work or product was first published or released",
+      "domain": [
+        "Creative work",
+        "Event",
+        "Musical work",
+        "Product",
+        "Written work"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 12,
+        "mapped": 9,
+        "total": 21
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P577",
+      "range": "literal:date",
+      "range_constraint_classes": {
+        "excluded": 0,
+        "mapped": 0,
+        "total": 0
+      },
+      "range_note": "Wikidata datatype is time (D4).",
+      "range_source": "datatype",
+      "relation": "publication date",
+      "wikidata_datatype": "time",
+      "wikidata_label": "publication date"
+    },
+    {
+      "definition": "organization or person responsible for publishing a work, such as a book, periodical, printed music, podcast, game or software",
+      "domain": [
+        "Creative work",
+        "Musical work",
+        "Product",
+        "Written work"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 3,
+        "mapped": 24,
+        "total": 27
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P123",
+      "range": [
+        "Award",
+        "Creative work",
+        "Educational institution",
+        "Organization",
+        "Product",
+        "Settlement or region",
+        "Written work"
+      ],
+      "range_constraint_classes": {
+        "excluded": 7,
+        "mapped": 16,
+        "total": 23
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "publisher",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "publisher"
+    },
+    {
+      "definition": "the subject and the object have at least one common parent (brother, sister, etc. including half-siblings); use \"relative\" (P1038) for siblings-in-law (brother-in-law, sister-in-law, etc.) and step-siblings (step-brothers, step-sisters, etc.)",
+      "domain": [
+        "Group",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 13,
+        "mapped": 3,
+        "total": 16
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P3373",
+      "range": [
+        "Group",
+        "Human"
+      ],
+      "range_constraint_classes": {
+        "excluded": 19,
+        "mapped": 2,
+        "total": 21
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "sibling",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "sibling"
+    },
+    {
+      "definition": "the subject has the object as their spouse (husband, wife, partner, etc.). Use \"unmarried partner\" (P451) for non-married companions",
+      "domain": [
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 4,
+        "mapped": 3,
+        "total": 7
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P26",
+      "range": [
+        "Human"
+      ],
+      "range_constraint_classes": {
+        "excluded": 0,
+        "mapped": 0,
+        "total": 0
+      },
+      "range_note": "P26 has no value type constraint. Dev objects are people, e.g. 'Stephen King'.",
+      "range_source": "manual",
+      "relation": "spouse",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "spouse"
+    },
+    {
+      "definition": "person who has taught this person",
+      "domain": [
+        "Group",
+        "Human"
+      ],
+      "domain_constraint_classes": {
+        "excluded": 1,
+        "mapped": 2,
+        "total": 3
+      },
+      "domain_note": null,
+      "domain_source": "constraint",
+      "pid": "P1066",
+      "range": [
+        "Group",
+        "Human"
+      ],
+      "range_constraint_classes": {
+        "excluded": 1,
+        "mapped": 2,
+        "total": 3
+      },
+      "range_note": null,
+      "range_source": "constraint",
+      "relation": "student of",
+      "wikidata_datatype": "wikibase-item",
+      "wikidata_label": "student of"
+    }
+  ]
+}

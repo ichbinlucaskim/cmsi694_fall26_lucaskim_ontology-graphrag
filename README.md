@@ -83,3 +83,20 @@ Tests:
 ```
 python -m unittest discover -s tests
 ```
+
+## Ontology
+
+```
+python scripts/derive_ontology.py
+python scripts/derive_ontology.py --offline
+python scripts/derive_ontology.py --check
+```
+
+This derives the treatment ontology, `ontology/ontology.json` (18 entity
+types, 34 relation types), from the Wikidata property constraints of the
+2Wiki relations. It also writes `ontology/derivation_report.json`, which
+holds the validation and relation-coverage results. Wikidata responses are cached in
+`data/raw/wikidata/` (git-ignored). `--offline` writes both files from the
+cache only. `--check` regenerates them from the cache, also without network
+calls, and fails if they differ. The decisions and
+collapsing rules are in `docs/notes/ontology-decisions.md`.

@@ -1,0 +1,1025 @@
+{
+  "coverage": {
+    "dev": {
+      "coverage": 1.0,
+      "covered_triples": 31120,
+      "distinct_relations": 34,
+      "questions": 12576,
+      "relation_counts": {
+        "award received": 125,
+        "cause of death": 78,
+        "child": 107,
+        "composer": 262,
+        "country": 657,
+        "country of citizenship": 2146,
+        "country of origin": 754,
+        "creator": 18,
+        "date of birth": 4976,
+        "date of death": 2551,
+        "director": 7592,
+        "doctoral advisor": 1,
+        "editor": 12,
+        "educated at": 249,
+        "employer": 148,
+        "father": 3203,
+        "founded by": 78,
+        "has part": 17,
+        "inception": 143,
+        "manufacturer": 3,
+        "mother": 1156,
+        "occupation": 19,
+        "performer": 426,
+        "place of birth": 1648,
+        "place of burial": 156,
+        "place of death": 1015,
+        "place of detention": 5,
+        "presenter": 6,
+        "producer": 42,
+        "publication date": 2184,
+        "publisher": 34,
+        "sibling": 106,
+        "spouse": 1198,
+        "student of": 5
+      },
+      "triples": 31120,
+      "uncovered_relations": {}
+    },
+    "study50": {
+      "coverage": 1.0,
+      "covered_triples": 126,
+      "distinct_relations": 18,
+      "questions": 50,
+      "relation_counts": {
+        "child": 1,
+        "country": 2,
+        "country of citizenship": 1,
+        "country of origin": 4,
+        "date of birth": 20,
+        "date of death": 16,
+        "director": 28,
+        "editor": 1,
+        "educated at": 1,
+        "father": 16,
+        "mother": 8,
+        "performer": 1,
+        "place of birth": 5,
+        "place of burial": 1,
+        "place of death": 2,
+        "publication date": 10,
+        "sibling": 1,
+        "spouse": 8
+      },
+      "triples": 126,
+      "uncovered_relations": {}
+    }
+  },
+  "provenance": {
+    "sources": {
+      "data/raw/2wiki/dev.json": "79f77ae104088ea8e25b1a65dbece768d45771194663bc5660ec9a98070dadf5",
+      "data/subsets/manifest.json": "094198d427cd05be619c023f15dc1be80d7d3b4df98891967aa356181797a30d"
+    },
+    "wikidata_endpoint": "https://www.wikidata.org/w/api.php",
+    "wikidata_lookup_dates": [
+      "2026-10-06"
+    ],
+    "wikidata_requests": "wbgetclaims for P31 (entities) and P279 (their classes)"
+  },
+  "validation": {
+    "cap": 200,
+    "coverage": 1.0,
+    "covered": 85,
+    "depth_counts": {
+      "0": 74,
+      "1": 10,
+      "2": 1
+    },
+    "entities": [
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q215380"
+        ],
+        "qid": "Q1179312",
+        "types": [
+          "Group"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q11845136",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q122553",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q1260675",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q128399",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q129234",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q13017966",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q1305838",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q11424"
+        ],
+        "qid": "Q1414527",
+        "types": [
+          "Film"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q215380"
+        ],
+        "qid": "Q1473361",
+        "types": [
+          "Group"
+        ]
+      },
+      {
+        "p279_depth": 1,
+        "p31": [
+          "Q35657"
+        ],
+        "qid": "Q1509",
+        "types": [
+          "Settlement or region"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q158025",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q16146131",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q161872",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q16199172",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q16200502",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q16239985",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q16268718",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 1,
+        "p31": [
+          "Q4022"
+        ],
+        "qid": "Q1633768",
+        "types": [
+          "Location"
+        ]
+      },
+      {
+        "p279_depth": 1,
+        "p31": [
+          "Q1066984",
+          "Q14762300",
+          "Q1549591",
+          "Q18810091",
+          "Q21507383",
+          "Q515",
+          "Q51929311"
+        ],
+        "qid": "Q172",
+        "types": [
+          "Settlement or region"
+        ]
+      },
+      {
+        "p279_depth": 1,
+        "p31": [
+          "Q108178728",
+          "Q1549591",
+          "Q2264924",
+          "Q5119",
+          "Q515",
+          "Q51929311"
+        ],
+        "qid": "Q1764",
+        "types": [
+          "Settlement or region"
+        ]
+      },
+      {
+        "p279_depth": 1,
+        "p31": [
+          "Q4022"
+        ],
+        "qid": "Q1807191",
+        "types": [
+          "Location"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q181985",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q3624078",
+          "Q4209223",
+          "Q619610",
+          "Q6256",
+          "Q63791824"
+        ],
+        "qid": "Q183",
+        "types": [
+          "Country"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q105543609"
+        ],
+        "qid": "Q18635677",
+        "types": [
+          "Musical work"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q11424"
+        ],
+        "qid": "Q19007172",
+        "types": [
+          "Film"
+        ]
+      },
+      {
+        "p279_depth": 1,
+        "p31": [
+          "Q13025342",
+          "Q15141632",
+          "Q515",
+          "Q7635776"
+        ],
+        "qid": "Q203370",
+        "types": [
+          "Settlement or region"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q2086454",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q2195469",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q2266324",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q2318426",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q2348420",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q234890",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q2468264",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q255809",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q263486",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q2832816",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q284188",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q1489259",
+          "Q1520223",
+          "Q3624078",
+          "Q5035794",
+          "Q6256",
+          "Q99541706"
+        ],
+        "qid": "Q30",
+        "types": [
+          "Country"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q313055",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q179164",
+          "Q3624078",
+          "Q41614",
+          "Q6256",
+          "Q63791824"
+        ],
+        "qid": "Q34",
+        "types": [
+          "Country"
+        ]
+      },
+      {
+        "p279_depth": 2,
+        "p31": [
+          "Q13415368"
+        ],
+        "qid": "Q341915",
+        "types": [
+          "Settlement or region"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q11424"
+        ],
+        "qid": "Q3507442",
+        "types": [
+          "Film"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q3568548",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q3610281",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q3616790",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q3666746",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q3750569",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q3894151",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q3990690",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q123480",
+          "Q127693126",
+          "Q3624078",
+          "Q6256",
+          "Q7270"
+        ],
+        "qid": "Q403",
+        "types": [
+          "Country"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q42455",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q11424"
+        ],
+        "qid": "Q4329399",
+        "types": [
+          "Film"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q11424"
+        ],
+        "qid": "Q444525",
+        "types": [
+          "Film"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q445593",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q11424"
+        ],
+        "qid": "Q451630",
+        "types": [
+          "Film"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q46408",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q469603",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q50824425",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q51552",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q532329",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q5363130",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q577160",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 1,
+        "p31": [
+          "Q1093829",
+          "Q15063611",
+          "Q1549591",
+          "Q174844",
+          "Q200250",
+          "Q208511",
+          "Q2264924",
+          "Q515",
+          "Q51929311"
+        ],
+        "qid": "Q60",
+        "types": [
+          "Settlement or region"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q6027272",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q60511",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q60709",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q6108639",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q61207",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q6245623",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q639329",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 1,
+        "p31": [
+          "Q1093829",
+          "Q131338872",
+          "Q13218391",
+          "Q200250",
+          "Q515"
+        ],
+        "qid": "Q65",
+        "types": [
+          "Settlement or region"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q7147046",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q7155048",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q728777",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q7324457",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q7608108",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q7675438",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q7878966",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 1,
+        "p31": [
+          "Q3918"
+        ],
+        "qid": "Q7896101",
+        "types": [
+          "Educational institution",
+          "Organization"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q41298"
+        ],
+        "qid": "Q822478",
+        "types": [
+          "Written work"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q848615",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 1,
+        "p31": [
+          "Q1066984",
+          "Q108178728",
+          "Q11418818",
+          "Q1187811",
+          "Q1200957",
+          "Q134445478",
+          "Q1422929",
+          "Q1549591",
+          "Q174844",
+          "Q200250",
+          "Q208511",
+          "Q2240381",
+          "Q22923920",
+          "Q484170",
+          "Q51929311"
+        ],
+        "qid": "Q90",
+        "types": [
+          "Location"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q919475",
+        "types": [
+          "Human"
+        ]
+      },
+      {
+        "p279_depth": 0,
+        "p31": [
+          "Q5"
+        ],
+        "qid": "Q955409",
+        "types": [
+          "Human"
+        ]
+      }
+    ],
+    "entities_by_type": {
+      "Country": 4,
+      "Educational institution": 1,
+      "Film": 6,
+      "Group": 2,
+      "Human": 60,
+      "Location": 3,
+      "Musical work": 1,
+      "Organization": 1,
+      "Settlement or region": 7,
+      "Written work": 1
+    },
+    "entity_qids": 85,
+    "looked_up": 85,
+    "max_p279_depth": 5,
+    "p279_lookups": 34,
+    "subset": "study50",
+    "uncovered": []
+  }
+}
