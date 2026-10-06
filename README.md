@@ -100,3 +100,40 @@ holds the validation and relation-coverage results. Wikidata responses are cache
 cache only. `--check` regenerates them from the cache, also without network
 calls, and fails if they differ. The decisions and
 collapsing rules are in `docs/notes/ontology-decisions.md`.
+
+## Ontology condition
+
+The `ontology` condition is the baseline with the ontology rendered into the
+JSON-mode extraction prompts: entity types through
+`addon_params["entity_types_guidance"]`, and relation types through overrides
+of `entity_extraction_json_system_prompt` and
+`entity_extraction_json_user_prompt`. Every other setting, including the
+answer template, comes from the shared `configs/run_config.json`.
+`configs/conditions/ontology.json` is generated; do not edit it by hand.
+
+```
+python scripts/ontology_prompt.py --write-condition    # after any change to ontology/ontology.json
+python scripts/ontology_prompt.py --check
+python scripts/render_extraction_prompts.py            # prompts for one chunk, and their diff
+```
+
+`render_extraction_prompts.py` saves both conditions' prompts for one smoke10
+chunk in `docs/results/prompts/`, and their unified diff in
+`docs/results/prompt-diff-baseline-vs-ontology.diff`.
+
+Index and query, as for the baseline:
+
+```
+python scripts/run_condition.py index --condition ontology --subset mini
+caffeinate -i python scripts/run_condition.py index --condition ontology --subset smoke10 \
+  2>&1 | tee -a runs/ontology/smoke10-index.log
+python scripts/run_condition.py query --condition ontology --subset smoke10
+```
+
+Relation conformance is the share of graph relations whose keywords are exactly
+one ontology relation label after normalization (lowercase, underscores to
+spaces, collapsed whitespace). The rule is documented in the script.
+
+```
+python scripts/relation_conformance.py --condition ontology --subset mini
+```

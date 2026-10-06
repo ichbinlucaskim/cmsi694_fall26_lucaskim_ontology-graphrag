@@ -14,9 +14,11 @@ merges repeated edges by joining their keywords with commas
 (lightrag/operate.py:3012-3018), so an edge carrying two different labels, e.g.
 "father,mother", does not conform; the report counts such edges separately.
 
-Entity types are reported alongside: LightRAG stores them lowercased, so a node
-type is "in the ontology" when it equals an ontology type name under the same
-normalization. SCRUM-21 extends this measurement.
+Entity types are reported alongside. LightRAG stores a type lowercased with
+its spaces removed (lightrag/operate.py:698), e.g. "Settlement or region"
+becomes "settlementorregion", so a node type is "in the ontology" when it
+equals an ontology type name lowercased with whitespace and underscores
+removed. SCRUM-21 extends this measurement.
 
 Standard library only.
 """
@@ -40,6 +42,11 @@ def normalize(text: str | None) -> str:
     return re.sub(r"\s+", " ", (text or "").lower().replace("_", " ")).strip()
 
 
+def type_key(text: str | None) -> str:
+    """An entity type as LightRAG stores it: lowercase, no spaces (or underscores)."""
+    return re.sub(r"[\s_]+", "", (text or "").lower())
+
+
 def read_graph(path: Path) -> tuple[list[dict], list[dict]]:
     """Nodes and edges of a GraphML file as attribute dicts."""
     root = ET.parse(path).getroot()
@@ -54,11 +61,11 @@ def read_graph(path: Path) -> tuple[list[dict], list[dict]]:
 
 def measure(nodes: list[dict], edges: list[dict], ontology: dict) -> dict:
     labels = {normalize(r["relation"]) for r in ontology["relation_types"]}
-    types = {normalize(t["name"]) for t in ontology["entity_types"]}
+    types = {type_key(t["name"]) for t in ontology["entity_types"]}
     keywords = [normalize(e.get("keywords")) for e in edges]
     conforming = [k for k in keywords if k in labels]
     nonconforming = Counter(k for k in keywords if k not in labels)
-    node_types = Counter(normalize(n.get("entity_type")) for n in nodes)
+    node_types = Counter(type_key(n.get("entity_type")) for n in nodes)
     outside = {t: n for t, n in node_types.items() if t not in types}
     return {
         "relations": len(edges),
