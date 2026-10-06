@@ -201,7 +201,7 @@
         ],
         "qid": "Q1509",
         "types": [
-          "Administrative region"
+          "Settlement or region"
         ]
       },
       {
@@ -297,7 +297,7 @@
         ],
         "qid": "Q172",
         "types": [
-          "Administrative region"
+          "Settlement or region"
         ]
       },
       {
@@ -312,7 +312,7 @@
         ],
         "qid": "Q1764",
         "types": [
-          "Administrative region"
+          "Settlement or region"
         ]
       },
       {
@@ -379,7 +379,7 @@
         ],
         "qid": "Q203370",
         "types": [
-          "Administrative region"
+          "Settlement or region"
         ]
       },
       {
@@ -538,7 +538,7 @@
         ],
         "qid": "Q341915",
         "types": [
-          "Administrative region"
+          "Settlement or region"
         ]
       },
       {
@@ -770,7 +770,7 @@
         ],
         "qid": "Q60",
         "types": [
-          "Administrative region"
+          "Settlement or region"
         ]
       },
       {
@@ -854,7 +854,7 @@
         ],
         "qid": "Q65",
         "types": [
-          "Administrative region"
+          "Settlement or region"
         ]
       },
       {
@@ -1004,7 +1004,6 @@
       }
     ],
     "entities_by_type": {
-      "Administrative region": 7,
       "Country": 4,
       "Educational institution": 1,
       "Film": 6,
@@ -1013,6 +1012,7 @@
       "Location": 3,
       "Musical work": 1,
       "Organization": 1,
+      "Settlement or region": 7,
       "Written work": 1
     },
     "entity_qids": 85,

@@ -1,6 +1,7 @@
 """Derive the treatment ontology from Wikidata property constraints (SCRUM-17).
 
     python scripts/derive_ontology.py           # fetch what is not cached, write outputs
+    python scripts/derive_ontology.py --offline # write outputs from the cache only
     python scripts/derive_ontology.py --check   # regenerate from the cache only, compare
 
 Relations: the 34 relations of docs/notes/2wiki-relation-map.json, each with
@@ -217,20 +218,17 @@ ENTITY_TYPES = [
         },
     },
     {
-        "name": "Administrative region",
-        "definition": "A subdivision of a country with a government or jurisdiction, such as a province, state, or parish.",
+        # D5: one type for settlements and administrative areas; Wikidata files
+        # many cities under administrative territorial entity.
+        "name": "Settlement or region",
+        "definition": "A city, town, village, or administrative area below the country level.",
         "broader": "Location",
         "classes": {
             "administrative units": [
                 "Q56061", "Q19953632", "Q107390", "Q182547", "Q1048835", "Q253836", "Q5982983", "Q102496",
             ],
+            "settlements": ["Q486972"],
         },
-    },
-    {
-        "name": "Settlement",
-        "definition": "A city, town, village, or other place where people live.",
-        "broader": "Location",
-        "classes": {"settlements": ["Q486972"]},
     },
     {
         "name": "Facility",
@@ -672,11 +670,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--check", action="store_true",
                         help="regenerate from the cache only and compare with the committed files")
+    parser.add_argument("--offline", action="store_true",
+                        help="write the outputs from the cache only; a cache miss is an error")
     args = parser.parse_args()
     try:
-        ontology, report = derive(offline=args.check)
+        ontology, report = derive(offline=args.check or args.offline)
     except wc.CacheMiss as e:
-        raise SystemExit(f"Cache miss in --check mode: {e}")
+        raise SystemExit(f"Cache miss in offline mode: {e}")
     outputs = {ONTOLOGY_PATH: dump(ontology), REPORT_PATH: dump(report)}
     if args.check:
         stale = [p for p, text in outputs.items()

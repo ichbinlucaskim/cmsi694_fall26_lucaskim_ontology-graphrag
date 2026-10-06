@@ -54,6 +54,21 @@ stands for a date. The decision follows the Wikidata datatype (`time`) of all
 four properties. 2Wiki writes dates in many surface forms, and `evidences_id`
 replaces them with `date_information`.
 
+**D5. Settlements and administrative areas are one type.** Settlement or
+region covers cities, towns, villages, and administrative areas below the
+country level. An earlier version of this ontology had separate Settlement
+and Administrative region types. They were merged for two reasons:
+
+- The extraction model sees only type names and definitions, not Wikidata
+  classes, so it cannot use Wikidata's distinctions between them.
+- Wikidata files many cities under administrative territorial entity. In
+  validation, Toronto, Reykjavík, New York, Los Angeles, and Ayutthaya all
+  reached Administrative region, and none reached Settlement.
+
+With two types, the same city could be typed both ways in different passages
+and become two graph nodes. The merged type keeps every class of both old
+types: the 8 administrative-unit classes and human settlement (Q486972).
+
 ## How the entity types were derived
 
 1. For each of the 34 properties, the script reads its property constraint
@@ -73,10 +88,10 @@ replaces them with `date_information`.
    from dev examples and marked `"source": "manual"` with a note in the
    ontology file (see below).
 
-The result has **19 entity types**, inside the required 10 to 30.
+The result has **18 entity types**, inside the required 10 to 30.
 
-Some types have a `broader` type: Country, Administrative region, Settlement,
-and Facility are narrower than Location; Film, Broadcast program, Musical
+Some types have a `broader` type: Country, Settlement or region, and Facility
+are narrower than Location; Film, Broadcast program, Musical
 work, and Written work are narrower than Creative work; and Educational
 institution is narrower than Organization. A domain or range that lists a type
 admits its narrower types. This keeps the type list short while letting a
@@ -91,7 +106,6 @@ one entity is counted under two types).
 
 | Entity type | Broader | Definition | Constraint classes | Validation entities |
 |---|---|---|---|---|
-| Administrative region | Location | A subdivision of a country with a government or jurisdiction, such as a province, state, or parish. | 8 | 7 |
 | Award |  | A prize, honour, decoration, or award category given to a person, group, or work. | 16 | 0 |
 | Broadcast program | Creative work | A television, radio, or podcast program or series, or one of its seasons. | 6 | 0 |
 | Cause of death |  | A disease, injury, method, or event named as the cause of a death. | 10 | 0 |
@@ -108,17 +122,13 @@ one entity is counted under two types).
 | Occupation |  | A profession, job, position, or religious role a person holds. | 11 | 0 |
 | Organization |  | A formally constituted body such as a company, agency, broadcaster, or society. | 29 | 1 |
 | Product |  | A manufactured or published product, model, brand, machine, or piece of software. | 14 | 0 |
-| Settlement | Location | A city, town, village, or other place where people live. | 1 | 0 |
+| Settlement or region | Location | A city, town, village, or administrative area below the country level. | 9 | 7 |
 | Written work | Creative work | A book, periodical, document, or other published text, including legal instruments. | 26 | 1 |
 
 ### Collapsing rules
 
 Each type lists the constraint classes it collapses, grouped by the reason
 they belong together. Class labels are the English Wikidata labels.
-
-**Administrative region** (narrower than Location)
-
-- administrative units: parish (Q102496), political territorial entity (Q1048835), federated state (Q107390), Roman province (Q182547), former administrative territorial entity (Q19953632), judicial district (Q253836), administrative territorial entity (Q56061), jurisdiction (Q5982983)
 
 **Award**
 
@@ -202,8 +212,9 @@ they belong together. Class labels are the English Wikidata labels.
 - machines and software: robot (Q11012), machine (Q11019), optical telescope (Q35273), software bundle (Q62651817), software (Q7397)
 - products and brands: product model (Q10929058), tangible good (Q1485500), artificial object (Q16686448), product (Q2424752), good/s (Q28877), brand (Q431289), group of artificial physical objects (Q66661745), model series (Q811701), race car prototype (Q972011)
 
-**Settlement** (narrower than Location)
+**Settlement or region** (narrower than Location)
 
+- administrative units: parish (Q102496), political territorial entity (Q1048835), federated state (Q107390), Roman province (Q182547), former administrative territorial entity (Q19953632), judicial district (Q253836), administrative territorial entity (Q56061), jurisdiction (Q5982983)
 - settlements: human settlement (Q486972)
 
 **Written work** (narrower than Creative work)
@@ -280,9 +291,9 @@ television program or a university as an employer.
 | cause of death | P509 cause of death | Human | Cause of death | constraint |
 | child | P40 child | Group, Human | Group, Human | constraint |
 | composer | P86 composer | Creative work, Musical work | Group, Human | constraint |
-| country | P17 country | Location, Organization | Administrative region, Country, Location | manual / constraint |
-| country of citizenship | P27 country of citizenship | Group, Human | Administrative region, Country | constraint |
-| country of origin | P495 country of origin | Creative work, Event, Group, Product, Written work | Administrative region, Country, Location, Organization | constraint |
+| country | P17 country | Location, Organization | Country, Location, Settlement or region | manual / constraint |
+| country of citizenship | P27 country of citizenship | Group, Human | Country, Settlement or region | constraint |
+| country of origin | P495 country of origin | Creative work, Event, Group, Product, Written work | Country, Location, Organization, Settlement or region | constraint |
 | creator | P170 creator | Creative work, Event, Facility, Product, Written work | Group, Human, Occupation, Organization, Product | constraint |
 | date of birth | P569 date of birth | Human | literal:date | constraint / datatype |
 | date of death | P570 date of death | Group, Human | literal:date | constraint / datatype |
@@ -290,7 +301,7 @@ television program or a university as an employer.
 | doctoral advisor | P184 doctoral advisor | Human | Human | constraint |
 | editor | P98 editor | Creative work, Group, Organization, Written work | Human, Organization | constraint |
 | educated at | P69 educated at | Group, Human | Educational institution, Event, Facility, Organization | constraint |
-| employer | P108 employer | Group, Human | Administrative region, Broadcast program, Creative work, Educational institution, Event, Facility, Group, Human, Organization, Product, Written work | constraint |
+| employer | P108 employer | Group, Human | Broadcast program, Creative work, Educational institution, Event, Facility, Group, Human, Organization, Product, Settlement or region, Written work | constraint |
 | father | P22 father | Group, Human | Human | constraint |
 | founded by | P112 founder | Award, Creative work, Event, Facility, Group, Location, Occupation, Organization, Product, Written work | Group, Human, Organization | constraint |
 | has part | P527 has part(s) | Group | Human | manual |
@@ -302,11 +313,11 @@ television program or a university as an employer.
 | place of birth | P19 place of birth | Group, Human | Facility, Location | constraint |
 | place of burial | P119 place of burial | Group, Human | Country, Facility, Location | constraint |
 | place of death | P20 place of death | Group, Human | Educational institution, Event, Facility, Location | constraint |
-| place of detention | P2632 place of detention | Event, Group, Human | Facility, Location, Organization, Settlement | constraint |
+| place of detention | P2632 place of detention | Event, Group, Human | Facility, Location, Organization, Settlement or region | constraint |
 | presenter | P371 presenter | Creative work, Event, Organization | Human | constraint |
 | producer | P162 producer | Creative work | Group, Human, Organization | constraint |
 | publication date | P577 publication date | Creative work, Event, Musical work, Product, Written work | literal:date | constraint / datatype |
-| publisher | P123 publisher | Creative work, Musical work, Product, Written work | Administrative region, Award, Creative work, Educational institution, Organization, Product, Written work | constraint |
+| publisher | P123 publisher | Creative work, Musical work, Product, Written work | Award, Creative work, Educational institution, Organization, Product, Settlement or region, Written work | constraint |
 | sibling | P3373 sibling | Group, Human | Group, Human | constraint |
 | spouse | P26 spouse | Human | Human | constraint / manual |
 | student of | P1066 student of | Group, Human | Group, Human | constraint |
@@ -340,7 +351,7 @@ above the 80 percent threshold, so the type set was not changed.
 
 - 74 entities matched at their P31 class directly, 10 after one P279 step, and
   1 after two.
-- By type: Human 60, Administrative region 7, Film 6, Country 4, Location 3,
+- By type: Human 60, Settlement or region 7, Film 6, Country 4, Location 3,
   Group 2, Educational institution 1, Organization 1, Musical work 1, Written
   work 1.
 - One university matched Educational institution and Organization at the same
@@ -348,14 +359,12 @@ above the 80 percent threshold, so the type set was not changed.
 
 Observations:
 
-- **Cities do not reach Settlement.** Toronto, Reykjavík, New York, Los
-  Angeles, and Ayutthaya reach Administrative region after one step, through
-  classes such as "big city" or "municipality". Paris reaches Location. No
-  validation entity reached Settlement, whose only mapped class is "human
-  settlement" (Q486972), the only settlement class in any constraint. All
-  three types are narrower than Location, so `place of birth` and similar
-  ranges still admit cities. Whether an extraction model will separate
-  Settlement from Administrative region is not settled by this check.
+- **Cities fall into Settlement or region.** Toronto, Reykjavík, New York,
+  Los Angeles, and Ayutthaya reach it after one step, through classes such as
+  "big city" or "municipality", whose Wikidata superclasses include
+  administrative territorial entity. Paris reaches Location. Before the merge
+  (D5), these five cities reached Administrative region and none reached
+  Settlement.
 - **The sample is small and mostly people.** Comparison and
   bridge_comparison questions have `evidences_id` only for country relations
   (`docs/notes/2wiki-inspection.md`), so 21 of the 50 study50 questions
@@ -422,7 +431,7 @@ ontology. For study50, the question IDs come from
   validation sample, 85 entities, is consistent with this but too small to
   confirm it for all 12,576 dev questions.
 - **Whether finer or coarser types would help extraction.** The type count of
-  19 follows from the constraint classes and the 10 to 30 bound; SCRUM-17 does
+  18 follows from the constraint classes and the 10 to 30 bound; SCRUM-17 does
   not test alternatives.
 - **Kinship composition (D2).** Whether adding composition rules would help
   inference questions is left for a later story.

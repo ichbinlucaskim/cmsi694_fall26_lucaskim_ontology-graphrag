@@ -2,50 +2,6 @@
   "description": "Entity types and relation types for ontology-guided extraction on 2WikiMultiHopQA, derived from Wikidata property constraints (SCRUM-17). A listed type admits its narrower types. The ontology supplies types and relations only; it has no composition rules (D2).",
   "entity_types": [
     {
-      "broader": "Location",
-      "definition": "A subdivision of a country with a government or jurisdiction, such as a province, state, or parish.",
-      "name": "Administrative region",
-      "wikidata_classes": [
-        {
-          "classes": [
-            {
-              "label": "parish",
-              "qid": "Q102496"
-            },
-            {
-              "label": "political territorial entity",
-              "qid": "Q1048835"
-            },
-            {
-              "label": "federated state",
-              "qid": "Q107390"
-            },
-            {
-              "label": "Roman province",
-              "qid": "Q182547"
-            },
-            {
-              "label": "former administrative territorial entity",
-              "qid": "Q19953632"
-            },
-            {
-              "label": "judicial district",
-              "qid": "Q253836"
-            },
-            {
-              "label": "administrative territorial entity",
-              "qid": "Q56061"
-            },
-            {
-              "label": "jurisdiction",
-              "qid": "Q5982983"
-            }
-          ],
-          "group": "administrative units"
-        }
-      ]
-    },
-    {
       "broader": null,
       "definition": "A prize, honour, decoration, or award category given to a person, group, or work.",
       "name": "Award",
@@ -1249,9 +1205,46 @@
     },
     {
       "broader": "Location",
-      "definition": "A city, town, village, or other place where people live.",
-      "name": "Settlement",
+      "definition": "A city, town, village, or administrative area below the country level.",
+      "name": "Settlement or region",
       "wikidata_classes": [
+        {
+          "classes": [
+            {
+              "label": "parish",
+              "qid": "Q102496"
+            },
+            {
+              "label": "political territorial entity",
+              "qid": "Q1048835"
+            },
+            {
+              "label": "federated state",
+              "qid": "Q107390"
+            },
+            {
+              "label": "Roman province",
+              "qid": "Q182547"
+            },
+            {
+              "label": "former administrative territorial entity",
+              "qid": "Q19953632"
+            },
+            {
+              "label": "judicial district",
+              "qid": "Q253836"
+            },
+            {
+              "label": "administrative territorial entity",
+              "qid": "Q56061"
+            },
+            {
+              "label": "jurisdiction",
+              "qid": "Q5982983"
+            }
+          ],
+          "group": "administrative units"
+        },
         {
           "classes": [
             {
@@ -2304,7 +2297,7 @@
     },
     "sources": {
       "docs/notes/2wiki-relation-map.json": "73ea5680ef7d0a9261d52401f926848b0df1e7228de6aa728ab79b5d38b7819c",
-      "scripts/derive_ontology.py": "59af929fb318144cb2f44fb22353f3f8906192f1f774b239e174dca90afeed89",
+      "scripts/derive_ontology.py": "6cb766980466f8066854506071e3c570a7eab427e8b4cced183250fb4b9c6dd6",
       "scripts/wikidata_cache.py": "235d86bf718b4e2bed4e60366ab8401e3ded5c6917be22f75fb9dcf32a8b5db7"
     },
     "wikidata_endpoint": "https://www.wikidata.org/w/api.php",
@@ -2446,9 +2439,9 @@
       "domain_source": "manual",
       "pid": "P17",
       "range": [
-        "Administrative region",
         "Country",
-        "Location"
+        "Location",
+        "Settlement or region"
       ],
       "range_constraint_classes": {
         "excluded": 3,
@@ -2476,8 +2469,8 @@
       "domain_source": "constraint",
       "pid": "P27",
       "range": [
-        "Administrative region",
-        "Country"
+        "Country",
+        "Settlement or region"
       ],
       "range_constraint_classes": {
         "excluded": 6,
@@ -2508,10 +2501,10 @@
       "domain_source": "constraint",
       "pid": "P495",
       "range": [
-        "Administrative region",
         "Country",
         "Location",
-        "Organization"
+        "Organization",
+        "Settlement or region"
       ],
       "range_constraint_classes": {
         "excluded": 3,
@@ -2746,7 +2739,6 @@
       "domain_source": "constraint",
       "pid": "P108",
       "range": [
-        "Administrative region",
         "Broadcast program",
         "Creative work",
         "Educational institution",
@@ -2756,6 +2748,7 @@
         "Human",
         "Organization",
         "Product",
+        "Settlement or region",
         "Written work"
       ],
       "range_constraint_classes": {
@@ -3115,7 +3108,7 @@
         "Facility",
         "Location",
         "Organization",
-        "Settlement"
+        "Settlement or region"
       ],
       "range_constraint_classes": {
         "excluded": 4,
@@ -3232,12 +3225,12 @@
       "domain_source": "constraint",
       "pid": "P123",
       "range": [
-        "Administrative region",
         "Award",
         "Creative work",
         "Educational institution",
         "Organization",
         "Product",
+        "Settlement or region",
         "Written work"
       ],
       "range_constraint_classes": {
