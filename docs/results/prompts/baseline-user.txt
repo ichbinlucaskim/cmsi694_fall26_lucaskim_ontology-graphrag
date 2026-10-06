@@ -1,0 +1,30 @@
+---Task---
+Extract entities and relationships from the `---Input Text---` section below.
+
+---Instructions---
+1. **Strict Adherence to JSON Format:** Your output MUST be a valid JSON object with `entities` and `relationships` arrays. Do not include any introductory or concluding remarks, explanations, markdown code fences, or any other text before or after the JSON.
+2. **Quantity Limits:** In this response, output at most 100 total records and at most 40 entity objects. Output fewer records if fewer high-value items are present. Only output relationship objects whose `source` and `target` are both included in this response.
+3. **Output Language:** Ensure the output language is English. Proper nouns (e.g., personal names, place names, organization names) must be kept in their original language and not translated.
+
+---Entity Types---
+Classify each entity using one of the following types. If no type fits, use `Other`.
+
+- Person: Human individuals, real or fictional
+- Creature: Non-human living beings (animals, mythical beings, etc.)
+- Organization: Companies, institutions, government bodies, groups
+- Location: Geographic places (cities, countries, buildings, regions)
+- Event: Occurrences, incidents, ceremonies, meetings
+- Concept: Abstract ideas, theories, principles, beliefs
+- Method: Procedures, techniques, algorithms, workflows
+- Content: Creative or informational works (books, articles, films, reports)
+- Data: Quantitative or structured information (statistics, datasets, measurements)
+- Artifact: Physical or digital objects created by humans (tools, software, devices)
+- NaturalObject: Natural non-living objects (minerals, celestial bodies, chemical compounds)
+
+---Input Text---
+```
+Siemowit V of Masovia
+Siemowit V of Rawa (pl: "Siemowit V rawski"; 1389 - 17 February 1442), was a Polish prince member of the House of Piast from the Masovian branch. He was a Duke of Rawa Mazowiecka, Płock, Sochaczew, Gostynin, Płońsk, Wizna and Belz during 1426-1434 jointly with his brothers, and after the division of the paternal inheritance between him and his brothers in 1434, sole ruler over Rawa Mazowiecka, Gostynin and Sochaczew. He was the eldest son of Siemowit IV, Duke of Masovia and Alexandra of Lithuania, daughter of Algirdas.
+```
+
+---Output---
