@@ -266,6 +266,8 @@ def build_rag(
     for key, value in settings.get("prompt_overrides", {}).items():
         if key not in PROMPTS:
             raise SystemExit(f"Unknown PROMPTS key in condition: {key}")
+        if placeholders(value) != placeholders(PROMPTS[key]):
+            raise SystemExit(f"Condition override of {key} changes its placeholders")
         PROMPTS[key] = value  # assign the key; never rebind PROMPTS
 
     @wrap_embedding_func_with_attrs(
