@@ -135,5 +135,15 @@ one ontology relation label after normalization (lowercase, underscores to
 spaces, collapsed whitespace). The rule is documented in the script.
 
 ```
-python scripts/relation_conformance.py --condition ontology --subset mini
+python scripts/relation_conformance.py --condition ontology --subset smoke10
 ```
+
+Score the ontology run and compare it with the baseline. The comparison reads
+both runs' `scores.json`, so score each condition first:
+
+```
+python scripts/score.py --condition ontology --subset smoke10
+python scripts/compare_conditions.py --baseline baseline --treatment ontology --subset smoke10
+```
+
+The comparison is written to `docs/results/ontology-vs-baseline-smoke10.md`.

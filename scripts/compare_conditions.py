@@ -168,6 +168,14 @@ def markdown(base: dict, treat: dict, subset: str) -> str:
                      f"{st['predicted_answer']} | {key} |")
     lines += ["", "Paired counts:", "", "| Outcome | Questions |", "|---|---|"]
     lines += [f"| {k} | {v} |" for k, v in counts.items()]
+    ob, ot = base["scores"]["overall"]["em_alias"]["mean"], treat["scores"]["overall"]["em_alias"]["mean"]
+    lines += [
+        "",
+        f"Overall EM with aliases is {pct(ob)} for {b} and {pct(ot)} for {t}. The conditions "
+        f"disagree on {counts[f'{b} only'] + counts[f'{t} only']} of {len(by_b)} questions "
+        f"({counts[f'{b} only']} {b} only, {counts[f'{t} only']} {t} only). At this sample size these "
+        "numbers do not show that either condition answers better; see Limitations.",
+    ]
 
     gb, gt = base["graph"], treat["graph"]
 
@@ -179,7 +187,9 @@ def markdown(base: dict, treat: dict, subset: str) -> str:
         "## Graphs",
         "",
         "Relation conformance and entity types are from `scripts/relation_conformance.py`. A date "
-        "relation is an edge with a date-named node at either end (see the script docstring).",
+        "relation is an edge with a date-named node at either end (see the script docstring). "
+        f"The {b} prompt never names the ontology types, so its count of types outside the "
+        "ontology only shows how far LightRAG's default type names are from the ontology's.",
         "",
         f"| Measure | {b} | {t} |",
         "|---|---|---|",
