@@ -32,7 +32,7 @@ matched Wikidata property. Two need a note:
   a member, which is P527's use.
 
 Each relation's one-line definition is the property's English Wikidata
-description.
+description, with notes to Wikidata editors removed (D7).
 
 **D2. No composition rules.** The ontology has no rules for derived kinship
 relations such as paternal grandfather or father-in-law. Inference questions
@@ -47,7 +47,7 @@ origin` (P495), and `country of citizenship` (P27) are three relation types.
 They are different properties with different subjects (places and
 organizations, works, people), and 2Wiki uses them as different relations.
 
-**D4. Dates are literal attributes.** `date of birth` (P569), `date of death`
+**D4. Dates are literal attributes.** Superseded by D6. `date of birth` (P569), `date of death`
 (P570), `publication date` (P577), and `inception` (P571) have range
 `literal:date` and are also listed under `literal_attributes`. No entity type
 stands for a date. The decision follows the Wikidata datatype (`time`) of all
@@ -69,6 +69,54 @@ With two types, the same city could be typed both ways in different passages
 and become two graph nodes. The merged type keeps every class of both old
 types: the 8 administrative-unit classes and human settlement (Q486972).
 
+**D6. Dates are entities of type Date (supersedes D4).** The ontology has
+an entity type Date, "A calendar date, month, or year." The four time-valued
+relations, `date of birth`, `date of death`, `inception`, and `publication
+date`, have range Date instead of `literal:date`, and the
+`literal_attributes` list is removed, as nothing else used it. Date has no
+Wikidata constraint classes; the script sets it as the range of every property
+whose Wikidata datatype is `time` (range source `datatype`).
+
+Reason: a LightRAG graph has entities and relations but no attributes. With a
+literal range, a date relation had no valid target: the prompt offered no
+entity type for a date, so the model either typed the date `date`, `other`,
+or `unknown`, outside the ontology, or did not extract the relation. Almost
+none were extracted. In the ontology smoke10 graph, 3 of 354 relations carry a
+date label (`date of birth` 2, `publication date` 1; see
+`docs/results/ontology-vs-baseline-smoke10.md`), although `date of birth`,
+`date of death`, and `publication date` are among the most frequent 2Wiki
+evidence relations (see Relation coverage).
+
+**D7. Definitions omit notes to Wikidata editors.** English Wikidata
+property descriptions often add instructions for editors, such as "Use
+'manner of death' (P1196) for broadest category", cross references to other
+properties, and usage guidance. None of it describes the relation, and the
+property IDs mean nothing to the extraction model. `definition_of` in
+`scripts/derive_ontology.py` removes them by a fixed rule, documented in the
+script docstring: it drops each bracketed group, `;`-separated clause, and
+sentence that names a property ID (P123), the word "property", the words
+"use", "used", or "preferred", or that starts with "see also" or "not for".
+The verbatim description is kept in the ontology file as
+`wikidata_description`. The rule changes 13 of the 34 definitions:
+
+| Relation | Wikidata description (before) | Definition (after) |
+|---|---|---|
+| cause of death | underlying or immediate cause of death. Underlying cause (e.g. car accident, stomach cancer) preferred. Use 'manner of death' (P1196) for broadest category, e.g. natural causes, accident, homicide, suicide | underlying or immediate cause of death |
+| child | subject has object as child. Do not use for stepchildren—use "relative" (P1038), qualified with "kinship to subject" (P1039) | subject has object as child |
+| composer | person(s) who wrote the music [for lyricist, use "lyrics by" (P676)] | person(s) who wrote the music |
+| country | sovereign state that this subject item is in (not to be used for human beings) | sovereign state that this subject item is in |
+| creator | maker of this creative work or other object (where no more specific property exists) | maker of this creative work or other object |
+| father | male parent of the subject. For stepfather, use "stepparent" (P3448) | male parent of the subject |
+| has part | part of this subject; inverse property of "part of" (P361). See also "has parts of the class" (P2670). | part of this subject |
+| inception | time when an entity begins to exist; for date of official opening use P1619 | time when an entity begins to exist |
+| mother | female parent of the subject. For stepmother, use "stepparent" (P3448) | female parent of the subject |
+| occupation | occupation of a person. See also "field of work" (Property:P101), "position held" (Property:P39). Not for groups of people. There, use "field of work" (Property:P101), "industry" (Property:P452), "members have occupation" (Property:P3989). | occupation of a person |
+| producer | person(s) who produced the film, musical work, theatrical production, etc. (for film, this does not include executive producers, associate producers, etc.) [for production company, use P272, video games - use P178] | person(s) who produced the film, musical work, theatrical production, etc. (for film, this does not include executive producers, associate producers, etc.) |
+| sibling | the subject and the object have at least one common parent (brother, sister, etc. including half-siblings); use "relative" (P1038) for siblings-in-law (brother-in-law, sister-in-law, etc.) and step-siblings (step-brothers, step-sisters, etc.) | the subject and the object have at least one common parent (brother, sister, etc. including half-siblings) |
+| spouse | the subject has the object as their spouse (husband, wife, partner, etc.). Use "unmarried partner" (P451) for non-married companions | the subject has the object as their spouse (husband, wife, partner, etc.) |
+
+The prompt change is in `docs/results/prompt-diff-baseline-vs-ontology.diff`.
+
 ## How the entity types were derived
 
 1. For each of the 34 properties, the script reads its property constraint
@@ -88,7 +136,8 @@ types: the 8 administrative-unit classes and human settlement (Q486972).
    from dev examples and marked `"source": "manual"` with a note in the
    ontology file (see below).
 
-The result has **18 entity types**, inside the required 10 to 30.
+The result has **19 entity types**, inside the required 10 to 30: 18 from the
+constraint classes and Date, which has no constraint classes (D6).
 
 Some types have a `broader` type: Country, Settlement or region, and Facility
 are narrower than Location; Film, Broadcast program, Musical
@@ -111,6 +160,7 @@ one entity is counted under two types).
 | Cause of death |  | A disease, injury, method, or event named as the cause of a death. | 10 | 0 |
 | Country | Location | A sovereign, historical, or dependent state or territory. | 22 | 4 |
 | Creative work |  | A work of authorship or performance not covered by a narrower work type, such as a play or video game. | 22 | 0 |
+| Date |  | A calendar date, month, or year. | 0 | 0 |
 | Educational institution | Organization | A school, college, university, or other organization that educates students. | 8 | 1 |
 | Event |  | Something that happens at a time, such as a battle, competition, ceremony, or campaign. | 13 | 0 |
 | Facility | Location | A building, structure, or site such as a hospital, cemetery, prison, or airport. | 27 | 0 |
@@ -278,7 +328,7 @@ ship (Q11446), vessel (Q16391167), naval vessel (Q177597), orbit (Q4130), astron
 "Source" says where each end comes from:
 
 - `constraint`: Wikidata type constraints.
-- `datatype`: the time datatype, for date ranges (D4).
+- `datatype`: the time datatype, for date ranges (D6).
 - `manual`: set by hand; see below.
 
 The domains and ranges keep everything the constraints allow, so some are
@@ -295,8 +345,8 @@ television program or a university as an employer.
 | country of citizenship | P27 country of citizenship | Group, Human | Country, Settlement or region | constraint |
 | country of origin | P495 country of origin | Creative work, Event, Group, Product, Written work | Country, Location, Organization, Settlement or region | constraint |
 | creator | P170 creator | Creative work, Event, Facility, Product, Written work | Group, Human, Occupation, Organization, Product | constraint |
-| date of birth | P569 date of birth | Human | literal:date | constraint / datatype |
-| date of death | P570 date of death | Group, Human | literal:date | constraint / datatype |
+| date of birth | P569 date of birth | Human | Date | constraint / datatype |
+| date of death | P570 date of death | Group, Human | Date | constraint / datatype |
 | director | P57 director | Broadcast program, Creative work, Film, Musical work, Written work | Group, Human | constraint |
 | doctoral advisor | P184 doctoral advisor | Human | Human | constraint |
 | editor | P98 editor | Creative work, Group, Organization, Written work | Human, Organization | constraint |
@@ -305,7 +355,7 @@ television program or a university as an employer.
 | father | P22 father | Group, Human | Human | constraint |
 | founded by | P112 founder | Award, Creative work, Event, Facility, Group, Location, Occupation, Organization, Product, Written work | Group, Human, Organization | constraint |
 | has part | P527 has part(s) | Group | Human | manual |
-| inception | P571 inception | Organization | literal:date | manual / datatype |
+| inception | P571 inception | Organization | Date | manual / datatype |
 | manufacturer | P176 manufacturer | Event, Musical work, Product | Facility, Human, Occupation, Organization | constraint |
 | mother | P25 mother | Human | Human | constraint |
 | occupation | P106 occupation | Group, Human, Product | Occupation | constraint |
@@ -316,7 +366,7 @@ television program or a university as an employer.
 | place of detention | P2632 place of detention | Event, Group, Human | Facility, Location, Organization, Settlement or region | constraint |
 | presenter | P371 presenter | Creative work, Event, Organization | Human | constraint |
 | producer | P162 producer | Creative work | Group, Human, Organization | constraint |
-| publication date | P577 publication date | Creative work, Event, Musical work, Product, Written work | literal:date | constraint / datatype |
+| publication date | P577 publication date | Creative work, Event, Musical work, Product, Written work | Date | constraint / datatype |
 | publisher | P123 publisher | Creative work, Musical work, Product, Written work | Award, Creative work, Educational institution, Organization, Product, Settlement or region, Written work | constraint |
 | sibling | P3373 sibling | Group, Human | Group, Human | constraint |
 | spouse | P26 spouse | Human | Human | constraint / manual |
@@ -430,8 +480,9 @@ ontology. For study50, the question IDs come from
   judgment that 2Wiki entities are real-world Wikipedia subjects. The
   validation sample, 85 entities, is consistent with this but too small to
   confirm it for all 12,576 dev questions.
-- **Whether finer or coarser types would help extraction.** The type count of
-  18 follows from the constraint classes and the 10 to 30 bound; SCRUM-17 does
-  not test alternatives.
+- **Whether finer or coarser types would help extraction.** The 18 types
+  from constraint classes follow from those classes and the 10 to 30 bound,
+  and Date was added for the date relations (D6); SCRUM-17 does not test
+  alternatives.
 - **Kinship composition (D2).** Whether adding composition rules would help
   inference questions is left for a later story.

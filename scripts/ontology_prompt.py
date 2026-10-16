@@ -52,7 +52,6 @@ RELATION_TYPES_INTRO = (
     "the entity types of its source and target, and its definition. For a relation whose target "
     "is a date, the target entity is the date as written in the input text."
 )
-DATE_RANGE = "literal:date"
 
 SYSTEM_KEY = "entity_extraction_json_system_prompt"
 USER_KEY = "entity_extraction_json_user_prompt"
@@ -73,7 +72,7 @@ def load_ontology(path: Path = ONTOLOGY_PATH) -> dict:
 
 
 def _types(value) -> str:
-    return "date" if value == DATE_RANGE else " | ".join(value)
+    return " | ".join(value)
 
 
 def render_entity_types(ontology: dict) -> str:

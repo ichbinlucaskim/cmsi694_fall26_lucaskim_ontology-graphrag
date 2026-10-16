@@ -386,6 +386,12 @@
       ]
     },
     {
+      "broader": null,
+      "definition": "A calendar date, month, or year.",
+      "name": "Date",
+      "wikidata_classes": []
+    },
+    {
       "broader": "Organization",
       "definition": "A school, college, university, or other organization that educates students.",
       "name": "Educational institution",
@@ -2244,49 +2250,6 @@
       "reason_key": "vessels and off-world places"
     }
   ],
-  "literal_attributes": [
-    {
-      "note": "Dates are literal values, not entities (D4). 2Wiki writes them in many surface forms, e.g. '28 August 1921', 'March 20, 1995', '2003'; evidences_id replaces them with 'date_information'.",
-      "pid": "P569",
-      "relation": "date of birth",
-      "subject_types": [
-        "Human"
-      ],
-      "value": "date"
-    },
-    {
-      "note": "Dates are literal values, not entities (D4). 2Wiki writes them in many surface forms, e.g. '28 August 1921', 'March 20, 1995', '2003'; evidences_id replaces them with 'date_information'.",
-      "pid": "P570",
-      "relation": "date of death",
-      "subject_types": [
-        "Group",
-        "Human"
-      ],
-      "value": "date"
-    },
-    {
-      "note": "Dates are literal values, not entities (D4). 2Wiki writes them in many surface forms, e.g. '28 August 1921', 'March 20, 1995', '2003'; evidences_id replaces them with 'date_information'.",
-      "pid": "P571",
-      "relation": "inception",
-      "subject_types": [
-        "Organization"
-      ],
-      "value": "date"
-    },
-    {
-      "note": "Dates are literal values, not entities (D4). 2Wiki writes them in many surface forms, e.g. '28 August 1921', 'March 20, 1995', '2003'; evidences_id replaces them with 'date_information'.",
-      "pid": "P577",
-      "relation": "publication date",
-      "subject_types": [
-        "Creative work",
-        "Event",
-        "Musical work",
-        "Product",
-        "Written work"
-      ],
-      "value": "date"
-    }
-  ],
   "name": "2Wiki treatment ontology",
   "provenance": {
     "constraint_classes": 462,
@@ -2297,7 +2260,7 @@
     },
     "sources": {
       "docs/notes/2wiki-relation-map.json": "73ea5680ef7d0a9261d52401f926848b0df1e7228de6aa728ab79b5d38b7819c",
-      "scripts/derive_ontology.py": "6cb766980466f8066854506071e3c570a7eab427e8b4cced183250fb4b9c6dd6",
+      "scripts/derive_ontology.py": "0b14d8daff72ef61525c2d64370ffe177596080fc9450a27aaddf38aff390fcb",
       "scripts/wikidata_cache.py": "235d86bf718b4e2bed4e60366ab8401e3ded5c6917be22f75fb9dcf32a8b5db7"
     },
     "wikidata_endpoint": "https://www.wikidata.org/w/api.php",
@@ -2337,10 +2300,11 @@
       "range_source": "constraint",
       "relation": "award received",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "award or recognition received by a person, organization or creative work",
       "wikidata_label": "award received"
     },
     {
-      "definition": "underlying or immediate cause of death. Underlying cause (e.g. car accident, stomach cancer) preferred. Use 'manner of death' (P1196) for broadest category, e.g. natural causes, accident, homicide, suicide",
+      "definition": "underlying or immediate cause of death",
       "domain": [
         "Human"
       ],
@@ -2364,10 +2328,11 @@
       "range_source": "constraint",
       "relation": "cause of death",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "underlying or immediate cause of death. Underlying cause (e.g. car accident, stomach cancer) preferred. Use 'manner of death' (P1196) for broadest category, e.g. natural causes, accident, homicide, suicide",
       "wikidata_label": "cause of death"
     },
     {
-      "definition": "subject has object as child. Do not use for stepchildren—use \"relative\" (P1038), qualified with \"kinship to subject\" (P1039)",
+      "definition": "subject has object as child",
       "domain": [
         "Group",
         "Human"
@@ -2393,10 +2358,11 @@
       "range_source": "constraint",
       "relation": "child",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "subject has object as child. Do not use for stepchildren—use \"relative\" (P1038), qualified with \"kinship to subject\" (P1039)",
       "wikidata_label": "child"
     },
     {
-      "definition": "person(s) who wrote the music [for lyricist, use \"lyrics by\" (P676)]",
+      "definition": "person(s) who wrote the music",
       "domain": [
         "Creative work",
         "Musical work"
@@ -2422,10 +2388,11 @@
       "range_source": "constraint",
       "relation": "composer",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "person(s) who wrote the music [for lyricist, use \"lyrics by\" (P676)]",
       "wikidata_label": "composer"
     },
     {
-      "definition": "sovereign state that this subject item is in (not to be used for human beings)",
+      "definition": "sovereign state that this subject item is in",
       "domain": [
         "Location",
         "Organization"
@@ -2452,6 +2419,7 @@
       "range_source": "constraint",
       "relation": "country",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "sovereign state that this subject item is in (not to be used for human beings)",
       "wikidata_label": "country"
     },
     {
@@ -2481,6 +2449,7 @@
       "range_source": "constraint",
       "relation": "country of citizenship",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "the object is a country that recognizes the subject as its citizen",
       "wikidata_label": "country of citizenship"
     },
     {
@@ -2515,10 +2484,11 @@
       "range_source": "constraint",
       "relation": "country of origin",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "country of origin of this item (creative work, food, phrase, product, etc.)",
       "wikidata_label": "country of origin"
     },
     {
-      "definition": "maker of this creative work or other object (where no more specific property exists)",
+      "definition": "maker of this creative work or other object",
       "domain": [
         "Creative work",
         "Event",
@@ -2550,6 +2520,7 @@
       "range_source": "constraint",
       "relation": "creator",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "maker of this creative work or other object (where no more specific property exists)",
       "wikidata_label": "creator"
     },
     {
@@ -2565,16 +2536,19 @@
       "domain_note": null,
       "domain_source": "constraint",
       "pid": "P569",
-      "range": "literal:date",
+      "range": [
+        "Date"
+      ],
       "range_constraint_classes": {
         "excluded": 0,
         "mapped": 0,
         "total": 0
       },
-      "range_note": "Wikidata datatype is time (D4).",
+      "range_note": "Wikidata datatype is time (D6).",
       "range_source": "datatype",
       "relation": "date of birth",
       "wikidata_datatype": "time",
+      "wikidata_description": "date on which the subject was born",
       "wikidata_label": "date of birth"
     },
     {
@@ -2591,16 +2565,19 @@
       "domain_note": null,
       "domain_source": "constraint",
       "pid": "P570",
-      "range": "literal:date",
+      "range": [
+        "Date"
+      ],
       "range_constraint_classes": {
         "excluded": 0,
         "mapped": 0,
         "total": 0
       },
-      "range_note": "Wikidata datatype is time (D4).",
+      "range_note": "Wikidata datatype is time (D6).",
       "range_source": "datatype",
       "relation": "date of death",
       "wikidata_datatype": "time",
+      "wikidata_description": "date on which the subject died",
       "wikidata_label": "date of death"
     },
     {
@@ -2633,6 +2610,7 @@
       "range_source": "constraint",
       "relation": "director",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "director(s) of film, TV-series, stageplay, video game or similar",
       "wikidata_label": "director"
     },
     {
@@ -2660,6 +2638,7 @@
       "range_source": "constraint",
       "relation": "doctoral advisor",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "person who supervised the doctorate or PhD thesis of the subject",
       "wikidata_label": "doctoral advisor"
     },
     {
@@ -2691,6 +2670,7 @@
       "range_source": "constraint",
       "relation": "editor",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "person who checks and corrects a work (such as a book, newspaper, academic journal, etc.) to comply with a rules of certain genre. Also applies to person who establishes the text of an ancient written work or manuscript.",
       "wikidata_label": "editor"
     },
     {
@@ -2722,6 +2702,7 @@
       "range_source": "constraint",
       "relation": "educated at",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "educational institution attended by subject",
       "wikidata_label": "educated at"
     },
     {
@@ -2760,10 +2741,11 @@
       "range_source": "constraint",
       "relation": "employer",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "person or organization for which the subject works or worked",
       "wikidata_label": "employer"
     },
     {
-      "definition": "male parent of the subject. For stepfather, use \"stepparent\" (P3448)",
+      "definition": "male parent of the subject",
       "domain": [
         "Group",
         "Human"
@@ -2788,6 +2770,7 @@
       "range_source": "constraint",
       "relation": "father",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "male parent of the subject. For stepfather, use \"stepparent\" (P3448)",
       "wikidata_label": "father"
     },
     {
@@ -2826,10 +2809,11 @@
       "range_source": "constraint",
       "relation": "founded by",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "founder or co-founder of this organization, religion, place or entity",
       "wikidata_label": "founder"
     },
     {
-      "definition": "part of this subject; inverse property of \"part of\" (P361). See also \"has parts of the class\" (P2670).",
+      "definition": "part of this subject",
       "domain": [
         "Group"
       ],
@@ -2853,10 +2837,11 @@
       "range_source": "manual",
       "relation": "has part",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "part of this subject; inverse property of \"part of\" (P361). See also \"has parts of the class\" (P2670).",
       "wikidata_label": "has part(s)"
     },
     {
-      "definition": "time when an entity begins to exist; for date of official opening use P1619",
+      "definition": "time when an entity begins to exist",
       "domain": [
         "Organization"
       ],
@@ -2868,16 +2853,19 @@
       "domain_note": "P571 has no type constraints. Dev subjects are organizations and schools, e.g. 'Sigma Xi', 'Korn Ferry', 'Whitehorse Manor Junior School'.",
       "domain_source": "manual",
       "pid": "P571",
-      "range": "literal:date",
+      "range": [
+        "Date"
+      ],
       "range_constraint_classes": {
         "excluded": 0,
         "mapped": 0,
         "total": 0
       },
-      "range_note": "Wikidata datatype is time (D4).",
+      "range_note": "Wikidata datatype is time (D6).",
       "range_source": "datatype",
       "relation": "inception",
       "wikidata_datatype": "time",
+      "wikidata_description": "time when an entity begins to exist; for date of official opening use P1619",
       "wikidata_label": "inception"
     },
     {
@@ -2910,10 +2898,11 @@
       "range_source": "constraint",
       "relation": "manufacturer",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "(main or final) manufacturer or producer of this product",
       "wikidata_label": "manufacturer"
     },
     {
-      "definition": "female parent of the subject. For stepmother, use \"stepparent\" (P3448)",
+      "definition": "female parent of the subject",
       "domain": [
         "Human"
       ],
@@ -2937,10 +2926,11 @@
       "range_source": "constraint",
       "relation": "mother",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "female parent of the subject. For stepmother, use \"stepparent\" (P3448)",
       "wikidata_label": "mother"
     },
     {
-      "definition": "occupation of a person. See also \"field of work\" (Property:P101), \"position held\" (Property:P39). Not for groups of people. There, use \"field of work\" (Property:P101), \"industry\" (Property:P452), \"members have occupation\" (Property:P3989).",
+      "definition": "occupation of a person",
       "domain": [
         "Group",
         "Human",
@@ -2966,6 +2956,7 @@
       "range_source": "constraint",
       "relation": "occupation",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "occupation of a person. See also \"field of work\" (Property:P101), \"position held\" (Property:P39). Not for groups of people. There, use \"field of work\" (Property:P101), \"industry\" (Property:P452), \"members have occupation\" (Property:P3989).",
       "wikidata_label": "occupation"
     },
     {
@@ -2997,6 +2988,7 @@
       "range_source": "constraint",
       "relation": "performer",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "actor, musician, band or other performer associated with this role or musical work",
       "wikidata_label": "performer"
     },
     {
@@ -3026,6 +3018,7 @@
       "range_source": "constraint",
       "relation": "place of birth",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "most specific known birth location of a person, animal or fictional character",
       "wikidata_label": "place of birth"
     },
     {
@@ -3056,6 +3049,7 @@
       "range_source": "constraint",
       "relation": "place of burial",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "location of grave, resting place, place of ash-scattering, etc. (e.g., town/city or cemetery) for a person or animal. There may be several places: e.g., re-burials, parts of body buried separately.",
       "wikidata_label": "place of burial"
     },
     {
@@ -3087,6 +3081,7 @@
       "range_source": "constraint",
       "relation": "place of death",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "most specific known (e.g. city instead of country, or hospital instead of city) death location of a person, animal or fictional character",
       "wikidata_label": "place of death"
     },
     {
@@ -3119,6 +3114,7 @@
       "range_source": "constraint",
       "relation": "place of detention",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "place where this person is or was detained",
       "wikidata_label": "place of detention"
     },
     {
@@ -3148,10 +3144,11 @@
       "range_source": "constraint",
       "relation": "presenter",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "main role in presenting a radio or television program or a performing arts show",
       "wikidata_label": "presenter"
     },
     {
-      "definition": "person(s) who produced the film, musical work, theatrical production, etc. (for film, this does not include executive producers, associate producers, etc.) [for production company, use P272, video games - use P178]",
+      "definition": "person(s) who produced the film, musical work, theatrical production, etc. (for film, this does not include executive producers, associate producers, etc.)",
       "domain": [
         "Creative work"
       ],
@@ -3177,6 +3174,7 @@
       "range_source": "constraint",
       "relation": "producer",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "person(s) who produced the film, musical work, theatrical production, etc. (for film, this does not include executive producers, associate producers, etc.) [for production company, use P272, video games - use P178]",
       "wikidata_label": "producer"
     },
     {
@@ -3196,16 +3194,19 @@
       "domain_note": null,
       "domain_source": "constraint",
       "pid": "P577",
-      "range": "literal:date",
+      "range": [
+        "Date"
+      ],
       "range_constraint_classes": {
         "excluded": 0,
         "mapped": 0,
         "total": 0
       },
-      "range_note": "Wikidata datatype is time (D4).",
+      "range_note": "Wikidata datatype is time (D6).",
       "range_source": "datatype",
       "relation": "publication date",
       "wikidata_datatype": "time",
+      "wikidata_description": "date or point in time when a work or product was first published or released",
       "wikidata_label": "publication date"
     },
     {
@@ -3242,10 +3243,11 @@
       "range_source": "constraint",
       "relation": "publisher",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "organization or person responsible for publishing a work, such as a book, periodical, printed music, podcast, game or software",
       "wikidata_label": "publisher"
     },
     {
-      "definition": "the subject and the object have at least one common parent (brother, sister, etc. including half-siblings); use \"relative\" (P1038) for siblings-in-law (brother-in-law, sister-in-law, etc.) and step-siblings (step-brothers, step-sisters, etc.)",
+      "definition": "the subject and the object have at least one common parent (brother, sister, etc. including half-siblings)",
       "domain": [
         "Group",
         "Human"
@@ -3271,10 +3273,11 @@
       "range_source": "constraint",
       "relation": "sibling",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "the subject and the object have at least one common parent (brother, sister, etc. including half-siblings); use \"relative\" (P1038) for siblings-in-law (brother-in-law, sister-in-law, etc.) and step-siblings (step-brothers, step-sisters, etc.)",
       "wikidata_label": "sibling"
     },
     {
-      "definition": "the subject has the object as their spouse (husband, wife, partner, etc.). Use \"unmarried partner\" (P451) for non-married companions",
+      "definition": "the subject has the object as their spouse (husband, wife, partner, etc.)",
       "domain": [
         "Human"
       ],
@@ -3298,6 +3301,7 @@
       "range_source": "manual",
       "relation": "spouse",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "the subject has the object as their spouse (husband, wife, partner, etc.). Use \"unmarried partner\" (P451) for non-married companions",
       "wikidata_label": "spouse"
     },
     {
@@ -3327,6 +3331,7 @@
       "range_source": "constraint",
       "relation": "student of",
       "wikidata_datatype": "wikibase-item",
+      "wikidata_description": "person who has taught this person",
       "wikidata_label": "student of"
     }
   ]

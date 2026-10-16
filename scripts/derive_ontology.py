@@ -16,7 +16,28 @@ one exclusion reason. The script refuses to run if a constraint class is
 unassigned, assigned twice, or if a rule names a class that no constraint
 uses. A relation's domain (range) is the set of types its subject (value)
 classes map to. Where the constraints give no type, MANUAL_ENDS sets it and
-the output says so. Time-valued properties have range "literal:date".
+the output says so. Time-valued properties have range Date, an entity type
+with no Wikidata classes (D6).
+
+Definitions: a relation's definition is its English Wikidata description with
+the notes addressed to Wikidata editors removed by EDITOR_NOTE (D7). The
+verbatim description is kept as wikidata_description. The rule, in order:
+
+1. Remove every parenthesized or bracketed group that matches EDITOR_NOTE:
+   "(P1196)", "[for lyricist, use "lyrics by" (P676)]",
+   "(not to be used for human beings)".
+2. Split the rest into sentences at a period followed by a space and a
+   capital letter or a quote, split each sentence into clauses at "; ", and
+   drop every clause that matches. A sentence with no clause left is dropped.
+3. Collapse whitespace, remove spaces before punctuation, and strip trailing
+   spaces, commas, semicolons, and colons. If steps 1 and 2 removed anything,
+   also strip a trailing period, as most descriptions end without one.
+
+EDITOR_NOTE matches a Wikidata property ID (P123), the word "property", the
+words "use", "used", or "preferred", or text starting with "see also" or "not
+for" (all case-insensitive). These mark instructions to editors, cross
+references to other properties, and usage guidance; none describes the
+relation itself. If nothing would be left, the description is kept whole.
 
 Validation: instance of (P31) for the entity QIDs in the study50
 evidences_id (at most VALIDATION_CAP), each class followed up subclass of
@@ -58,7 +79,13 @@ VALIDATION_SUBSET = "study50"
 VALIDATION_CAP = 200
 MAX_P279_DEPTH = 5
 QID = re.compile(r"^Q\d+$")
-DATE_RANGE = "literal:date"
+DATE_TYPE = "Date"
+EDITOR_NOTE = re.compile(
+    r"\bP\d+\b|\bproperty\b|\b(?:use|used|preferred)\b|^\W*(?:see also|not for)\b",
+    re.IGNORECASE,
+)
+BRACKETED = re.compile(r"\s*(?:\([^()]*\)|\[[^\[\]]*\])")
+SENTENCE_END = re.compile(r"(?<=\.)\s+(?=[A-Z\"'])")
 
 # Each rule: name, one-line definition, broader type (a listed type admits its
 # narrower types), and the constraint classes it collapses, grouped by why.
@@ -257,6 +284,14 @@ ENTITY_TYPES = [
         },
     },
     {
+        # D6: the range of the time-valued relations. No constraint class maps
+        # here; Date is set by the Wikidata datatype (time).
+        "name": DATE_TYPE,
+        "definition": "A calendar date, month, or year.",
+        "broader": None,
+        "classes": {},
+    },
+    {
         "name": "Product",
         "definition": "A manufactured or published product, model, brand, machine, or piece of software.",
         "broader": None,
@@ -428,6 +463,19 @@ def class_rules() -> tuple[dict[str, str], dict[str, str]]:
     return to_type, to_excluded
 
 
+def definition_of(description: str) -> str:
+    """The description without notes to Wikidata editors (D7; rule in the module docstring)."""
+    text = BRACKETED.sub(lambda m: "" if EDITOR_NOTE.search(m.group()) else m.group(), description)
+    sentences = ["; ".join(c for c in s.split("; ") if not EDITOR_NOTE.search(c))
+                 for s in SENTENCE_END.split(text)]
+    kept = " ".join(s for s in sentences if s)
+    removed = kept != description
+    text = re.sub(r"\s+([.,;:])", r"\1", re.sub(r"\s+", " ", kept)).strip().rstrip(" ,;:")
+    if removed:
+        text = text.removesuffix(".").rstrip(" ,;:")
+    return text or description
+
+
 def type_constraints(prop: dict) -> dict[str, list[str]]:
     """Classes of the non-deprecated subject and value type constraints of a property."""
     out = {"domain": set(), "range": set()}
@@ -488,15 +536,17 @@ def derive(offline: bool) -> tuple[dict, dict]:
         })
     type_names = {t["name"] for t in ENTITY_TYPES}
 
-    relation_types, literal_attributes = [], []
+    relation_types = []
     for r in relations:
         prop = wc.entity(props[r["pid"]])
         is_date = prop.get("datatype") == "time"
+        description = wc.description(props[r["pid"]])
         out = {
             "relation": r["relation"],
             "pid": r["pid"],
             "wikidata_label": wc.label(props[r["pid"]]),
-            "definition": wc.description(props[r["pid"]]),
+            "wikidata_description": description,
+            "definition": definition_of(description),
             "wikidata_datatype": prop.get("datatype"),
         }
         for end in ("domain", "range"):
@@ -506,7 +556,7 @@ def derive(offline: bool) -> tuple[dict, dict]:
             if end == "range" and is_date:
                 if classes:
                     raise SystemExit(f"{r['relation']}: date property with value type classes")
-                value, source, note = DATE_RANGE, "datatype", "Wikidata datatype is time (D4)."
+                value, source, note = [DATE_TYPE], "datatype", "Wikidata datatype is time (D6)."
             elif mapped:
                 if manual:
                     raise SystemExit(f"{r['relation']} {end}: manual end given but constraints map to {mapped}")
@@ -526,16 +576,6 @@ def derive(offline: bool) -> tuple[dict, dict]:
                 "excluded": sum(q in to_excluded for q in classes),
             }
         relation_types.append(out)
-        if is_date:
-            literal_attributes.append({
-                "relation": r["relation"],
-                "pid": r["pid"],
-                "value": "date",
-                "subject_types": out["domain"],
-                "note": ("Dates are literal values, not entities (D4). 2Wiki writes them in "
-                         "many surface forms, e.g. '28 August 1921', 'March 20, 1995', "
-                         "'2003'; evidences_id replaces them with 'date_information'."),
-            })
 
     excluded = [
         {"reason_key": key, "reason": g["reason"],
@@ -568,7 +608,6 @@ def derive(offline: bool) -> tuple[dict, dict]:
         ),
         "entity_types": sorted(entity_types, key=lambda t: t["name"]),
         "relation_types": sorted(relation_types, key=lambda r: r["relation"]),
-        "literal_attributes": sorted(literal_attributes, key=lambda a: a["relation"]),
         "excluded_constraint_classes": excluded,
         "provenance": provenance,
     }

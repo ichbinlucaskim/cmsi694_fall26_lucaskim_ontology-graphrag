@@ -67,10 +67,17 @@ class RenderTest(unittest.TestCase):
     def test_keywords_instruction(self):
         self.assertIn("must be exactly one label from this list", self.rendered["relation_types_block"])
 
-    def test_dates_render_as_date(self):
+    def test_dates_render_as_date_type(self):
         text = self.rendered["relation_types_block"]
-        self.assertIn("- date of birth (Human -> date): ", text)
+        self.assertIn("- date of birth (Human -> Date): ", text)
         self.assertNotIn("literal:date", text)
+        self.assertIn("- Date: A calendar date, month, or year.", self.rendered["entity_types_guidance"])
+
+    def test_no_editor_notes_in_definitions(self):
+        text = self.rendered["relation_types_block"]
+        self.assertIsNone(re.search(r"\bP\d+\b", text))
+        self.assertNotIn("Use ", text)
+        self.assertIn("- cause of death (Human -> Cause of death): underlying or immediate cause of death\n", text)
 
     def test_deterministic(self):
         again = op.render(json.loads(json.dumps(self.ontology)))
