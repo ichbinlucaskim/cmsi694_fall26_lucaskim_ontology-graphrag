@@ -18,7 +18,9 @@ Entity types are reported alongside. LightRAG stores a type lowercased with
 its spaces removed (lightrag/operate.py:698), e.g. "Settlement or region"
 becomes "settlementorregion", so a node type is "in the ontology" when it
 equals an ontology type name lowercased with whitespace and underscores
-removed. SCRUM-21 extends this measurement.
+removed. Entity-type conformance is the share of entities whose type is in the
+ontology by that rule. scripts/graph_metrics.py (SCRUM-21) reports these
+measures with a duplicate-entity rate.
 
 Standard library only.
 """
@@ -76,6 +78,8 @@ def measure(nodes: list[dict], edges: list[dict], ontology: dict) -> dict:
         "nonconforming_keywords": dict(nonconforming.most_common()),
         "entities": len(nodes),
         "entity_types": dict(node_types.most_common()),
+        "entities_in_ontology_types": len(nodes) - sum(outside.values()),
+        "entity_type_conformance": (len(nodes) - sum(outside.values())) / len(nodes) if nodes else None,
         "entities_outside_ontology_types": sum(outside.values()),
         "entity_types_outside_ontology": dict(sorted(outside.items(), key=lambda kv: (-kv[1], kv[0]))),
     }
