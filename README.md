@@ -98,7 +98,7 @@ python scripts/derive_ontology.py --offline
 python scripts/derive_ontology.py --check
 ```
 
-This derives the treatment ontology, `ontology/ontology.json` (18 entity
+This derives the treatment ontology, `ontology/ontology.json` (19 entity
 types, 34 relation types), from the Wikidata property constraints of the
 2Wiki relations. It also writes `ontology/derivation_report.json`, which
 holds the validation and relation-coverage results. Wikidata responses are cached in
