@@ -113,25 +113,39 @@ hashed.
 
 ## Reference timing
 
-**Current reference: baseline smoke10 index** (SCRUM-16, run 2026-09-27 (America/Los_Angeles),
-commit `7ac0e59`, `configs/run_config.json` as committed there; details in
-`docs/results/baseline-smoke10.md`).
+**Current reference: baseline study50** (SCRUM-32, indexed 2026-10-16 and
+2026-10-20, queried 2026-10-22 to 23 (America/Los_Angeles); index commit
+`2b358d2`, query commit `fca12d5`, `configs/run_config.json` sha256
+`0462fab880d2…`; details in `docs/results/baseline-study50.md`).
 
 | Measure | Value |
 |---|---|
-| Paragraphs | 100 (mean 65.5 words) |
-| Indexing wall-clock | 5,383.3 s |
-| Seconds per paragraph | **53.8** |
-| Result | 100/100 processed, 0 failed |
-| LLM tokens (Ollama-reported) | 189,225 prompt + 50,373 completion, 100 calls |
+| Paragraphs | 427, one graph |
+| Indexing wall-clock | 24,872 s (6.9 h) in two sessions: 8,187 s for 149 paragraphs (interrupted; from timestamps) and 16,685.1 s for 278 |
+| Seconds per paragraph | **58.2** over both sessions (54.9 and 60.0) |
+| Result | 427/427 processed, 0 failed |
+| LLM tokens, session 2 (Ollama-reported) | 525,646 prompt + 157,887 completion, 278 calls; session 1 not recorded |
+| Query, 50 questions, cache off | 11,486.2 s (3.2 h); mean **229.7 s** per question, max 365.4 s; 100 LLM calls, about 7,446 prompt tokens each |
 
-**Projection for study50 at 53.8 s per paragraph:** 427 paragraphs gives
-22,973 s, about 6.4 h per condition.
+**For the ontology condition on study50** (SCRUM-22): at 58.2 s per paragraph,
+indexing 427 paragraphs takes about 6.9 h, and querying 50 questions about
+3.2 h. The ontology smoke10 index ran at 51.6 s per paragraph, close to the
+baseline's 53.8 on smoke10; the ontology prompt has since changed (SCRUM-18),
+so plan for the observed range below.
 
-The projection is a rough guide. The rate depends mostly on how much each
-extraction generates. smoke10 averaged about 504 completion tokens per call,
-and the unseeded 10-paragraph mini run averaged about 923, which took 117.8 s
-per paragraph. Treat 54 to 118 s per paragraph as the observed range.
+Query time grows with the index: 158.9 s per question on smoke10 (100
+paragraphs, SCRUM-30 re-run) against 229.7 s on study50, because more context
+is assembled into each answer prompt.
+
+The rate depends mostly on how much each extraction generates. smoke10
+averaged about 504 completion tokens per call and study50 session 2 about 568,
+while the unseeded 10-paragraph mini run averaged about 923 and took 117.8 s
+per paragraph. Treat 52 to 118 s per paragraph as the observed range.
+
+**Previous reference: baseline smoke10 index** (SCRUM-16, run 2026-09-27,
+commit `7ac0e59`; details in `docs/results/baseline-smoke10.md`): 100
+paragraphs, 5,383.3 s, **53.8** s per paragraph, 100/100 processed, 189,225
+prompt + 50,373 completion LLM tokens over 100 calls.
 
 Earlier measurements, kept for history:
 

@@ -549,7 +549,14 @@ async def run_index(args, shared, cond, hashes, questions, corpus, provenance, b
             **status_summary(final),
         )
     except BaseException as exc:
-        record.update(status="interrupted", ended_at=now(), error=repr(exc))
+        # Keep the tokens spent before the interruption; a resumed run does
+        # not redo the documents this session finished.
+        record.update(status="interrupted", ended_at=now(), error=repr(exc), tokens={
+            "method": ("Ollama-reported counts via token_tracker for the calls sent before "
+                       "the interruption; cache hits count nothing"),
+            "llm": llm_tracker.get_usage(),
+            "embedding": embed_tracker.get_usage(),
+        })
         raise
     finally:
         write_manifest(manifest_path, manifest)
