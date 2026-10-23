@@ -1,0 +1,178 @@
+{
+  "condition": "baseline",
+  "subset": "study50",
+  "subset_provenance": {
+    "subset_manifest_sha256": "094198d427cd05be619c023f15dc1be80d7d3b4df98891967aa356181797a30d",
+    "source_subset": "study50",
+    "files": {
+      "questions_50.jsonl": "dda89d59a240cf94dcfe91c8c3798188dc8ba26589ee161c581083513c86c0eb",
+      "corpus_50.jsonl": "8fd8f182a9a93d7669bb33e967406f813ca4a17cf57dbd66bbf57117d4bf41a7"
+    }
+  },
+  "question_count": 50,
+  "paragraph_count": 427,
+  "index": [
+    {
+      "status": "interrupted",
+      "started_at": "2026-10-16T21:40:11+00:00",
+      "config_sha256": "0462fab880d215c56e98f07db049581f380b4add5a8919ec9ed5b965b4cf1a5a",
+      "condition_config_sha256": "22f151c2a0766d27cc0297b53d1831ce72f58181086413178579bfecfcd2453c",
+      "index_settings_sha256": "e2a4c0dcb9777fb8ee037d86c148249adb7cf871da56f46da6c355c55858e7d2",
+      "models": {
+        "llm": "qwen2.5:7b-instruct",
+        "embedding": "bge-m3:latest"
+      },
+      "ollama_version": "0.34.3",
+      "model_digests": {
+        "qwen2.5:7b-instruct": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+        "bge-m3:latest": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab"
+      },
+      "lightrag_version": "1.5.7",
+      "git": {
+        "commit": "2b358d29a32a56da2cca547ee5a4ddafbde28576",
+        "dirty": false
+      },
+      "seed": 694,
+      "documents_total": 427,
+      "documents_already_processed": 0,
+      "documents_enqueued": 427,
+      "warmup_s": 7.2,
+      "ended_at": "2026-10-16T23:56:38+00:00",
+      "error": "CancelledError()"
+    },
+    {
+      "status": "completed",
+      "started_at": "2026-10-20T19:04:02+00:00",
+      "config_sha256": "0462fab880d215c56e98f07db049581f380b4add5a8919ec9ed5b965b4cf1a5a",
+      "condition_config_sha256": "22f151c2a0766d27cc0297b53d1831ce72f58181086413178579bfecfcd2453c",
+      "index_settings_sha256": "e2a4c0dcb9777fb8ee037d86c148249adb7cf871da56f46da6c355c55858e7d2",
+      "models": {
+        "llm": "qwen2.5:7b-instruct",
+        "embedding": "bge-m3:latest"
+      },
+      "ollama_version": "0.34.3",
+      "model_digests": {
+        "qwen2.5:7b-instruct": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+        "bge-m3:latest": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab"
+      },
+      "lightrag_version": "1.5.7",
+      "git": {
+        "commit": "2b358d29a32a56da2cca547ee5a4ddafbde28576",
+        "dirty": false
+      },
+      "seed": 694,
+      "documents_total": 427,
+      "documents_already_processed": 149,
+      "documents_enqueued": 0,
+      "warmup_s": 7.2,
+      "first_pass": {
+        "status_counts": {
+          "processed": 427
+        },
+        "failed_ids": [],
+        "unfinished_ids": []
+      },
+      "ended_at": "2026-10-20T23:42:16+00:00",
+      "indexing_wall_s": 16685.1,
+      "documents_processed_this_run": 278,
+      "seconds_per_processed_document": 60.0,
+      "max_chunks_per_document": 1,
+      "tokens": {
+        "method": "Ollama-reported prompt_eval_count and eval_count for every LLM and embedding call actually sent in this invocation, collected with LightRAG's token_tracker hook; LLM cache hits send no call and count nothing.",
+        "llm": {
+          "prompt_tokens": 525646,
+          "completion_tokens": 157887,
+          "total_tokens": 683533,
+          "call_count": 278
+        },
+        "embedding": {
+          "prompt_tokens": 126785,
+          "completion_tokens": 0,
+          "total_tokens": 126785,
+          "call_count": 859
+        }
+      },
+      "status_counts": {
+        "processed": 427
+      },
+      "failed_ids": [],
+      "unfinished_ids": []
+    }
+  ],
+  "index_sessions": 2,
+  "query": [
+    {
+      "status": "completed",
+      "started_at": "2026-10-22T21:08:06+00:00",
+      "config_sha256": "0462fab880d215c56e98f07db049581f380b4add5a8919ec9ed5b965b4cf1a5a",
+      "condition_config_sha256": "22f151c2a0766d27cc0297b53d1831ce72f58181086413178579bfecfcd2453c",
+      "index_settings_sha256": "e2a4c0dcb9777fb8ee037d86c148249adb7cf871da56f46da6c355c55858e7d2",
+      "models": {
+        "llm": "qwen2.5:7b-instruct",
+        "embedding": "bge-m3:latest"
+      },
+      "ollama_version": "0.34.3",
+      "model_digests": {
+        "qwen2.5:7b-instruct": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+        "bge-m3:latest": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab"
+      },
+      "lightrag_version": "1.5.7",
+      "git": {
+        "commit": "fca12d581c4fee54c9857432f908855b2ba262de",
+        "dirty": true
+      },
+      "seed": 694,
+      "llm_cache": false,
+      "index_built_with_settings_sha256": "e2a4c0dcb9777fb8ee037d86c148249adb7cf871da56f46da6c355c55858e7d2",
+      "allow_settings_mismatch": false,
+      "settings_mismatch": false,
+      "allow_incomplete": false,
+      "index_incomplete": false,
+      "index_status_counts": {
+        "processed": 427
+      },
+      "answer_template": {
+        "key": "rag_response",
+        "placeholders": [
+          "context_data",
+          "response_type",
+          "user_prompt"
+        ],
+        "template_sha256": "7f0e7292a5c2c395918828daaaf231afdf0f2db584c0b6612c49480a4b75b923",
+        "replaced_template_sha256": "72bd3844d9165657291989dc0117665d3f2a98de01471811f475a52d6818e893"
+      },
+      "warmup_s": 6.4,
+      "ended_at": "2026-10-23T15:13:29+00:00",
+      "questions_already_answered": 0,
+      "questions_answered": 50,
+      "query_failures_this_session": 0,
+      "query_wall_s": 11486.2,
+      "mean_query_s": 229.72,
+      "tokens": {
+        "method": "as for index: Ollama-reported counts via token_tracker; cache hits count nothing",
+        "llm": {
+          "prompt_tokens": 744610,
+          "completion_tokens": 1954,
+          "total_tokens": 746564,
+          "call_count": 100
+        },
+        "embedding": {
+          "prompt_tokens": 1891,
+          "completion_tokens": 0,
+          "total_tokens": 1891,
+          "call_count": 50
+        }
+      },
+      "questions": 50,
+      "query_failures": 0,
+      "results_file": "runs/baseline/study50/results.jsonl",
+      "results_sha256": "2b01ce8b86f782368f5ee95487ca7223612dce76613cfdfc5040435f8248c02c",
+      "normalization_fallback": {
+        "rule": "keep text before the first blank line or '### References' heading; keep its first sentence (split on a period, whitespace, capital letter); then repeatedly strip trailing [n] / [n, m] markers, surrounding whitespace, and one trailing period",
+        "rows_changed": 0,
+        "changed": []
+      }
+    }
+  ],
+  "query_sessions": 1
+}

@@ -14,7 +14,8 @@ question and its own context paragraphs, for pipeline tests.
 
 Outputs go to runs/<condition>/<subset>/ (git-ignored):
     lightrag/            LightRAG working directory
-    run_manifest.json    one record per index or query invocation
+    run_manifest.json    one record per index or query invocation (session);
+                         index_sessions and query_sessions count them
     results.jsonl        one row per question (query)
 
 query replaces LightRAG's answer template (query.answer_template_key) with
@@ -28,6 +29,13 @@ rows changed.
 
 index is resumable: documents already PROCESSED are skipped, documents left
 PENDING or interrupted are picked up, and FAILED documents get one retry.
+query is resumable too: each answered question's row is appended to
+results.jsonl and flushed at once, and a re-run skips the question_ids already
+in the file. It refuses to append when the rows already written have a
+different shared-config sha256, index-settings sha256, seed, or LLM cache flag
+(RESUME_KEYS, stored on every row), and says which differ. A question
+interrupted mid-answer (Ctrl+C) is not written. To start a query run over,
+move results.jsonl aside.
 query refuses to run on an incomplete index unless --allow-incomplete is given.
 index always uses the seed in the shared config. query --seed overrides it for
 query-time LLM calls, and query --no-llm-cache bypasses LightRAG's LLM response
@@ -38,6 +46,7 @@ import argparse
 import asyncio
 import hashlib
 import json
+import os
 import re
 import string
 import subprocess
@@ -84,6 +93,8 @@ NORMALIZE_RULE = (
     "first sentence (split on a period, whitespace, capital letter); then repeatedly "
     "strip trailing [n] / [n, m] markers, surrounding whitespace, and one trailing period"
 )
+# Stored on every result row; query appends only to rows that agree on all four.
+RESUME_KEYS = ["config_sha256", "index_settings_sha256", "seed", "llm_cache"]
 # Keys a condition file may add under "settings", and how they are applied.
 CONDITION_KEYS = {"addon_params", "prompt_overrides"}
 
@@ -242,6 +253,7 @@ def start_record(manifest_path: Path, base: dict, phase: str, record: dict) -> t
         manifest.setdefault(key, value)
     record = {"status": "running", "started_at": now(), **record}
     manifest.setdefault(phase, []).append(record)
+    manifest[f"{phase}_sessions"] = len(manifest[phase])
     write_manifest(manifest_path, manifest)
     return manifest, record
 
@@ -389,6 +401,73 @@ def status_summary(statuses: dict[str, str]) -> dict:
     }
 
 
+# ---------------------------------------------------------------- results
+
+
+def read_results(path: Path) -> list[dict]:
+    """Rows already in a results file; refuse a torn last line or duplicate IDs."""
+    if not path.exists():
+        return []
+    text = path.read_text(encoding="utf-8")
+    if text and not text.endswith("\n"):
+        raise SystemExit(f"{path}: the last line is incomplete; remove it or move the file aside")
+    rows = []
+    for n, line in enumerate(text.splitlines(), start=1):
+        try:
+            rows.append(json.loads(line))
+        except json.JSONDecodeError:
+            raise SystemExit(f"{path}: line {n} is not valid JSON") from None
+    duplicates = sorted(q for q, c in Counter(r["question_id"] for r in rows).items() if c > 1)
+    if duplicates:
+        raise SystemExit(f"{path}: duplicate question_ids {duplicates}")
+    return rows
+
+
+def resume_mismatches(rows: list[dict], run_keys: dict) -> list[str]:
+    """One line per RESUME_KEYS value on which written rows differ from this run."""
+    out = []
+    for key in RESUME_KEYS:
+        mine = json.dumps(run_keys[key])
+        theirs = sorted({json.dumps(r[key]) if key in r else "missing" for r in rows} - {mine})
+        if theirs:
+            out.append(f"{key}: file has {', '.join(theirs)}, this run has {mine}")
+    return out
+
+
+async def answer_questions(questions: list[dict], path: Path, run_keys: dict, answer,
+                           progress: dict) -> None:
+    """Answer the questions not yet in path, appending and flushing one row each.
+
+    answer(question) is awaited for a row; run_keys are added to it. progress
+    gets "already_answered" and a running "answered" count, so a caller can
+    record them if this is interrupted.
+    """
+    rows = read_results(path)
+    problems = resume_mismatches(rows, run_keys)
+    if problems:
+        raise SystemExit(
+            f"Refusing to append to {path}: " + "; ".join(problems) + ". Rerun with the "
+            "settings of the rows already written, or move the file aside to start over."
+        )
+    wanted = {q["_id"] for q in questions}
+    strangers = sorted(r["question_id"] for r in rows if r["question_id"] not in wanted)
+    if strangers:
+        raise SystemExit(f"{path} has rows for questions not in this subset: {strangers}")
+    done = {r["question_id"] for r in rows}
+    progress.update(already_answered=len(done), answered=0)
+    pending = [q for q in questions if q["_id"] not in done]
+    print(f"{len(done)} of {len(questions)} questions already answered; {len(pending)} to go", flush=True)
+    with path.open("a", encoding="utf-8", newline="\n") as f:
+        for question in pending:
+            row = await answer(question)
+            # No await between here and the fsync, so a cancellation (Ctrl+C)
+            # lands either before the row is written or after it is on disk.
+            f.write(json.dumps({**row, **run_keys}, ensure_ascii=False) + "\n")
+            f.flush()
+            os.fsync(f.fileno())
+            progress["answered"] += 1
+
+
 # ------------------------------------------------------------------ phases
 
 
@@ -470,7 +549,14 @@ async def run_index(args, shared, cond, hashes, questions, corpus, provenance, b
             **status_summary(final),
         )
     except BaseException as exc:
-        record.update(status="interrupted", ended_at=now(), error=repr(exc))
+        # Keep the tokens spent before the interruption; a resumed run does
+        # not redo the documents this session finished.
+        record.update(status="interrupted", ended_at=now(), error=repr(exc), tokens={
+            "method": ("Ollama-reported counts via token_tracker for the calls sent before "
+                       "the interruption; cache hits count nothing"),
+            "llm": llm_tracker.get_usage(),
+            "embedding": embed_tracker.get_usage(),
+        })
         raise
     finally:
         write_manifest(manifest_path, manifest)
@@ -507,6 +593,7 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
     )
     answer_template = apply_answer_template(shared)
     await rag.initialize_storages()
+    record = None
     try:
         statuses = await doc_statuses(rag, [p["id"] for p in corpus])
         summary = status_summary(statuses)
@@ -516,6 +603,17 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
                 f"Index is incomplete ({summary['status_counts']}); "
                 "finish indexing or pass --allow-incomplete."
             )
+        results_path = run_dir / "results.jsonl"
+        run_keys = {"config_sha256": hashes["config_sha256"],
+                    "index_settings_sha256": hashes["index_settings_sha256"],
+                    "seed": seed, "llm_cache": not args.no_llm_cache}
+        # Refuse before recording a session or warming up, so a mismatch
+        # leaves the manifest unchanged and costs no model call.
+        problems = resume_mismatches(read_results(results_path), run_keys)
+        if problems:
+            raise SystemExit(f"Refusing to append to {results_path.relative_to(ROOT)}: "
+                             + "; ".join(problems) + ". Rerun with the settings of the rows "
+                             "already written, or move the file aside to start over.")
         manifest, record = start_record(manifest_path, base, "query", {
             **hashes,
             **env(shared),
@@ -530,10 +628,12 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
             "answer_template": answer_template,
         })
         q = shared["query"]
-        record["warmup_s"] = await warm_up(shared)
-        results_path = run_dir / "results.jsonl"
-        rows, failures, start = [], 0, time.perf_counter()
-        for n, question in enumerate(questions, start=1):
+        progress = {"already_answered": 0, "answered": 0}
+        session_failures, start = 0, time.perf_counter()
+        total = len(questions)
+
+        async def answer(question: dict) -> dict:
+            nonlocal session_failures
             param = QueryParam(
                 mode=q["mode"],
                 top_k=q["top_k"],
@@ -557,15 +657,17 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
             retrieved = list(dict.fromkeys(
                 rec["full_doc_id"] for rec in chunk_records if rec and "full_doc_id" in rec
             ))
-            answer = (result.get("llm_response") or {}).get("content") or ""
-            failures += result.get("status") != "success"
-            rows.append({
+            text = (result.get("llm_response") or {}).get("content") or ""
+            session_failures += result.get("status") != "success"
+            n = progress["already_answered"] + progress["answered"] + 1
+            print(f"[{n}/{total}] {question['_id']} {elapsed:.1f}s -> {text.strip()[:80]!r}", flush=True)
+            return {
                 "question_id": question["_id"],
                 "type": question["type"],
                 "question": question["question"],
                 "gold_answer": question["answer"],
-                "predicted_answer_raw": answer,
-                "predicted_answer": normalize_answer(answer),
+                "predicted_answer_raw": text,
+                "predicted_answer": normalize_answer(text),
                 "retrieved_paragraph_ids": retrieved,
                 "gold_paragraph_ids": question["gold_paragraph_ids"],
                 "query_status": result.get("status"),
@@ -574,13 +676,36 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
                 "retrieved_relations": len((result.get("data") or {}).get("relationships") or []),
                 "query_wall_s": round(elapsed, 2),
                 "llm_tokens": llm_tracker.get_usage()["total_tokens"] - before,
-            })
-            print(f"[{n}/{len(questions)}] {question['_id']} {elapsed:.1f}s -> {answer.strip()[:80]!r}", flush=True)
+            }
 
-        wall = time.perf_counter() - start
-        with results_path.open("w", encoding="utf-8", newline="\n") as f:
-            for row in rows:
-                f.write(json.dumps(row, ensure_ascii=False) + "\n")
+        def session(wall: float) -> dict:
+            return {
+                "ended_at": now(),
+                "questions_already_answered": progress["already_answered"],
+                "questions_answered": progress["answered"],
+                "query_failures_this_session": session_failures,
+                "query_wall_s": round(wall, 1),
+                "mean_query_s": round(wall / progress["answered"], 2) if progress["answered"] else None,
+                "tokens": {
+                    "method": "as for index: Ollama-reported counts via token_tracker; cache hits count nothing",
+                    "llm": llm_tracker.get_usage(),
+                    "embedding": embed_tracker.get_usage(),
+                },
+            }
+
+        try:
+            record["warmup_s"] = await warm_up(shared)
+            start = time.perf_counter()
+            await answer_questions(questions, results_path, run_keys, answer, progress)
+        except BaseException as exc:
+            record.update(status="interrupted", error=repr(exc), **session(time.perf_counter() - start))
+            raise
+        rows = read_results(results_path)
+        if [r["question_id"] for r in rows] != [x["_id"] for x in questions]:
+            record.update(status="failed", error="results rows are not in subset order",
+                          **session(time.perf_counter() - start))
+            raise SystemExit(f"{results_path.relative_to(ROOT)} rows are not in subset order")
+        failures = sum(r.get("query_status") != "success" for r in rows)
         fallback = [
             {"row": n, "question_id": row["question_id"],
              "raw": row["predicted_answer_raw"], "normalized": row["predicted_answer"]}
@@ -589,11 +714,9 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
         ]
         record.update(
             status="completed",
-            ended_at=now(),
+            **session(time.perf_counter() - start),
             questions=len(rows),
             query_failures=failures,
-            query_wall_s=round(wall, 1),
-            mean_query_s=round(wall / len(rows), 2) if rows else None,
             results_file=str(results_path.relative_to(ROOT)),
             results_sha256=freeze_subset.sha256_of(results_path),
             normalization_fallback={
@@ -601,17 +724,13 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
                 "rows_changed": len(fallback),
                 "changed": fallback,
             },
-            tokens={
-                "method": "as for index: Ollama-reported counts via token_tracker; cache hits count nothing",
-                "llm": llm_tracker.get_usage(),
-                "embedding": embed_tracker.get_usage(),
-            },
         )
-        write_manifest(manifest_path, manifest)
     finally:
+        if record is not None:
+            write_manifest(manifest_path, manifest)
         await rag.finalize_storages()
-    print(f"Wrote {results_path.relative_to(ROOT)}: {len(rows)} rows, {failures} failed queries, "
-          f"{len(fallback)} changed by the normalization fallback")
+    print(f"Wrote {results_path.relative_to(ROOT)}: {len(rows)} rows ({progress['answered']} this "
+          f"session), {failures} failed queries, {len(fallback)} changed by the normalization fallback")
     return 1 if failures else 0
 
 

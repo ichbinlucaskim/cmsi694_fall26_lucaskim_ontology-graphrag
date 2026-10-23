@@ -54,14 +54,20 @@ caffeinate -i python scripts/run_condition.py index --condition baseline --subse
 skipped, paragraphs left pending or interrupted are processed, and paragraphs
 that failed are retried once. `query` refuses to run until every paragraph is
 processed; `--allow-incomplete` overrides this and is recorded in the manifest.
+`query` resumes the same way: each answer is appended to `results.jsonl` as
+soon as it is made, and a rerun skips questions already in the file. It
+refuses to append if the rows already written used a different shared config,
+index settings, seed, or LLM cache setting, and names what differs. A question
+interrupted mid-answer is not written. To start a query over, move
+`results.jsonl` aside.
 
 **Outputs** go to `runs/<condition>/<subset>/`, which is git-ignored:
 
 | Path | Contents |
 |---|---|
 | `lightrag/` | LightRAG working directory (graph, vector stores, LLM cache, document status) |
-| `run_manifest.json` | One record per `index` or `query` invocation: timings, document status counts, failed IDs, token counts, config and subset hashes, model digests, versions, git commit |
-| `results.jsonl` | One row per question: ID, type, question, gold answer, predicted answer, retrieved and gold paragraph IDs, query time |
+| `run_manifest.json` | One record per `index` or `query` invocation (session), counted in `index_sessions` and `query_sessions`: timings, document status counts, failed IDs, token counts, config and subset hashes, model digests, versions, git commit |
+| `results.jsonl` | One row per question: ID, type, question, gold answer, predicted answer, retrieved and gold paragraph IDs, query time, and the config sha256, index-settings sha256, seed, and cache flag it was answered with |
 | `scores.json` | Written by `scripts/score.py`: per-question and aggregate scores |
 
 ## Scoring a run
