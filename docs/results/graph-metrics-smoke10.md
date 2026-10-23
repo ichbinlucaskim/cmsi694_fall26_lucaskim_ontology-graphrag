@@ -72,3 +72,46 @@ ontology, types outside the ontology: other 8, unknown 7, date 4.
 - `Sir Philip Sidney`; `Sir Philip Sidney and Robert Devereaux, Earl of Essex`
 - `The Presidents of the United States of America`; `United States`
 - `The Time`; `Time`
+
+## Interpretation
+
+This section was written by hand after the hand check; regenerating the report
+with `--out` drops it.
+
+The duplicate rates, 2.1% for the baseline and 5.0% for the ontology graph,
+cannot be compared as measured. In the hand-checked sample of 20 flagged pairs
+(`docs/results/duplicate-sample-smoke10.md`), 8 name the same entity:
+precision 40.0% overall, 3/7 in the baseline graph and 5/13 in the ontology
+graph. Most flagged pairs are therefore not duplicates, and with 7 and 13
+sample pairs per graph the precision of each graph is too uncertain to correct
+its rate, so the measured rates do not show which graph has more duplicates.
+
+The 12 false pairs show these error patterns:
+
+| Pattern | Sample pairs | In the sample |
+|---|---|---|
+| A parent's name inside a child's name ("ibn", "bin", "younger son of") | 6, 8, 19 | both graphs; the "ibn" and "bin" forms only in the ontology graph |
+| A film and its sequel | 2, 9 | both graphs |
+| Two people joined with "and" into one entity | 13, 18 | ontology only |
+| A place and the region containing it | 1 | baseline only |
+| A title and a person who held it | 11 | ontology only |
+| A relation label turned into an entity ("Place of Origin") | 16 | ontology only |
+| A name that contains an unrelated name (a band and a country) | 7 | baseline only |
+| Two different things with the same name (a band and a magazine) | 20 | ontology only |
+
+Five patterns appear only in the ontology graph's sample pairs: entities
+joined with "and", a title against its holder, a relation label as an entity,
+the same-name pair, and the "ibn"/"bin" form of the parent pattern. The
+cluster lists above agree for the first three: the baseline graph has no
+cluster of those kinds, while the ontology graph also has the 7-entity "Place
+of Birth (...)" cluster. The band-and-country cluster is in both graphs but
+was drawn only from the baseline. Clusters outside the sample were not
+labeled.
+
+The "and" entities, the title node, and the relation-label entities are
+extraction errors in their own right, so they also bear on the ontology
+condition's entity quality, separately from the duplicate rule.
+
+The rule is not changed in this story. A rule with better precision, for
+example one that does not link across "and", "ibn", "bin", or "son of", and
+that ignores entities named as relation labels, is follow-up work.
