@@ -1,0 +1,149 @@
+{
+  "condition": "ontology",
+  "subset": "smoke10",
+  "subset_provenance": {
+    "subset_manifest_sha256": "094198d427cd05be619c023f15dc1be80d7d3b4df98891967aa356181797a30d",
+    "source_subset": "smoke10",
+    "files": {
+      "questions_smoke10.jsonl": "f07c798e534ef2df02f46fe76a663dbad4a929905b6395ceda400d76cfa6e0cf",
+      "corpus_smoke10.jsonl": "13dd5516543963dc380a5a5a11448866d16b3cc2aee490c7d0c48e5c0bb78497"
+    }
+  },
+  "question_count": 10,
+  "paragraph_count": 100,
+  "index": [
+    {
+      "status": "completed",
+      "started_at": "2026-10-23T19:58:53+00:00",
+      "config_sha256": "0462fab880d215c56e98f07db049581f380b4add5a8919ec9ed5b965b4cf1a5a",
+      "condition_config_sha256": "b049bbac528ccaf2dbc22968e3eed10262ab85149e06e6a4728644f1329d3f6b",
+      "index_settings_sha256": "16a4d3d71a9c3097d7b217b592a9caf1d873ae1acbe82c54129dee27ec6095d1",
+      "models": {
+        "llm": "qwen2.5:7b-instruct",
+        "embedding": "bge-m3:latest"
+      },
+      "ollama_version": "0.34.3",
+      "model_digests": {
+        "qwen2.5:7b-instruct": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+        "bge-m3:latest": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab"
+      },
+      "lightrag_version": "1.5.7",
+      "git": {
+        "commit": "19a76ff3332d84c5683bdcf99f548c54f29278c2",
+        "dirty": false
+      },
+      "seed": 694,
+      "documents_total": 100,
+      "documents_already_processed": 0,
+      "documents_enqueued": 100,
+      "warmup_s": 7.2,
+      "first_pass": {
+        "status_counts": {
+          "processed": 100
+        },
+        "failed_ids": [],
+        "unfinished_ids": []
+      },
+      "ended_at": "2026-10-23T21:48:04+00:00",
+      "indexing_wall_s": 5896.9,
+      "documents_processed_this_run": 100,
+      "seconds_per_processed_document": 59.0,
+      "max_chunks_per_document": 1,
+      "tokens": {
+        "method": "Ollama-reported prompt_eval_count and eval_count for every LLM and embedding call actually sent in this invocation, collected with LightRAG's token_tracker hook; LLM cache hits send no call and count nothing.",
+        "llm": {
+          "prompt_tokens": 465125,
+          "completion_tokens": 54937,
+          "total_tokens": 520062,
+          "call_count": 100
+        },
+        "embedding": {
+          "prompt_tokens": 40875,
+          "completion_tokens": 0,
+          "total_tokens": 40875,
+          "call_count": 309
+        }
+      },
+      "status_counts": {
+        "processed": 100
+      },
+      "failed_ids": [],
+      "unfinished_ids": []
+    }
+  ],
+  "query": [
+    {
+      "status": "completed",
+      "started_at": "2026-10-23T21:49:48+00:00",
+      "config_sha256": "0462fab880d215c56e98f07db049581f380b4add5a8919ec9ed5b965b4cf1a5a",
+      "condition_config_sha256": "b049bbac528ccaf2dbc22968e3eed10262ab85149e06e6a4728644f1329d3f6b",
+      "index_settings_sha256": "16a4d3d71a9c3097d7b217b592a9caf1d873ae1acbe82c54129dee27ec6095d1",
+      "models": {
+        "llm": "qwen2.5:7b-instruct",
+        "embedding": "bge-m3:latest"
+      },
+      "ollama_version": "0.34.3",
+      "model_digests": {
+        "qwen2.5:7b-instruct": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+        "bge-m3:latest": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab"
+      },
+      "lightrag_version": "1.5.7",
+      "git": {
+        "commit": "56d8c102281dcb6ea9b7206196b68efb50413fa1",
+        "dirty": false
+      },
+      "seed": 694,
+      "llm_cache": false,
+      "index_built_with_settings_sha256": "16a4d3d71a9c3097d7b217b592a9caf1d873ae1acbe82c54129dee27ec6095d1",
+      "allow_settings_mismatch": false,
+      "settings_mismatch": false,
+      "allow_incomplete": false,
+      "index_incomplete": false,
+      "index_status_counts": {
+        "processed": 100
+      },
+      "answer_template": {
+        "key": "rag_response",
+        "placeholders": [
+          "context_data",
+          "response_type",
+          "user_prompt"
+        ],
+        "template_sha256": "7f0e7292a5c2c395918828daaaf231afdf0f2db584c0b6612c49480a4b75b923",
+        "replaced_template_sha256": "72bd3844d9165657291989dc0117665d3f2a98de01471811f475a52d6818e893"
+      },
+      "warmup_s": 0.4,
+      "ended_at": "2026-10-23T22:13:45+00:00",
+      "questions_already_answered": 0,
+      "questions_answered": 10,
+      "query_failures_this_session": 0,
+      "query_wall_s": 1433.8,
+      "mean_query_s": 143.38,
+      "tokens": {
+        "method": "as for index: Ollama-reported counts via token_tracker; cache hits count nothing",
+        "llm": {
+          "prompt_tokens": 116251,
+          "completion_tokens": 382,
+          "total_tokens": 116633,
+          "call_count": 20
+        },
+        "embedding": {
+          "prompt_tokens": 381,
+          "completion_tokens": 0,
+          "total_tokens": 381,
+          "call_count": 10
+        }
+      },
+      "questions": 10,
+      "query_failures": 0,
+      "results_file": "runs/ontology/smoke10/results.jsonl",
+      "results_sha256": "0d44e8afb9effbaa196fcf1f939efe75503cae3c6e7f59ea3971c273440750df",
+      "normalization_fallback": {
+        "rule": "keep text before the first blank line or '### References' heading; keep its first sentence (split on a period, whitespace, capital letter); then repeatedly strip trailing [n] / [n, m] markers, surrounding whitespace, and one trailing period",
+        "rows_changed": 0,
+        "changed": []
+      }
+    }
+  ],
+  "query_sessions": 1
+}
