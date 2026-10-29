@@ -96,11 +96,17 @@ hashed.
   the same answer without calling the model. Repeats must run with
   `enable_llm_cache=False`, which `run_condition.py query --no-llm-cache` sets
   for that run and records in the manifest. Truncated responses are never
-  cached (`operate.py:4789`).
-- **Re-indexing with a different seed.** This must use a fresh working
-  directory. The old directory's extraction cache would return the earlier
-  outputs for identical prompts, and `run_condition.py index` also skips
-  documents that are already processed.
+  cached (`operate.py:4789`). A repeat on the same index should also pass
+  `--results-tag TAG` (SCRUM-33). It then writes `results-<TAG>.jsonl` and
+  leaves the first `results.jsonl` alone. Score it with
+  `score.py --run-dir <run dir> --results-tag TAG`.
+- **Re-indexing with a different seed or ontology version.** This must use a
+  fresh working directory. The old directory's extraction cache would return
+  the earlier outputs for identical prompts, and `run_condition.py index` also
+  skips documents that are already processed. `--run-label LABEL` gives the
+  new index its own directory, `runs/<condition>-<LABEL>/<subset>/`, and
+  records the label in the manifest (SCRUM-33). Labels use lowercase letters,
+  digits, and hyphens.
 
 ## Machine
 

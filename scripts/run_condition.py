@@ -5,6 +5,9 @@ One command per phase, for one experimental condition and one subset:
     python scripts/run_condition.py index --condition baseline --subset smoke10
     python scripts/run_condition.py query --condition baseline --subset smoke10
     python scripts/run_condition.py renormalize --condition baseline --subset smoke10
+    python scripts/run_condition.py index --condition ontology --subset study50 --run-label v2
+    python scripts/run_condition.py query --condition ontology --subset study50 --run-label v2 \
+        --results-tag r2
 
 Settings shared by every condition come from configs/run_config.json; a
 condition file, configs/conditions/<condition>.json, may add settings but not
@@ -12,11 +15,17 @@ redefine shared ones. Subsets are the frozen files from SCRUM-15, verified
 against data/subsets/manifest.json before use. "mini" is the first smoke20
 question and its own context paragraphs, for pipeline tests.
 
-Outputs go to runs/<condition>/<subset>/ (git-ignored):
+Outputs go to runs/<condition>/<subset>/ (git-ignored), or with --run-label
+LABEL to runs/<condition>-<LABEL>/<subset>/ (SCRUM-33):
     lightrag/            LightRAG working directory
     run_manifest.json    one record per index or query invocation (session);
                          index_sessions and query_sessions count them
-    results.jsonl        one row per question (query)
+    results.jsonl        one row per question (query); with query --results-tag
+                         TAG, results-<TAG>.jsonl instead, so a repeat can reuse
+                         the index without touching the first results
+Labels and tags are lowercase letters, digits and hyphens. Every manifest
+record stores run_label, and query records store results_tag (null when not
+given).
 
 query replaces LightRAG's answer template (query.answer_template_key) with
 query.answer_template from the shared config, for every condition, after
@@ -33,9 +42,10 @@ query is resumable too: each answered question's row is appended to
 results.jsonl and flushed at once, and a re-run skips the question_ids already
 in the file. It refuses to append when the rows already written have a
 different shared-config sha256, index-settings sha256, seed, or LLM cache flag
-(RESUME_KEYS, stored on every row), and says which differ. A question
+(RESUME_KEYS, stored on every row), and says which differ. Resume and this
+refusal apply to one results file, so each --results-tag has its own. A question
 interrupted mid-answer (Ctrl+C) is not written. To start a query run over,
-move results.jsonl aside.
+move the results file aside, or use a new --results-tag.
 query refuses to run on an incomplete index unless --allow-incomplete is given.
 index always uses the seed in the shared config. query --seed overrides it for
 query-time LLM calls, and query --no-llm-cache bypasses LightRAG's LLM response
@@ -97,6 +107,8 @@ NORMALIZE_RULE = (
 RESUME_KEYS = ["config_sha256", "index_settings_sha256", "seed", "llm_cache"]
 # Keys a condition file may add under "settings", and how they are applied.
 CONDITION_KEYS = {"addon_params", "prompt_overrides"}
+# The characters allowed in --run-label and --results-tag.
+LABEL = re.compile(r"[a-z0-9-]+")
 
 
 class SharedTokenTracker(TokenTracker):
@@ -125,6 +137,26 @@ def normalize_answer(raw: str) -> str:
 
 
 # ---------------------------------------------------------------- inputs
+
+
+def label(value: str) -> str:
+    """argparse type for --run-label and --results-tag."""
+    if not LABEL.fullmatch(value):
+        raise argparse.ArgumentTypeError(
+            f"{value!r}: use lowercase letters, digits and hyphens only"
+        )
+    return value
+
+
+def run_dir_for(condition: str, subset: str, run_label: str | None = None) -> Path:
+    """runs/<condition>/<subset>, or runs/<condition>-<run_label>/<subset>."""
+    name = condition if run_label is None else f"{condition}-{run_label}"
+    return RUNS_DIR / name / subset
+
+
+def results_name(results_tag: str | None = None) -> str:
+    """results.jsonl, or results-<results_tag>.jsonl."""
+    return "results.jsonl" if results_tag is None else f"results-{results_tag}.jsonl"
 
 
 def sha256_text(text: str) -> str:
@@ -472,12 +504,13 @@ async def answer_questions(questions: list[dict], path: Path, run_keys: dict, an
 
 
 async def run_index(args, shared, cond, hashes, questions, corpus, provenance, base) -> int:
-    run_dir = RUNS_DIR / args.condition / args.subset
+    run_dir = run_dir_for(args.condition, args.subset, args.run_label)
     rag_dir = run_dir / "lightrag"
     rag_dir.mkdir(parents=True, exist_ok=True)
     manifest_path = run_dir / "run_manifest.json"
     manifest, record = start_record(manifest_path, base, "index", {
         **hashes, **env(shared), "seed": shared["llm"]["options"].get("seed"),
+        "run_label": args.run_label,
     })
 
     llm_tracker, embed_tracker = SharedTokenTracker(), SharedTokenTracker()
@@ -569,7 +602,7 @@ async def run_index(args, shared, cond, hashes, questions, corpus, provenance, b
 
 
 async def run_query(args, shared, cond, hashes, questions, corpus, provenance, base) -> int:
-    run_dir = RUNS_DIR / args.condition / args.subset
+    run_dir = run_dir_for(args.condition, args.subset, args.run_label)
     rag_dir = run_dir / "lightrag"
     manifest_path = run_dir / "run_manifest.json"
     manifest = read_manifest(manifest_path)
@@ -603,7 +636,7 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
                 f"Index is incomplete ({summary['status_counts']}); "
                 "finish indexing or pass --allow-incomplete."
             )
-        results_path = run_dir / "results.jsonl"
+        results_path = run_dir / results_name(args.results_tag)
         run_keys = {"config_sha256": hashes["config_sha256"],
                     "index_settings_sha256": hashes["index_settings_sha256"],
                     "seed": seed, "llm_cache": not args.no_llm_cache}
@@ -626,6 +659,8 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
             "index_incomplete": incomplete,
             "index_status_counts": summary["status_counts"],
             "answer_template": answer_template,
+            "run_label": args.run_label,
+            "results_tag": args.results_tag,
         })
         q = shared["query"]
         progress = {"already_answered": 0, "answered": 0}
@@ -735,13 +770,14 @@ async def run_query(args, shared, cond, hashes, questions, corpus, provenance, b
 
 
 async def run_renormalize(args, shared, cond, hashes, questions, corpus, provenance, base) -> int:
-    run_dir = RUNS_DIR / args.condition / args.subset
-    results_path = run_dir / "results.jsonl"
+    run_dir = run_dir_for(args.condition, args.subset, args.run_label)
+    results_path = run_dir / results_name()
     if not results_path.exists():
         raise SystemExit(f"No results to renormalize: {results_path.relative_to(ROOT)}")
     manifest_path = run_dir / "run_manifest.json"
     manifest, record = start_record(manifest_path, base, "renormalize", {
         "git": git_info(),
+        "run_label": args.run_label,
         "rule": NORMALIZE_RULE,
         "results_sha256_before": freeze_subset.sha256_of(results_path),
     })
@@ -777,6 +813,14 @@ def main() -> int:
     parser.add_argument("--condition", required=True)
     parser.add_argument("--subset", required=True, choices=SUBSETS)
     parser.add_argument(
+        "--run-label", type=label, default=None,
+        help="use runs/<condition>-<LABEL>/<subset> instead of runs/<condition>/<subset> (recorded)",
+    )
+    parser.add_argument(
+        "--results-tag", type=label, default=None,
+        help="query: write results-<TAG>.jsonl instead of results.jsonl (recorded)",
+    )
+    parser.add_argument(
         "--allow-incomplete", action="store_true",
         help="query: run even if some documents are not processed (recorded)",
     )
@@ -799,6 +843,8 @@ def main() -> int:
         parser.error("--seed, --no-llm-cache and --allow-settings-mismatch apply to query only")
     if args.phase != "query" and args.allow_incomplete:
         parser.error("--allow-incomplete applies to query only")
+    if args.phase != "query" and args.results_tag is not None:
+        parser.error("--results-tag applies to query only")
 
     shared, cond, hashes = load_config(args.condition)
     questions, corpus, provenance = load_subset(args.subset)

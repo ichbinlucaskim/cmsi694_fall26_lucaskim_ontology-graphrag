@@ -1,10 +1,23 @@
-"""Score one condition's results on one subset (SCRUM-19).
+"""Score one run's results (SCRUM-19, SCRUM-33).
 
+    python scripts/score.py --run-dir runs/ontology-v2/smoke10
+    python scripts/score.py --run-dir runs/ontology-v2/study50 --results-tag r2
     python scripts/score.py --condition baseline --subset smoke10
 
-Reads runs/<condition>/<subset>/results.jsonl and writes
-    runs/<condition>/<subset>/scores.json       per-question scores and aggregates
-    docs/results/<condition>-<subset>-scores.md  short summary
+--condition C --subset S is shorthand for --run-dir runs/C/S. In a run
+directory <run>/<subset>, score.py reads results.jsonl (or, with
+--results-tag TAG, results-<TAG>.jsonl) and writes
+    <run>/<subset>/scores.json                  per-question scores and aggregates
+                                                (scores-<TAG>.json with a tag)
+    docs/results/<run>-<subset>-scores.md       short summary
+                                                (<run>-<subset>-<TAG>-scores.md)
+for example docs/results/ontology-v2-smoke10-scores.md. --out-dir DIR writes
+both files, under the same names, into DIR instead. If either file exists,
+score.py refuses and names it, unless --overwrite is given.
+
+The results file must match the sha256 of the last completed query run in the
+run manifest that has the same results tag (no tag when the record has none),
+or of a later renormalize run of that file.
 
 Answer metrics follow the authors' official evaluation script,
 2wikimultihop_evaluate_v1.1.py in https://github.com/Alab-NII/2wikimultihop
@@ -51,6 +64,8 @@ OFFICIAL_SCRIPT = (
     "13800e5be57df1b4040b9b1588c6c811779e69e9/2wikimultihop_evaluate_v1.1.py"
 )
 METRICS = ["em", "em_alias", "f1", "f1_alias", "retrieval_recall"]
+# The characters allowed in --results-tag, as in run_condition.py.
+LABEL = re.compile(r"[a-z0-9-]+")
 BOOTSTRAP_RESAMPLES = 1000
 BOOTSTRAP_SEED = 694
 TYPES = ["inference", "compositional", "comparison", "bridge_comparison"]
@@ -131,6 +146,63 @@ def load_aliases(path: Path, wanted: set[str]) -> dict[str, list[str]]:
             if entry["Q_id"] in wanted:
                 aliases[entry["Q_id"]] = sorted(set(entry["aliases"] + entry["demonyms"]))
     return aliases
+
+
+def label(value: str) -> str:
+    """argparse type for --results-tag."""
+    if not LABEL.fullmatch(value):
+        raise argparse.ArgumentTypeError(
+            f"{value!r}: use lowercase letters, digits and hyphens only"
+        )
+    return value
+
+
+def suffix(results_tag: str | None) -> str:
+    return "" if results_tag is None else f"-{results_tag}"
+
+
+def output_paths(run_dir: Path, results_tag: str | None = None,
+                 out_dir: Path | None = None) -> dict[str, Path]:
+    """Results file read, and scores and summary files written, for one run."""
+    tag = suffix(results_tag)
+    scores_dir = run_dir if out_dir is None else out_dir
+    docs_dir = RESULTS_DOCS_DIR if out_dir is None else out_dir
+    return {
+        "results": run_dir / f"results{tag}.jsonl",
+        "scores": scores_dir / f"scores{tag}.json",
+        "summary": docs_dir / f"{run_dir.parent.name}-{run_dir.name}{tag}-scores.md",
+    }
+
+
+def refuse_existing(paths: list[Path], overwrite: bool) -> None:
+    existing = [path for path in paths if path.exists()]
+    if existing and not overwrite:
+        raise SystemExit(
+            "Refusing to overwrite " + ", ".join(display(path) for path in existing)
+            + "; pass --overwrite to replace, or --out-dir to write elsewhere."
+        )
+
+
+def display(path: Path) -> str:
+    """A path relative to the repo when it is inside it, else absolute."""
+    path = path.resolve()
+    return str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else str(path)
+
+
+def expected_sha256(manifest: dict, results_tag: str | None) -> tuple[dict, str]:
+    """The last completed query run for this results tag, and the sha256 its file should have."""
+    def same_tag(record: dict) -> bool:
+        return record.get("status") == "completed" and record.get("results_tag") == results_tag
+
+    query_runs = [r for r in manifest.get("query", []) if same_tag(r)]
+    if not query_runs:
+        raise SystemExit(f"The run manifest has no completed query run with results tag {results_tag}")
+    query_run = query_runs[-1]
+    expected = query_run["results_sha256"]
+    renormalized = [r for r in manifest.get("renormalize", []) if same_tag(r)]
+    if renormalized and renormalized[-1]["started_at"] > query_run["started_at"]:
+        expected = renormalized[-1]["results_sha256_after"]
+    return query_run, expected
 
 
 # ----------------------------------------------------------------- scoring
@@ -218,7 +290,8 @@ def pct(value: float) -> str:
 def markdown(report: dict) -> str:
     p = report["provenance"]
     lines = [
-        f"# Scores: {report['condition']}, {report['subset']}",
+        f"# Scores: {report['run']}, {report['subset']}"
+        + (f", results tag {report['results_tag']}" if report["results_tag"] else ""),
         "",
         "Written by `scripts/score.py`; full per-question scores are in "
         f"`{p['scores_file']}` (git-ignored).",
@@ -273,29 +346,35 @@ def markdown(report: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("--condition", required=True)
-    parser.add_argument("--subset", required=True)
-    args = parser.parse_args()
+    parser.add_argument("--run-dir", type=Path, help="the run directory, e.g. runs/ontology-v2/smoke10")
+    parser.add_argument("--condition", help="with --subset: shorthand for --run-dir runs/<condition>/<subset>")
+    parser.add_argument("--subset")
+    parser.add_argument("--results-tag", type=label, default=None,
+                        help="score results-<TAG>.jsonl instead of results.jsonl")
+    parser.add_argument("--out-dir", type=Path, default=None,
+                        help="write the scores and summary files into this directory instead")
+    parser.add_argument("--overwrite", action="store_true", help="replace existing output files")
+    args = parser.parse_args(argv)
+    if args.run_dir is not None and (args.condition or args.subset):
+        parser.error("give either --run-dir or --condition and --subset, not both")
+    if args.run_dir is None and not (args.condition and args.subset):
+        parser.error("give --run-dir, or both --condition and --subset")
 
-    run_dir = RUNS_DIR / args.condition / args.subset
-    results_path = run_dir / "results.jsonl"
+    run_dir = (args.run_dir if args.run_dir is not None else RUNS_DIR / args.condition / args.subset)
+    run_dir = run_dir.resolve()
+    paths = output_paths(run_dir, args.results_tag, args.out_dir and args.out_dir.resolve())
+    results_path, scores_path, md_path = paths["results"], paths["scores"], paths["summary"]
     manifest_path = run_dir / "run_manifest.json"
     if not results_path.exists():
-        raise SystemExit(f"No results: {results_path.relative_to(ROOT)}")
+        raise SystemExit(f"No results: {display(results_path)}")
+    refuse_existing([scores_path, md_path], args.overwrite)
     results_sha256 = sha256_of(results_path)
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    query_runs = [r for r in manifest.get("query", []) if r.get("status") == "completed"]
-    if not query_runs:
-        raise SystemExit("The run manifest has no completed query run")
-    query_run = query_runs[-1]
-    renormalized = [r for r in manifest.get("renormalize", []) if r.get("status") == "completed"]
-    expected = query_run["results_sha256"]
-    if renormalized and renormalized[-1]["started_at"] > query_run["started_at"]:
-        expected = renormalized[-1]["results_sha256_after"]
+    query_run, expected = expected_sha256(manifest, args.results_tag)
     if results_sha256 != expected:
-        raise SystemExit("results.jsonl does not match the sha256 recorded in the run manifest")
+        raise SystemExit(f"{display(results_path)} does not match the sha256 recorded in the run manifest")
 
     with results_path.open(encoding="utf-8") as f:
         rows = [json.loads(line) for line in f]
@@ -303,21 +382,23 @@ def main() -> int:
     aliases = load_aliases(ALIASES_PATH, {meta[r["question_id"]]["answer_id"] for r in rows})
     scored = score_rows(rows, meta, aliases)
 
-    scores_path = run_dir / "scores.json"
     report = {
-        "condition": args.condition,
-        "subset": args.subset,
+        "condition": manifest.get("condition", args.condition),
+        "subset": manifest.get("subset", run_dir.name),
+        "run": run_dir.parent.name,
+        "run_dir": display(run_dir),
+        "results_tag": args.results_tag,
         "provenance": {
-            "results_file": str(results_path.relative_to(ROOT)),
+            "results_file": display(results_path),
             "results_sha256": results_sha256,
-            "scores_file": str(scores_path.relative_to(ROOT)),
+            "scores_file": display(scores_path),
             "query_run": {
                 "started_at": query_run["started_at"],
                 "ended_at": query_run["ended_at"],
                 "commit": query_run["git"]["commit"],
                 "config_sha256": query_run["config_sha256"],
             },
-            "aliases_file": str(ALIASES_PATH.relative_to(ROOT)),
+            "aliases_file": display(ALIASES_PATH),
             "aliases_sha256": sha256_of(ALIASES_PATH),
             "official_script": OFFICIAL_SCRIPT,
             "bootstrap": {"resamples": BOOTSTRAP_RESAMPLES, "seed": BOOTSTRAP_SEED,
@@ -326,10 +407,11 @@ def main() -> int:
         },
         **scored,
     }
+    scores_path.parent.mkdir(parents=True, exist_ok=True)
+    md_path.parent.mkdir(parents=True, exist_ok=True)
     scores_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    md_path = RESULTS_DOCS_DIR / f"{args.condition}-{args.subset}-scores.md"
     md_path.write_text(markdown(report), encoding="utf-8")
-    print(f"Wrote {scores_path.relative_to(ROOT)} and {md_path.relative_to(ROOT)}")
+    print(f"Wrote {display(scores_path)} and {display(md_path)}")
     o = report["overall"]
     print("  ".join(f"{m} {pct(o[m]['mean'])}" for m in METRICS), f"fallback {o['fallback_rows']}")
     return 0

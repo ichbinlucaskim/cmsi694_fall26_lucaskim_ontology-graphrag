@@ -59,30 +59,65 @@ soon as it is made, and a rerun skips questions already in the file. It
 refuses to append if the rows already written used a different shared config,
 index settings, seed, or LLM cache setting, and names what differs. A question
 interrupted mid-answer is not written. To start a query over, move
-`results.jsonl` aside.
+`results.jsonl` aside, or use a new `--results-tag`.
 
-**Outputs** go to `runs/<condition>/<subset>/`, which is git-ignored:
+**Run labels and results tags.** Give a run its own directory with
+`--run-label`, and give a repeat its own results file with `--results-tag`:
+
+```
+python scripts/run_condition.py index --condition ontology --subset study50 --run-label v2
+python scripts/run_condition.py query --condition ontology --subset study50 --run-label v2
+python scripts/run_condition.py query --condition ontology --subset study50 --run-label v2 \
+  --results-tag r2 --seed 1 --no-llm-cache
+```
+
+Naming rule:
+
+- Without a label, a run's directory is `runs/<condition>/<subset>/`, as before.
+  With `--run-label LABEL` (any phase), it is `runs/<condition>-<LABEL>/<subset>/`.
+- Without a tag, `query` writes `results.jsonl`. With `--results-tag TAG`
+  (query only), it writes `results-<TAG>.jsonl` in the same run directory and
+  reuses that directory's index. Resume, and the refusal to append rows
+  answered with other settings, apply to each results file separately.
+- Labels and tags use lowercase letters, digits, and hyphens only.
+- Every manifest record stores `run_label`, and query records also store
+  `results_tag`. Both are `null` when not given.
+
+**Outputs** go to the run directory, which is git-ignored:
 
 | Path | Contents |
 |---|---|
 | `lightrag/` | LightRAG working directory (graph, vector stores, LLM cache, document status) |
 | `run_manifest.json` | One record per `index` or `query` invocation (session), counted in `index_sessions` and `query_sessions`: timings, document status counts, failed IDs, token counts, config and subset hashes, model digests, versions, git commit |
-| `results.jsonl` | One row per question: ID, type, question, gold answer, predicted answer, retrieved and gold paragraph IDs, query time, and the config sha256, index-settings sha256, seed, and cache flag it was answered with |
-| `scores.json` | Written by `scripts/score.py`: per-question and aggregate scores |
+| `results.jsonl`, `results-<TAG>.jsonl` | One row per question: ID, type, question, gold answer, predicted answer, retrieved and gold paragraph IDs, query time, and the config sha256, index-settings sha256, seed, and cache flag it was answered with |
+| `scores.json`, `scores-<TAG>.json` | Written by `scripts/score.py`: per-question and aggregate scores |
 
 ## Scoring a run
 
 ```
+python scripts/score.py --run-dir runs/ontology-v2/smoke10
+python scripts/score.py --run-dir runs/ontology-v2/study50 --results-tag r2
 python scripts/score.py --condition baseline --subset smoke10
 ```
 
-This scores `runs/<condition>/<subset>/results.jsonl` with the official
-2WikiMultiHopQA v1.1 answer metrics (EM and F1, with and without answer
-aliases) and retrieval recall, and adds bootstrap 95% confidence intervals
-overall and per question type. It writes `runs/<condition>/<subset>/scores.json`
-and a summary in `docs/results/<condition>-<subset>-scores.md`. It needs
-`data/raw/2wiki/id_aliases.json` from `scripts/download_2wiki.py` and uses the
-standard library only.
+This scores a run's results file with the official 2WikiMultiHopQA v1.1
+answer metrics (EM and F1, with and without answer aliases) and retrieval
+recall, and adds bootstrap 95% confidence intervals overall and per question
+type. `--condition C --subset S` is shorthand for `--run-dir runs/C/S`. For a
+run directory `runs/<run>/<subset>/` it reads and writes:
+
+| With | Reads | Writes |
+|---|---|---|
+| no tag | `results.jsonl` | `scores.json` in the run directory, and `docs/results/<run>-<subset>-scores.md` |
+| `--results-tag TAG` | `results-<TAG>.jsonl` | `scores-<TAG>.json` in the run directory, and `docs/results/<run>-<subset>-<TAG>-scores.md` |
+
+For example, `--run-dir runs/ontology-v2/smoke10` writes
+`docs/results/ontology-v2-smoke10-scores.md`. `--out-dir DIR` writes both
+files, under the same names, into `DIR` instead. If either output file
+already exists, `score.py` refuses and names it; `--overwrite` replaces it.
+The results file must match the sha256 recorded by the last completed query
+run with the same results tag. It needs `data/raw/2wiki/id_aliases.json` from
+`scripts/download_2wiki.py` and uses the standard library only.
 
 Tests:
 
